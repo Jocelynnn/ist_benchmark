@@ -90,17 +90,41 @@ the abstract section}
 \section{Introduction}
   \paragraph{}Interactive image segmentation has been extensively studied in the latest decade. Many state-of-the-art algorithms in this field have been proposed, starting from Boycov et. al\citep{boykov2001interactive},followed by Grabcut\citep{rother2004grabcut},Random Walker\citep{grady2006random},Bai and Sapiro \citep{bai2007geodesic} and \citep{gulshan2010geodesic}. However, when it comes to the evaluation of these algorithms, the comparison can hardly be objective due to different human interferences. As is often the case, interactive image segmentation algorithms are tested upon user scribbles provided by the specific author. In this way, the performance of segmentation result could heavily depend on certain batch of seeds selection, rendering the result not convincing enough when compared with other algorithms. 
  \paragraph{}This paper deals with the problem of evaluating interactive segmentation algorithms in an objective and comprehensive way. The contribution of this paper includes:
- \paragraph{} The remainder of this paper is organized as follows:
+ \paragraph{} The remainder of this paper is organized as follows:...
   
 \section{Related Work}
 
 ******
-
 \section{Dataset design}
-\paragraph{}The dataset contains 96 images from publicly available Berkeley Segmentation Dataset\citep{martin2001database}
+\paragraph{}The dataset contains 96 images from publicly available Berkeley Segmentation Dataset\citep{martin2001database}. These images are selected so that each of them contains at least one obvious object which could be unambiguously explained to participants.These images are representative of some major challenges of image segmentation, including fuzzy boundary, complex texture and complex lighting conditions. Ground truths are precisely hand-labeled for each image in order to avoid any bias.
+
+
+\section{Experiment}
+In this section we will discuss the design of experiment. We use the software provided by The K-Space Segmentation Tool Set, \citep{mcguinness2008k}. Screenshots of the tool are shown in Figure 1. The 5 participants are all students from computer science background but have limited knowledge in interactive image segmentation. Each participant was given a clear guidance and enough time to familiarize themselves and become proficient with the software that would be used for the experiment. Sample markers were also provided in avoid of misunderstanding . Then in real experiment, each participants are provided with 96 images and the corresponding ground-truth which tells exactly which object to extract. However, we hide the segmentation result from user so that they will not realize if they have provided a "good" mark or not. We also confined the time for labeling each image. In this way, we manage to (1)limit the effort of participants to draw scribbles in consideration of real-life application.
+(2)obtain the most natural response of users rather than inputs guided by segmentation result.
+\paragraph{}
 
 \section{User-interaction differences}
-
+ In our person-oriented experiments, great differences among user labels were observed. It comes to us instinctively that different people tend to consider different part of foreground and background object as salient. Under this guidance, we processed the 5 marker files of the same image and calculated the pair-wise intersection. The result is shown in table 1.
+ 
+\begin{table}[!hbp]
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+lable 1-1 & label 1-2 & label 1-3 & label 1 -4 & label 1-5& label 1-6 \\
+\hline
+label 2-1 & label 2-2 & label 3-3 & label 4-4 & label 5-5& label 2-6 \\
+\hline
+label 2-1 & label 2-2 & label 3-3 & label 4-4 & label 5-5& label 1-6 \\
+\hline
+label 2-1 & label 2-2 & label 3-3 & label 4-4 & label 5-5& label 1-6 \\
+\hline
+label 2-1 & label 2-2 & label 3-3 & label 4-4 & label 5-5& label 1-6 \\
+\hline
+label 2-1 & label 2-2 & label 3-3 & label 4-4 & label 5-5& label 1-6 \\
+\hline
+\end{tabular}
+\caption{example of table}
+\end{table} 
 
 
 \bibliographystyle{plain}

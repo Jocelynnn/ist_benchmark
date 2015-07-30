@@ -34,6 +34,11 @@ David Martin, Charless Fowlkes, Doron Tal, and Jitendra Malik.
 \newblock In {\em Computer Vision, 2001. ICCV 2001. Proceedings. Eighth IEEE
   International Conference on}, volume~2, pages 416--423. IEEE, 2001.
 
+\bibitem{mcguinness2008k}
+Kevin McGuinness and Noel~E O'Connor.
+\newblock The k-space segmentation tool set.
+\newblock 2008.
+
 \bibitem{rother2004grabcut}
 Carsten Rother, Vladimir Kolmogorov, and Andrew Blake.
 \newblock Grabcut: Interactive foreground extraction using iterated graph cuts.
