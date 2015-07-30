@@ -27,6 +27,13 @@ Varun Gulshan, Carsten Rother, Antonio Criminisi, Andrew Blake, and Andrew
 \newblock In {\em Computer Vision and Pattern Recognition (CVPR), 2010 IEEE
   Conference on}, pages 3129--3136. IEEE, 2010.
 
+\bibitem{martin2001database}
+David Martin, Charless Fowlkes, Doron Tal, and Jitendra Malik.
+\newblock A database of human segmented natural images and its application to
+  evaluating segmentation algorithms and measuring ecological statistics.
+\newblock In {\em Computer Vision, 2001. ICCV 2001. Proceedings. Eighth IEEE
+  International Conference on}, volume~2, pages 416--423. IEEE, 2001.
+
 \bibitem{rother2004grabcut}
 Carsten Rother, Vladimir Kolmogorov, and Andrew Blake.
 \newblock Grabcut: Interactive foreground extraction using iterated graph cuts.
