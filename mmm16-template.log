@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.1.15)  1 AUG 2015 19:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.1.15)  1 AUG 2015 22:18
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -482,30 +482,37 @@ y stud-ied in the lat-est decade.
 
 
 {/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-[2] <images/97033.jpg, id=19, 482.80376pt x 322.20375pt>
+<images/screenshot.png, id=14, 803.0pt x 602.25pt>
+File: images/screenshot.png Graphic file (type png)
+ <use images/screenshot.png>
+Package pdftex.def Info: images/screenshot.png used on input line 113.
+(pdftex.def)             Requested size: 173.56177pt x 130.17044pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[2] <images/97033.jpg, id=20, 482.80376pt x 322.20375pt>
 File: images/97033.jpg Graphic file (type jpg)
 
 <use images/97033.jpg>
-Package pdftex.def Info: images/97033.jpg used on input line 167.
+Package pdftex.def Info: images/97033.jpg used on input line 172.
 (pdftex.def)             Requested size: 104.1381pt x 69.49368pt.
- <images/97033-5.png, id=20, 482.80376pt x 322.20375pt>
+ <images/97033-5.png, id=21, 482.80376pt x 322.20375pt>
 File: images/97033-5.png Graphic file (type png)
 
 <use images/97033-5.png>
-Package pdftex.def Info: images/97033-5.png used on input line 170.
+Package pdftex.def Info: images/97033-5.png used on input line 175.
 (pdftex.def)             Requested size: 104.1381pt x 69.49368pt.
 
-<images/97033-4.png, id=21, 482.80376pt x 322.20375pt>
+<images/97033-4.png, id=22, 482.80376pt x 322.20375pt>
 File: images/97033-4.png Graphic file (type png)
 
 <use images/97033-4.png>
-Package pdftex.def Info: images/97033-4.png used on input line 173.
+Package pdftex.def Info: images/97033-4.png used on input line 178.
 (pdftex.def)             Requested size: 104.1381pt x 69.49368pt.
-
-Underfull \vbox (badness 5519) has occurred while \output is active []
-
- [3 <./images/97033.jpg> <./images/97033-5.png (PNG copy)> <./images/97033-4.pn
-g (PNG copy)>] [4] [5] (./mmm16-template.bbl [6]) [7
+ [3 <./images/screenshot.png>] [4 <./images/97033.jpg> <./images/97033-5.png (P
+NG copy)> <./images/97033-4.png (PNG copy)>] [5]
+(./mmm16-template.bbl [6] [7]) [8
 
 ] (./mmm16-template.aux)
 
@@ -513,13 +520,13 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 5035 strings out of 493117
- 68880 string characters out of 6135433
- 160642 words of memory out of 5000000
- 8390 multiletter control sequences out of 15000+600000
+ 5042 strings out of 493117
+ 69065 string characters out of 6135433
+ 163660 words of memory out of 5000000
+ 8396 multiletter control sequences out of 15000+600000
  11125 words of font info for 43 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,18n,35p,1370b,349s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 41i,19n,35p,1370b,349s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></
@@ -532,10 +539,10 @@ texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/t
 exlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/te
 xlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/texl
 ive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on mmm16-template.pdf (7 pages, 261614 bytes).
+Output written on mmm16-template.pdf (8 pages, 317520 bytes).
 PDF statistics:
- 79 PDF objects out of 1000 (max. 8388607)
- 54 compressed objects within 1 object stream
+ 83 PDF objects out of 1000 (max. 8388607)
+ 56 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 16 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 

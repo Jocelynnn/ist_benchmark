@@ -92,9 +92,9 @@ the abstract section}
 
 \section{Introduction}
   \paragraph{}Interactive image segmentation has been extensively studied in the latest decade. Many state-of-the-art algorithms in this field have been proposed, starting from Boycov et. al\citep{boykov2001interactive},followed by Grabcut\citep{rother2004grabcut},Random Walker\citep{grady2006random},Bai and Sapiro \citep{bai2007geodesic} and \citep{gulshan2010geodesic}. However, when it comes to the evaluation of these algorithms, the comparison can hardly be objective due to different human interferences. As is often the case, interactive image segmentation algorithms are tested upon user scribbles provided by the specific author. In this way, the performance of segmentation result could heavily depend on certain batch of seeds selection, rendering the result not convincing enough when compared with other algorithms. 
- \paragraph{}This paper deals with the problem of evaluating interactive segmentation algorithms in an objective and comprehensive way. The contribution of this paper includes: (1)  Analysis of differences between user labels in a quantitative way. By further clustering colors in the image, we figured out the correspondence between user labels and color groups. 
- (2)
- \paragraph{} The content of this paper is organized as follows:...
+ \paragraph{}This paper deals with the problem of evaluating interactive segmentation algorithms in an objective and comprehensive way. The contribution of this paper includes: (1)  Analysis of differences between user labels in a quantitative way. By clustering colors in the image, we figured out the correspondence between user labels and color clusters. 
+ (2)...
+ \paragraph{} The remainder of this paper is organized as follows:...
   
 \section{Related Work}
 
@@ -107,15 +107,19 @@ the abstract section}
 
 
 \subsection{Experiment}
-\paragraph{}In this section we will discuss the design of experiment. We use the software provided by The K-Space Segmentation Tool Set, \citep{mcguinness2008k}. Screenshots of the tool are shown in Figure 1. The 5 participants are all students from computer science background but have limited knowledge in interactive image segmentation. Each participant was given a clear guidance and enough time to familiarize themselves and become proficient with the software that would be used for the experiment. Sample markers were also provided in avoid of misunderstanding . Then in real experiment, each participants are provided with 96 images and the corresponding ground-truth which tells exactly which object to extract. However, we hide the segmentation result from user so that they will not realize if they have provided a "good" mark or not. We also confined the time for labeling each image. In this way, we manage to (1)limit the effort of participants to draw scribbles in consideration of real-life application.
-(2)obtain the most natural response of users rather than inputs guided by segmentation result.
-\paragraph{}
+\paragraph{}In this section we will discuss the design of experiment. We use the software provided by The K-Space Segmentation Tool Set, \citep{mcguinness2008k}. Screenshots of the tool are shown in Figure  \ref{fig:screenshot}. The 5 participants are all students from computer science background but have limited knowledge in interactive image segmentation. Each participant was given a clear guidance and enough time to familiarize themselves and become proficient with the software that would be used for the experiment. Sample markers were also provided in avoid of misunderstanding . Then in real experiment, each participants are provided with 96 images and the corresponding ground-truth which tells exactly which object to extract. However, we hide the segmentation result from user so that they will not realize if they have provided a "good" mark or not. We also confined the time for labeling each image. In this way, we manage to (1)limit the effort of participants to draw scribbles in consideration of real-life application.(2)obtain the most natural response of users rather than inputs guided by segmentation result.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\columnwidth]{images/screenshot.png}
+\textbf{\caption{ The screenshot of k-space segmentation tool}}
+\label{fig:screenshot}
+\end{figure}
 
 \subsection{User-interaction differences}
- \paragraph{}In our person-oriented experiments, great differences among user labels were observed. It comes to us instinctively that different people tend to consider different part of foreground and background object as salient. Under this guidance, we processed the 5 marker files of the same image and calculated the pair-wise intersection degree. The result is shown in table 1. The intersection degree is defined as follows:
+ \paragraph{}In our person-oriented experiments, great differences among user labels were observed. It comes to us instinctively that different people tend to consider different part of foreground and background object as salient. Under this guidance, we processed the 5 marker files of each image out of the dataset and calculated the pair-wise intersection degree. The result is shown in table \ref{ta:intersection degree f}and table \ref{ta:intersection degree b}. The intersection degree is defined as follows:
 $$intersection\ of\ marked\ pixels/union\ of\ marked\ pixels$$
 
-\paragraph{}Table 1 visualizes the value on foreground and Table 2 the background. We make the following observations: ?1?The average value of intersection/union between two people is rather low, ranging from 1.6592\% to 3.5195\% in foreground and 0.0905\% to 0.9700\% in background, which indicates that markers of different people have little common in common. Figure 1 shows an example of user markers which share no common pixel?2) People share less similarities in background markers than foreground. It is because the foreground objects are confined to a certain area while the backgrounds are more extensive. 
+\paragraph{}Table \ref{ta:intersection degree f} visualizes the value on foreground and Table \ref{ta:intersection degree b} the background. We make the following observations: (1)The average value of intersection/union between two people is rather low, ranging from 1.6592\% to 3.5195\% in foreground and 0.0905\% to 0.9700\% in background, which indicates that markers of different people have little common in common.Figure \ref{fig:example} shows an example of user markers which share no common pixel (2) People share less similarities in background markers than foreground. It is because the foreground objects are confined to a certain area while the backgrounds are more extensive. 
 
 
 \begin{table}
@@ -136,7 +140,7 @@ seed 5 & 1.6592\% & 2.2459\% & 2.0102\% & 1.8441\%& 100\% \\
 \hline
 \end{tabular}
 \caption{intersection degree of foreground}
-\label{table1}
+\label{ta:intersection degree f}
 \end{table} 
 
 \begin{table}
@@ -157,27 +161,29 @@ seed 5 & 0.6300\% & 0.7300\% & 0.6800\% & 0.6700\% & 100\% \\
 \hline
 \end{tabular}
 \caption{intersection degree of background}
+\label{ta:intersection degree b}
 \end{table} 
 
 \begin{figure}
 \centering
 
-\subfigure[figure 1 title.] { \label{fig:a}     
+\subfigure[source image] { \label{fig:a}     
 \includegraphics[width=0.3\columnwidth]{images/97033.jpg}  
 }     
-\subfigure[figure 2 title.] { \label{fig:b}     
+\subfigure[label 1] { \label{fig:b}     
 \includegraphics[width=0.3\columnwidth]{images/97033-5.png}     
 }   
-\subfigure[figure 3 title.] { \label{fig:b}     
+\subfigure[label 2] { \label{fig:b}     
 \includegraphics[width=0.3\columnwidth]{images/97033-4.png}     
 }     
-\caption{ general title. }     
-\label{fig}     
+\caption{Two labels of the same image}     
+\label{fig:example}     
 \end{figure}
 
 
-\subsection{segmentation differences}
-\paragraph{}Based on the above result, we took a step further by examine the segmentation results of different markers.The implementation of four interactive segmentation algorithms in \citep{gulshan2010geodesic} was used. Based on the 96*5*4 segmentation results, we have found out that due to the variance between different markers, the segmentation results tend to be quite different, too.  We achieved here by calculating percent of pixels which was segmented out as foreground simultaneously by 1 person, two people, three people ,four people and 5 people out of all the segmented pixels. The result is shown in table 4-7. We have observed that: (1) The effectiveness of different markers as input of interactive segmentation algorithms vary from person to person.  It could also be observed that the seed made by participant 1 have a better performance than others in terms of average, maximum and minimum, which means there exists kind of "professional lables" \citep{fu2008saliency} (2) In average level, the result reaches at most 66.760\% in table 5 made by participant 1. While the maximum ratio could be high as 99.050\%, the minimum ratio was also low as 1.060\%. This shows that when applied to segmentation algorithms, the variance of markers could further lead to quite great difference in segmentation results. 
+\subsection{Segmentation differences}
+\paragraph{}Based on the above result, we took a step further by examine the segmentation results of different markers.The implementation of four interactive segmentation algorithms in \citep{gulshan2010geodesic} was used. Based on the 96*5*4 segmentation results, we have found out that due to the variance between different markers, the segmentation results tend to be quite different, too.  We achieved here by calculating percent of pixels which was segmented out as foreground simultaneously by 1 person, two people, three people ,four people and 5 people out of all the segmented pixels. The result is shown in Table 4-7. We have observed that: (1) The effectiveness of different markers as input of interactive segmentation algorithms vary from person to person.  It could also be observed that the seed made by participant 1 have a better performance than others in terms of average, maximum and minimum, which means there exists kind of "professional lables" \citep{fu2008saliency} (2) On average level, the result reaches at most 66.760\% in table 5 made by participant 1. While the maximum ratio could be high as 99.050\%, the minimum ratio was also low as 1.060\%. This shows that when applied to segmentation algorithms, the variance of markers could further lead to quite great difference in segmentation results. 
+
 
 \begin{table}
 \centering
@@ -281,10 +287,12 @@ coefficient of variance& 0.2719 & 0.4207 & 0.4546 & 0.4819& 0.5042\\
 
 
 
-\section{Interaction simulation}
-\paragraph{} In interactive image segmentation,users are expected labels some key features of the image foreground and background. The effectiveness of these labels is greatly related to their coverage of foreground and background key components. So we decide to simulate markers by simulating their coverage of key pixel clusters. In our method, we used the simple linear iterative clustering (SLIC)  method \citep{achanta2010slic} implemented by VLFeat open source library\citep{vedaldi08vlfeat}. The SLIC algorithm clusters pixels in the combined five-dimensional color and image plane space which brings compact, nearly uniform superpixels. We then decompose all the superpixels into groups according to the quantilized feature of each superpixel. In this way, we could analyze user markers in superpixel level and superpixel group level.
-\paragraph{} Instead of continuous user scribbles, our simulation is targeted at generating several points to represent key features in the image. So our first step was to validate the effectiveness of points in segmentation as compared to continuous lines. We randomly select one superpixel from each group and then randomly select one point from that superpixel, in this way, we formed a point set which contains points from all groups. We then applied three set which were generated the same way to segmentation algorithms. In the evaluation of segmentation accuracy, we define the following criteria:
+\section{Automatic user interaction simulation}
+\subsection{Quantitative of images}
+\paragraph{} In interactive image segmentation,users are expected labels some key features of the image foreground and background. The effectiveness of these labels is greatly related to their coverage of foreground and background key components. So we decide to simulate markers by simulating their coverage of key pixel clusters. In our method, we used the simple linear iterative clustering (SLIC)  method \citep{achanta2010slic} implemented by VLFeat open source library\citep{vedaldi08vlfeat}. The SLIC algorithm clusters pixels in the combined five-dimensional color and image plane space which brings compact, nearly uniform superpixels. We then decompose all the superpixels into groups according to the quantitative feature of each superpixel. In this way, we could analyze user markers in superpixel level and superpixel group level.
 
+\subsection{Quantitative simulation of user labels}
+\paragraph{} Instead of continuous user scribbles, our simulation is targeted at generating several points to represent key features in the image. So our first step was to validate the effectiveness of points in segmentation as compared to continuous lines. After figuring out the superpixel groups which were covered by user markers, we randomly select one superpixel from these groups and then randomly select one point from that superpixel, in this way, we formed a point set which contains points from all groups covered by a certain artificial marker. We then applied five sets which were generated the same way to segmentation algorithms. In terms of evaluation of segmentation accuracy, we define the following criteria:
 \begin{empheq}[box=\fbox]{align}
 \begin{split}
  F_{gt} &= \text{foreground in ground truth}     \\
@@ -293,16 +301,111 @@ coefficient of variance& 0.2719 & 0.4207 & 0.4546 & 0.4819& 0.5042\\
   \text{precision} &= \frac{F_{gt} \cap F_s}{F_{gt}}  \\
   \end{split}
 \end{empheq}
+The accuracy evaluation of five batches of markers and five batches of auto-generated seeds applied to the four algorithms are shown in the following tables(To be done).
+
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+ & seed 1 & seed 2&seed 3&seed 4&seed 5 \\
+\hline
+Precision& 0.8595 & 0.8423 & 0.8449& 0.8543& 0.7474 \\
+\hline
+Recall& 0.8822 & 0.9158 & 0.9154& 0.9303& 0.9108 \\
+\hline
+ & simu-seed 1 & simu-seed 2&simu-seed 3&simu-seed 4&simu-seed 5 \\
+ \hline
+Precision& 63.180\% & 49.860\% & 45.720\%& 45.720\%& 45.720\% \\
+\hline
+Recall& 98.660\% & 97.910\% & 97.430\%& 45.720\%& 45.720\%  \\
+\hline
+\end{tabular}
+\caption{bj}
+\end{table} 
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+ & seed 1 & seed 2&seed 3&seed 4&seed 5 \\
+\hline
+Precision& 0.8595 & 0.8423 & 0.8449& 0.8543& 0.7474 \\
+\hline
+Recall& 0.8822 & 0.9158 & 0.9154& 0.9303& 0.9108 \\
+\hline
+ & simu-seed 1 & simu-seed 2&simu-seed 3&simu-seed 4&simu-seed 5 \\
+ \hline
+Precision& 63.180\% & 49.860\% & 45.720\%& 45.720\%& 45.720\% \\
+\hline
+Recall& 98.660\% & 97.910\% & 97.430\%& 45.720\%& 45.720\%  \\
+\hline
+\end{tabular}
+\caption{bj}
+\end{table} 
+
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+ & seed 1 & seed 2&seed 3&seed 4&seed 5 \\
+\hline
+Precision& 0.8595 & 0.8423 & 0.8449& 0.8543& 0.7474 \\
+\hline
+Recall& 0.8822 & 0.9158 & 0.9154& 0.9303& 0.9108 \\
+\hline
+ & simu-seed 1 & simu-seed 2&simu-seed 3&simu-seed 4&simu-seed 5 \\
+ \hline
+Precision& 63.180\% & 49.860\% & 45.720\%& 45.720\%& 45.720\% \\
+\hline
+Recall& 98.660\% & 97.910\% & 97.430\%& 45.720\%& 45.720\%  \\
+\hline
+\end{tabular}
+\caption{bj}
+\end{table} 
+
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+ & seed 1 & seed 2&seed 3&seed 4&seed 5 \\
+\hline
+Precision& 0.8595 & 0.8423 & 0.8449& 0.8543& 0.7474 \\
+\hline
+Recall& 0.8822 & 0.9158 & 0.9154& 0.9303& 0.9108 \\
+\hline
+ & simu-seed 1 & simu-seed 2&simu-seed 3&simu-seed 4&simu-seed 5 \\
+ \hline
+Precision& 63.180\% & 49.860\% & 45.720\%& 45.720\%& 45.720\% \\
+\hline
+Recall& 98.660\% & 97.910\% & 97.430\%& 45.720\%& 45.720\%  \\
+\hline
+\end{tabular}
+\caption{bj}
+\end{table} 
+
+
+\section{}
+
+
+
+
+
+
+
+
 
 \begin{table}
 \centering
 \begin{tabular}{|c|c|c|c|}
 \hline
-& all-group-seed-1 & all-group-seed-2&all-group-seed -3 \\
+& all-group-seed-1&all-group-seed-2&all-group-seed-3 \\
 \hline
-Precision& 63.180\% & 49.860\% & 45.720\% \\
+Precision&63.180\% &49.860\% &45.720\% \\
 \hline
-Recall& 98.660\% & 97.910\% & 97.430\%  \\
+Recall&98.660\% &97.910\% &97.430\%  \\
 \hline
 \end{tabular}
 \caption{rw}
