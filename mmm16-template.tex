@@ -29,6 +29,7 @@
 \usepackage{natbib}
 \usepackage{graphicx} 
 \usepackage{subfigure}
+\usepackage{empheq}
 
 
 \usepackage{url}
@@ -281,7 +282,32 @@ coefficient of variance& 0.2719 & 0.4207 & 0.4546 & 0.4819& 0.5042\\
 
 
 \section{Interaction simulation}
-\paragraph{} In interactive image segmentation,users are expected labels some key features of the image foreground and background. The effectiveness of these labels is greatly related to their coverage of foreground and background key components. In our method, we used the simple linear iterative clustering (SLIC)  method \citep{achanta2010slic} implemented by VLFeat open source library\citep{vedaldi08vlfeat}. The SLIC algorithm clusters pixels in the combined five-dimensional color and image plane space which brings compact, nearly uniform superpixels. 
+\paragraph{} In interactive image segmentation,users are expected labels some key features of the image foreground and background. The effectiveness of these labels is greatly related to their coverage of foreground and background key components. So we decide to simulate markers by simulating their coverage of key pixel clusters. In our method, we used the simple linear iterative clustering (SLIC)  method \citep{achanta2010slic} implemented by VLFeat open source library\citep{vedaldi08vlfeat}. The SLIC algorithm clusters pixels in the combined five-dimensional color and image plane space which brings compact, nearly uniform superpixels. We then decompose all the superpixels into groups according to the quantilized feature of each superpixel. In this way, we could analyze user markers in superpixel level and superpixel group level.
+\paragraph{} Instead of continuous user scribbles, our simulation is targeted at generating several points to represent key features in the image. So our first step was to validate the effectiveness of points in segmentation as compared to continuous lines. We randomly select one superpixel from each group and then randomly select one point from that superpixel, in this way, we formed a point set which contains points from all groups. We then applied three set which were generated the same way to segmentation algorithms. In the evaluation of segmentation accuracy, we define the following criteria:
+
+\begin{empheq}[box=\fbox]{align}
+\begin{split}
+ F_{gt} &= \text{foreground in ground truth}     \\
+ F_{s}  &= \text{foreground in segmentation}     \\
+  \text{recall}    &= \frac{F_{gt} \cap F_s}{F_{gt}}  \\
+  \text{precision} &= \frac{F_{gt} \cap F_s}{F_{gt}}  \\
+  \end{split}
+\end{empheq}
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+& all-group-seed-1 & all-group-seed-2&all-group-seed -3 \\
+\hline
+Precision& 63.180\% & 49.860\% & 45.720\% \\
+\hline
+Recall& 98.660\% & 97.910\% & 97.430\%  \\
+\hline
+\end{tabular}
+\caption{rw}
+\end{table} 
+
 
 
 
