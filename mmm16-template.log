@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.1.15)  30 JUL 2015 23:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.1.15)  1 AUG 2015 14:44
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -305,38 +305,64 @@ Package: natbib 2010/09/13 8.31b (PWD, AO)
 LaTeX Info: Redefining \cite on input line 694.
 \c@NAT@ctr=\count136
 )
+(/usr/local/texlive/2014/texmf-dist/tex/latex/subfigure/subfigure.sty
+Package: subfigure 2002/03/15 v2.1.5 subfigure package
+\subfigtopskip=\skip55
+\subfigcapskip=\skip56
+\subfigcaptopadj=\dimen139
+\subfigbottomskip=\skip57
+\subfigcapmargin=\dimen140
+\subfiglabelskip=\skip58
+\c@subfigure=\count137
+\c@lofdepth=\count138
+\c@subtable=\count139
+\c@lotdepth=\count140
+
+****************************************
+* Local config file subfigure.cfg used *
+****************************************
+(/usr/local/texlive/2014/texmf-dist/tex/latex/subfigure/subfigure.cfg)
+\subfig@top=\skip59
+\subfig@bottom=\skip60
+)
 (/usr/local/texlive/2014/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip11
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-(./mmm16-template.aux)
+(./mmm16-template.aux
+
+LaTeX Warning: Label `fig:b' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:b' multiply defined.
+
+)
 \openout1 = `mmm16-template.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-
-(/usr/local/texlive/2014/texmf-dist/tex/context/base/supp-pdf.mkii
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+ (/usr/local/texlive/2014/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count137
-\scratchdimen=\dimen139
+\scratchcounter=\count141
+\scratchdimen=\dimen141
 \scratchbox=\box58
-\nofMPsegments=\count138
-\nofMParguments=\count139
+\nofMPsegments=\count142
+\nofMParguments=\count143
 \everyMPshowfont=\toks30
-\MPscratchCnt=\count140
-\MPscratchDim=\dimen140
-\MPnumerator=\count141
-\makeMPintoPDFobject=\count142
+\MPscratchCnt=\count144
+\MPscratchDim=\dimen142
+\MPnumerator=\count145
+\makeMPintoPDFobject=\count146
 \everyMPtoPDFconversion=\toks31
 ) (/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
@@ -386,20 +412,17 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Font Info:    Try loading font information for U+msa on input line 78.
+LaTeX Font Info:    Try loading font information for U+msa on input line 80.
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 78.
+LaTeX Font Info:    Try loading font information for U+msb on input line 80.
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Title too long for running head. Please supply
-a shorter form with \titlerunning prior to \maketitle
-
-Overfull \hbox (1.62697pt too wide) in paragraph at lines 91--92
+Overfull \hbox (1.62697pt too wide) in paragraph at lines 93--94
  [] \OT1/cmr/m/n/10 In-ter-ac-tive im-age seg-men-ta-tion has been ex-ten-sivel
 y stud-ied in the lat-est decade.
  []
@@ -408,31 +431,59 @@ y stud-ied in the lat-est decade.
 
 
 {/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-(./mmm16-template.bbl [2] [3]) [4
+[2] <images/97033.jpg, id=19, 482.80376pt x 322.20375pt>
+File: images/97033.jpg Graphic file (type jpg)
 
-] (./mmm16-template.aux) ) 
+<use images/97033.jpg>
+Package pdftex.def Info: images/97033.jpg used on input line 166.
+(pdftex.def)             Requested size: 104.1381pt x 69.49368pt.
+ <images/97033-5.png, id=20, 482.80376pt x 322.20375pt>
+File: images/97033-5.png Graphic file (type png)
+
+<use images/97033-5.png>
+Package pdftex.def Info: images/97033-5.png used on input line 169.
+(pdftex.def)             Requested size: 104.1381pt x 69.49368pt.
+
+<images/97033-4.png, id=21, 482.80376pt x 322.20375pt>
+File: images/97033-4.png Graphic file (type png)
+
+<use images/97033-4.png>
+Package pdftex.def Info: images/97033-4.png used on input line 172.
+(pdftex.def)             Requested size: 104.1381pt x 69.49368pt.
+
+Underfull \vbox (badness 5519) has occurred while \output is active []
+
+ [3 <./images/97033.jpg> <./images/97033-5.png (PNG copy)> <./images/97033-4.pn
+g (PNG copy)>] [4] [5] (./mmm16-template.bbl [6]) [7
+
+] (./mmm16-template.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
 Here is how much of TeX's memory you used:
- 4043 strings out of 493117
- 51848 string characters out of 6135433
- 130880 words of memory out of 5000000
- 7424 multiletter control sequences out of 15000+600000
- 10817 words of font info for 42 fonts, out of 8000000 for 9000
+ 4243 strings out of 493117
+ 54743 string characters out of 6135433
+ 141869 words of memory out of 5000000
+ 7611 multiletter control sequences out of 15000+600000
+ 11125 words of font info for 43 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,10n,35p,1046b,347s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2014/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmmi6.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmmi7.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmr10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmr9.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmti10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmti9.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mtt9.pfb>
-Output written on mmm16-template.pdf (4 pages, 124657 bytes).
+ 41i,10n,35p,1370b,347s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
+></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
+</usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></
+usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></u
+sr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr
+/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/l
+ocal/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/loc
+al/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/
+texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/t
+exlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/tex
+live/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
+Output written on mmm16-template.pdf (7 pages, 251675 bytes).
 PDF statistics:
- 53 PDF objects out of 1000 (max. 8388607)
- 37 compressed objects within 1 object stream
+ 75 PDF objects out of 1000 (max. 8388607)
+ 51 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,4 +1,10 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{achanta2010slic}
+Radhakrishna Achanta, Appu Shaji, Kevin Smith, Aurelien Lucchi, Pascal Fua, and
+  Sabine S{\"u}sstrunk.
+\newblock Slic superpixels.
+\newblock Technical report, 2010.
 
 \bibitem{bai2007geodesic}
 Xue Bai and Guillermo Sapiro.
@@ -13,6 +19,12 @@ Yuri~Y Boykov and M-P Jolly.
   objects in nd images.
 \newblock In {\em Computer Vision, 2001. ICCV 2001. Proceedings. Eighth IEEE
   International Conference on}, volume~1, pages 105--112. IEEE, 2001.
+
+\bibitem{fu2008saliency}
+Yu~Fu, Jian Cheng, Zhenglong Li, and Hanqing Lu.
+\newblock Saliency cuts: An automatic approach to object segmentation.
+\newblock In {\em Pattern Recognition, 2008. ICPR 2008. 19th International
+  Conference on}, pages 1--4. IEEE, 2008.
 
 \bibitem{grady2006random}
 Leo Grady.
@@ -43,5 +55,10 @@ Kevin McGuinness and Noel~E O'Connor.
 Carsten Rother, Vladimir Kolmogorov, and Andrew Blake.
 \newblock Grabcut: Interactive foreground extraction using iterated graph cuts.
 \newblock {\em ACM Transactions on Graphics (TOG)}, 23(3):309--314, 2004.
+
+\bibitem{vedaldi08vlfeat}
+A.~Vedaldi and B.~Fulkerson.
+\newblock {VLFeat}: An open and portable library of computer vision algorithms,
+  2008.
 
 \end{thebibliography}
