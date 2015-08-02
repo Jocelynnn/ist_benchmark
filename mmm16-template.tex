@@ -147,7 +147,7 @@ seed 5 & 1.6592\% & 2.2459\% & 2.0102\% & 1.8441\%& 100\% \\
 \centering
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
- Seed & seed 1 & seed 2 & seed 3 & seed 4& seed 5 \\
+  & seed 1 & seed 2 & seed 3 & seed 4& seed 5 \\
 \hline
 seed 1 & 100\% & 0.8700\% & 0.8600\% & 0.0905\%& 0.6300\% \\
 \hline
@@ -182,7 +182,8 @@ seed 5 & 0.6300\% & 0.7300\% & 0.6800\% & 0.6700\% & 100\% \\
 
 
 \subsection{Segmentation differences}
-\paragraph{}Based on the above result, we took a step further by examine the segmentation results of different markers.The implementation of four interactive segmentation algorithms in \citep{gulshan2010geodesic} was used. Based on the 96*5*4 segmentation results, we have found out that due to the variance between different markers, the segmentation results tend to be quite different, too.  We achieved here by calculating percent of pixels which was segmented out as foreground simultaneously by 1 person, two people, three people ,four people and 5 people out of all the segmented pixels. The result is shown in Table 4-7. We have observed that: (1) The effectiveness of different markers as input of interactive segmentation algorithms vary from person to person.  It could also be observed that the seed made by participant 1 have a better performance than others in terms of average, maximum and minimum, which means there exists kind of "professional lables" \citep{fu2008saliency} (2) On average level, the result reaches at most 66.760\% in table 5 made by participant 1. While the maximum ratio could be high as 99.050\%, the minimum ratio was also low as 1.060\%. This shows that when applied to segmentation algorithms, the variance of markers could further lead to quite great difference in segmentation results. 
+\paragraph{}Based on the above result, we took a step further by examine the segmentation results of different markers.The four interactive segmentation algorithms \citep{boykov2001interactive}\citep{grady2006random}\citep{bai2007geodesic}\citep{gulshan2010geodesic}in Table \ref{ta:algorithms} was used. Based on the 96*5*4 segmentation results, we have found out that due to the variance between different markers, the segmentation results tend to be quite different, too.  We achieved here by calculating percent of pixels which was segmented out as foreground simultaneously by 1 person, two people, three people ,four people and 5 people out of all the segmented pixels. The result is shown in Table \ref{ta:bj intersection} \ref{ta:gsc intersection} \ref{ta:sp intersection} \ref{ta:rw intersection}
+. We have observed that: (1) The effectiveness of different markers as input of interactive segmentation algorithms vary from person to person.  It could also be observed that the seed made by participant 1 have a better performance than others in terms of average, maximum and minimum, which means there exists kind of "professional lables" \citep{fu2008saliency} (2) On average level, the result reaches at most 66.760\% in table 5 made by participant 1. While the maximum ratio could be high as 99.050\%, the minimum ratio was also low as 1.060\%. This shows that when applied to segmentation algorithms, the variance of markers could further lead to quite great difference in segmentation results. 
 
 
 \begin{table}
@@ -201,6 +202,7 @@ RW & Random Walker  \\
 \hline
 \end{tabular}
 \caption{intersection degree of background}
+\label{ta:algorithms}
 \end{table} 
 
 
@@ -221,7 +223,8 @@ variance& 0.0557 & 0.0883 & 0.0897 & 0.0899& 0.0898 \\
 coefficient of variance& 0.3556 & 0.5394 & 0.5727 & 0.5913& 0.6039\\
 \hline
 \end{tabular}
-\caption{bj}
+\caption{BJ intersection}
+\label{ta:bj intersection}
 \end{table} 
 
 \begin{table}
@@ -241,7 +244,8 @@ variance& 0.0518 & 0.0809 & 0.0813 & 0.0812& 0.0812 \\
 coefficient of variance& 0.3409 & 0.5126 & 0.5432 & 0.5632& 0.5795\\
 \hline
 \end{tabular}
-\caption{gsc}
+\caption{GSC intersection}
+\label{ta:gsc intersection}
 \end{table} 
 
 
@@ -262,7 +266,8 @@ variance& 0.0286 & 0.0431 & 0.0418& 0.0405&0.0393 \\
 coefficient of variance& 0.2999 & 0.5060 & 0.5565 & 0.5859& 0.6070\\
 \hline
 \end{tabular}
-\caption{sp}
+\caption{SP intersection}
+\label{ta:sp intersection}
 \end{table} 
 
 \begin{table}
@@ -282,7 +287,8 @@ variance& 0.0295 & 0.0440 & 0.0432 & 0.0433& 0.0436 \\
 coefficient of variance& 0.2719 & 0.4207 & 0.4546 & 0.4819& 0.5042\\
 \hline
 \end{tabular}
-\caption{rw}
+\caption{RW intersection}
+\label{ta:rw intersection}
 \end{table} 
 
 
@@ -304,25 +310,6 @@ coefficient of variance& 0.2719 & 0.4207 & 0.4546 & 0.4819& 0.5042\\
 The accuracy evaluation of five batches of markers and five batches of auto-generated seeds applied to the four algorithms are shown in the following tables(To be done).
 
 
-\begin{table}
-\centering
-\begin{tabular}{|c|c|c|c|c|c|}
-\hline
- & seed 1 & seed 2&seed 3&seed 4&seed 5 \\
-\hline
-Precision& 0.8595 & 0.8423 & 0.8449& 0.8543& 0.7474 \\
-\hline
-Recall& 0.8822 & 0.9158 & 0.9154& 0.9303& 0.9108 \\
-\hline
- & simu-seed 1 & simu-seed 2&simu-seed 3&simu-seed 4&simu-seed 5 \\
- \hline
-Precision& 63.180\% & 49.860\% & 45.720\%& 45.720\%& 45.720\% \\
-\hline
-Recall& 98.660\% & 97.910\% & 97.430\%& 45.720\%& 45.720\%  \\
-\hline
-\end{tabular}
-\caption{bj}
-\end{table} 
 
 \begin{table}
 \centering
@@ -336,9 +323,9 @@ Recall& 0.8822 & 0.9158 & 0.9154& 0.9303& 0.9108 \\
 \hline
  & simu-seed 1 & simu-seed 2&simu-seed 3&simu-seed 4&simu-seed 5 \\
  \hline
-Precision& 63.180\% & 49.860\% & 45.720\%& 45.720\%& 45.720\% \\
+Precision& 0.7659 & 0.7850 & 0.7500& 0.7327& 0.7997 \\
 \hline
-Recall& 98.660\% & 97.910\% & 97.430\%& 45.720\%& 45.720\%  \\
+Recall& 0.7101 & 0.7339 & 0.7780& 0.7740& 0.7337  \\
 \hline
 \end{tabular}
 \caption{bj}
@@ -350,19 +337,19 @@ Recall& 98.660\% & 97.910\% & 97.430\%& 45.720\%& 45.720\%  \\
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
  & seed 1 & seed 2&seed 3&seed 4&seed 5 \\
+  \hline
+Precision& 0.8671 & 0.8619 & 0.8560& 0.8747& 0.7562 \\
 \hline
-Precision& 0.8595 & 0.8423 & 0.8449& 0.8543& 0.7474 \\
-\hline
-Recall& 0.8822 & 0.9158 & 0.9154& 0.9303& 0.9108 \\
+Recall& 0.8794 & 0.9177 & 0.9137& 0.9183& 0.9129  \\
 \hline
  & simu-seed 1 & simu-seed 2&simu-seed 3&simu-seed 4&simu-seed 5 \\
- \hline
-Precision& 63.180\% & 49.860\% & 45.720\%& 45.720\%& 45.720\% \\
 \hline
-Recall& 98.660\% & 97.910\% & 97.430\%& 45.720\%& 45.720\%  \\
+Precision& 0.7885 & 0.7823 & 0.7733& 0.7443& 0.7856 \\
+\hline
+Recall& 0.7371 & 0.7366 & 0.7939& 0.7813& 0.7403 \\
 \hline
 \end{tabular}
-\caption{bj}
+\caption{gsc}
 \end{table} 
 
 
@@ -372,18 +359,40 @@ Recall& 98.660\% & 97.910\% & 97.430\%& 45.720\%& 45.720\%  \\
 \hline
  & seed 1 & seed 2&seed 3&seed 4&seed 5 \\
 \hline
-Precision& 0.8595 & 0.8423 & 0.8449& 0.8543& 0.7474 \\
+Precision& 0.7591 & 0.7672 & 0.7672& 0.8496& 0.7057 \\
 \hline
-Recall& 0.8822 & 0.9158 & 0.9154& 0.9303& 0.9108 \\
+Recall& 0.8837 & 0.9109 & 0.9019& 0.9279& 0.8759 \\
 \hline
  & simu-seed 1 & simu-seed 2&simu-seed 3&simu-seed 4&simu-seed 5 \\
- \hline
-Precision& 63.180\% & 49.860\% & 45.720\%& 45.720\%& 45.720\% \\
 \hline
-Recall& 98.660\% & 97.910\% & 97.430\%& 45.720\%& 45.720\%  \\
+Precision& 0.7716 & 0.7781 & 0.7556& 0.7716& 0.7766 \\
+\hline
+Recall& 0.8347 & 0.8477 & 0.8568& 0.8515& 0.8438 \\
 \hline
 \end{tabular}
-\caption{bj}
+\caption{rw}
+\end{table} 
+
+
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+ & seed 1 & seed 2&seed 3&seed 4&seed 5 \\
+\hline
+Precision& 0.6471 & 0.6567 & 0.6534& 0.7069& 0.6811 \\
+\hline
+Recall& 0.9306 & 0.9501 & 0.9454& 0.8991& 0.9015 \\
+\hline
+ & simu-seed 1 & simu-seed 2&simu-seed 3&simu-seed 4&simu-seed 5 \\
+\hline
+Precision& 0.6722 & 0.6995 & 0.6802& 0.6631& 0.7153 \\
+\hline
+Recall& 0.9251 & 0.9221 & 0.9331& 0.9249& 0.9189 \\
+\hline
+\end{tabular}
+\caption{sp}
 \end{table} 
 
 
