@@ -298,17 +298,7 @@ coefficient of variance& 0.2719 & 0.4207 & 0.4546 & 0.4819& 0.5042\\
 \paragraph{} In interactive image segmentation,users are expected labels some key features of the image foreground and background. The effectiveness of these labels is greatly related to their coverage of foreground and background key components. So we decide to simulate markers by simulating their coverage of key pixel clusters. In our method, we used the simple linear iterative clustering (SLIC)  method \citep{achanta2010slic} implemented by VLFeat open source library\citep{vedaldi08vlfeat}. The SLIC algorithm clusters pixels in the combined five-dimensional color and image plane space which brings compact, nearly uniform superpixels. We then decompose all the superpixels into groups according to the quantitative feature of each superpixel. In this way, we could analyze user markers in superpixel level and superpixel group level.
 
 \subsection{Quantitative simulation of user labels}
-\paragraph{} Instead of continuous user scribbles, our simulation is targeted at generating several points to represent key features in the image. So our first step was to validate the effectiveness of points in segmentation as compared to continuous lines. After figuring out the superpixel groups which were covered by user markers, we randomly select one superpixel from these groups and then randomly select one point from that superpixel, in this way, we formed a point set which contains points from all groups covered by a certain artificial marker. We then applied five sets which were generated the same way to segmentation algorithms. In terms of evaluation of segmentation accuracy, we define the following criteria:
-\begin{empheq}[box=\fbox]{align}
-\begin{split}
- F_{gt} &= \text{foreground in ground truth}     \\
- F_{s}  &= \text{foreground in segmentation}     \\
-  \text{recall}    &= \frac{F_{gt} \cap F_s}{F_{gt}}  \\
-  \text{precision} &= \frac{F_{gt} \cap F_s}{F_{gt}}  \\
-  \end{split}
-\end{empheq}
-The accuracy evaluation of five batches of markers and five batches of auto-generated seeds applied to the four algorithms are shown in the following tables(To be done).
-
+\paragraph{} 
 
 
 \begin{table}

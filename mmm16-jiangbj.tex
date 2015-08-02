@@ -111,12 +111,20 @@ The dataset contains 96 images from publicly available Berkeley Segmentation Dat
 
 
 % this paragraph is too long
-In this section we will discuss the design of experiment. We use the software provided by The K-Space Segmentation Tool Set, \citep{mcguinness2008k}. Screenshots of the tool are shown in Figure 1. The 5 participants are all students from computer science background but have limited knowledge in interactive image segmentation. Each participant was given a clear guidance and enough time to familiarize themselves and become proficient with the software that would be used for the experiment. Sample markers were also provided in avoid of misunderstanding . Then in real experiment, each participants are provided with 96 images and the corresponding ground-truth which tells exactly which object to extract. However, we hide the segmentation result from user so that they will not realize if they have provided a "good" mark or not. We also confined the time for labeling each image. In this way, we manage to (1)limit the effort of participants to draw scribbles in consideration of real-life application.
+In this section we will discuss the design of experiment. We use the software provided by The K-Space Segmentation Tool Set, \citep{mcguinness2008k}. Screenshots of the tool are shown in Figure \ref{fig:screenshot}. The 5 participants are all students from computer science background but have limited knowledge in interactive image segmentation. Each participant was given a clear guidance and enough time to familiarize themselves and become proficient with the software that would be used for the experiment. Sample markers were also provided in avoid of misunderstanding . Then in real experiment, each participants are provided with 96 images and the corresponding ground-truth which tells exactly which object to extract. However, we hide the segmentation result from user so that they will not realize if they have provided a "good" mark or not. We also confined the time for labeling each image. In this way, we manage to (1)limit the effort of participants to draw scribbles in consideration of real-life application.
 (2)obtain the most natural response of users rather than inputs guided by segmentation result.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\columnwidth]{images/screenshot.png}
+\textbf{\caption{ The screenshot of k-space segmentation tool}}
+\label{fig:screenshot}
+\end{figure}
+
 
 
 \subsection{User-interaction differences}
-In our person-oriented experiments, great differences among user labels were observed. It comes to us instinctively that different people tend to consider different part of foreground and background object as salient. Under this guidance, we processed the 5 marker files of the same image and calculated the pair-wise intersection degree. The result is shown in table 1. The intersection degree is defined as follows:
+In our person-oriented experiments, great differences among user labels were observed. It comes to us instinctively that different people tend to consider different part of foreground and background object as salient. Under this guidance, we processed the 5 marker files of the same image and calculated the pair-wise intersection degree. The result is shown in Table \ref{ta:intersection degree f}and table \ref{ta:intersection degree b}. The intersection degree is defined as follows:
 $$intersection\ of\ marked\ pixels/union\ of\ marked\ pixels$$
 
 Table 1 visualizes the value on foreground and Table 2 the background. We make the following observations: ?1?The average value of intersection/union between two people is rather low, ranging from 1.6592\% to 3.5195\% in foreground and 0.0905\% to 0.9700\% in background, which indicates that markers of different people have little common in common. Figure 1 shows an example of user markers which share no common pixel?2) People share less similarities in background markers than foreground. It is because the foreground objects are confined to a certain area while the backgrounds are more extensive.
@@ -171,34 +179,36 @@ seed 5 & 0.6300\% & 0.7300\% & 0.6800\% & 0.6700\% & 100\% \\
 \subfigure[figure 2 title.] { \label{fig:b}
 \includegraphics[width=0.3\columnwidth]{images/97033-5.png}
 }
-\subfigure[figure 3 title.] { \label{fig:b}
+\subfigure[figure 3 title.] { \label{fig:c}
 \includegraphics[width=0.3\columnwidth]{images/97033-4.png}
 }
-\caption{ general title. }
+\caption{ Two labels of the same image}
 \label{fig}
 \end{figure}
 
 
 \subsection{Segmentation result difference}
-Based on the above result, we took a step further by examine the segmentation results of different markers.The implementation of four interactive segmentation algorithms in \citep{gulshan2010geodesic} was used. Based on the 96*5*4 segmentation results, we have found out that due to the variance between different markers, the segmentation results tend to be quite different, too.  We achieved here by calculating percent of pixels which was segmented out as foreground simultaneously by 1 person, two people, three people ,four people and 5 people out of all the segmented pixels. The result is shown in table 4-7. We have observed that: (1) The effectiveness of different markers as input of interactive segmentation algorithms vary from person to person.  It could also be observed that the seed made by participant 1 have a better performance than others in terms of average, maximum and minimum, which means there exists kind of "professional lables" \citep{fu2008saliency} (2) In average level, the result reaches at most 66.760\% in table 5 made by participant 1. While the maximum ratio could be high as 99.050\%, the minimum ratio was also low as 1.060\%. This shows that when applied to segmentation algorithms, the variance of markers could further lead to quite great difference in segmentation results.
+Based on the above result, we took a step further by examine the segmentation results of different markers.The implementation of four interactive segmentation algorithms in \citep{gulshan2010geodesic} was used. Based on the 96*5*4 segmentation results, we have found out that due to the variance between different markers, the segmentation results tend to be quite different, too.  We achieved here by calculating percent of pixels which was segmented out as foreground simultaneously by 1 person, two people, three people ,four people and 5 people out of all the segmented pixels. The result is shown in Table \ref{ta:bj intersection} \ref{ta:gsc intersection} \ref{ta:sp intersection} \ref{ta:rw intersection}. We have observed that: (1) The effectiveness of different markers as input of interactive segmentation algorithms vary from person to person.  It could also be observed that the seed made by participant 1 have a better performance than others in terms of average, maximum and minimum, which means there exists kind of "professional lables" \citep{fu2008saliency} (2) In average level, the result reaches at most 66.760\% in table 5 made by participant 1. While the maximum ratio could be high as 99.050\%, the minimum ratio was also low as 1.060\%. This shows that when applied to segmentation algorithms, the variance of markers could further lead to quite great difference in segmentation results.
 
 \begin{table}
 \centering
 \begin{tabular}{|c|c|}
 \hline
-Algorithm & Description\\
+Algorithm shorthand & Description\\
 \hline
-BJ &  Boykov Jolly Graph cut  \\
+BJ\citep{boykov2001interactive} &  Boykov Jolly Graph cut  \\
 \hline
-GSC & Boykov Jolly with Geodesic Star-Convexity \\
+GSC\citep{gulshan2010geodesic}& Boykov Jolly with Geodesic Star-Convexity \\
 \hline
-SP & Bai and Sapiro \\
+SP\citep{bai2007geodesic} & Bai and Sapiro \\
 \hline
-RW & Random Walker  \\
+RW\citep {grady2006random}& Random Walker  \\
 \hline
 \end{tabular}
-\caption{intersection degree of background}
+\caption{Interactive image segmentation algorithms}
+\label{ta:algorithms}
 \end{table}
+
 
 
 \begin{table}
@@ -218,7 +228,8 @@ variance& 0.0557 & 0.0883 & 0.0897 & 0.0899& 0.0898 \\
 coefficient of variance& 0.3556 & 0.5394 & 0.5727 & 0.5913& 0.6039\\
 \hline
 \end{tabular}
-\caption{bj}
+\caption{BJ}
+\label{ta:bj intersection}
 \end{table}
 
 \begin{table}
@@ -238,7 +249,8 @@ variance& 0.0518 & 0.0809 & 0.0813 & 0.0812& 0.0812 \\
 coefficient of variance& 0.3409 & 0.5126 & 0.5432 & 0.5632& 0.5795\\
 \hline
 \end{tabular}
-\caption{gsc}
+\caption{GSC}
+\label{ta:gsc intersection}
 \end{table}
 
 
@@ -259,7 +271,8 @@ variance& 0.0286 & 0.0431 & 0.0418& 0.0405&0.0393 \\
 coefficient of variance& 0.2999 & 0.5060 & 0.5565 & 0.5859& 0.6070\\
 \hline
 \end{tabular}
-\caption{sp}
+\caption{SP}
+\label{ta:sp intersection}
 \end{table}
 
 \begin{table}
@@ -279,32 +292,259 @@ variance& 0.0295 & 0.0440 & 0.0432 & 0.0433& 0.0436 \\
 coefficient of variance& 0.2719 & 0.4207 & 0.4546 & 0.4819& 0.5042\\
 \hline
 \end{tabular}
-\caption{rw}
+\caption{RW}
+\label{ta:rw intersection}
 \end{table}
 
 
 \section{Semi-automatic Labelling Generation}
 
 \subsection{Image representation for labelling quantitative analysis}
+\paragraph{} In interactive image segmentation,users are expected labels some key features of the image foreground and background. The effectiveness of these labels is greatly related to their coverage of foreground and background key components. So we decide to simulate markers by simulating their coverage of key pixel clusters. In our method, we used the simple linear iterative clustering (SLIC)  method \citep{achanta2010slic} implemented by VLFeat open source library\citep{vedaldi08vlfeat}. The SLIC algorithm clusters pixels in the combined five-dimensional color and image plane space which brings compact, nearly uniform superpixels. We then decompose all the superpixels into groups according to the quantitative feature of each superpixel. In this way, we could analyze user markers in superpixel level and superpixel group level.
 
 \subsection{Effect of connection in labelling}
-
-\subsection{Solution space for labelling generation}
-
-\subsection{Labelling generation}
-
-In interactive image segmentation,users are expected labels some key features of the image foreground and background. The effectiveness of these labels is greatly related to their coverage of foreground and background key components. So we decide to simulate markers by simulating their coverage of key pixel clusters. In our method, we used the simple linear iterative clustering (SLIC)  method \citep{achanta2010slic} implemented by VLFeat open source library\citep{vedaldi08vlfeat}. The SLIC algorithm clusters pixels in the combined five-dimensional color and image plane space which brings compact, nearly uniform superpixels. We then decompose all the superpixels into groups according to the quantilized feature of each superpixel. In this way, we could analyze user markers in superpixel level and superpixel group level.
-
-Instead of continuous user scribbles, our simulation is targeted at generating several points to represent key features in the image. So our first step was to validate the effectiveness of points in segmentation as compared to continuous lines. We randomly select one superpixel from each group and then randomly select one point from that superpixel, in this way, we formed a point set which contains points from all groups. We then applied three set which were generated the same way to segmentation algorithms. In the evaluation of segmentation accuracy, we define the following criteria:
-
+\paragraph{} Instead of continuous user scribbles, our simulation is targeted at generating several points to represent key features in the image. So our first step was to validate the effectiveness of points in segmentation as compared to continuous lines. After figuring out the superpixel groups which were covered by user markers, we randomly select one superpixel from these groups and then randomly select one point from that superpixel, in this way, we formed a point set which contains points from all groups covered by a certain artificial marker. We then applied five sets which were generated the same way to segmentation algorithms. In terms of evaluation of segmentation accuracy, we define the following criteria:
 \begin{empheq}[box=\fbox]{align}
 \begin{split}
  F_{gt} &= \text{foreground in ground truth}     \\
  F_{s}  &= \text{foreground in segmentation}     \\
   \text{recall}    &= \frac{F_{gt} \cap F_s}{F_{gt}}  \\
-  \text{precision} &= \frac{F_{gt} \cap F_s}{F_{gt}}  \\
+  \text{precision} &= \frac{F_{gt} \cap F_s}{F_{s}}  \\
   \end{split}
 \end{empheq}
+
+The accuracy evaluation of five batches of markers and five batches of auto-generated seeds applied to the four algorithms are shown in Table  \ref{ta: simu in bj} \ref{ta: simu in gsc} \ref{ta: simu in sp} \ref{ta: simu in rw}. We have observed that when applied to BJ and GSC, our simulated label points achieves a similar precision and recall level as human labels do. (More analysis?)
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+ & seed 1 & seed 2&seed 3&seed 4&seed 5 \\
+\hline
+Precision& 0.8595 & 0.8423 & 0.8449& 0.8543& 0.7474 \\
+\hline
+Recall& 0.8822 & 0.9158 & 0.9154& 0.9303& 0.9108 \\
+\hline
+ & simu-seed 1 & simu-seed 2&simu-seed 3&simu-seed 4&simu-seed 5 \\
+ \hline
+Precision& 0.8659 & 0.8850 & 0.8500& 0.8327& 0.8997 \\
+\hline
+Recall& 0.8101 & 0.8339 & 0.8780& 0.8740& 0.8337  \\
+\hline
+\end{tabular}
+\caption{BJ}
+\label{ta: simu in bj}
+\end{table} 
+
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+ & seed 1 & seed 2&seed 3&seed 4&seed 5 \\
+  \hline
+Precision& 0.8671 & 0.8619 & 0.8560& 0.8747& 0.7562 \\
+\hline
+Recall& 0.8794 & 0.9177 & 0.9137& 0.9183& 0.9129  \\
+\hline
+ & simu-seed 1 & simu-seed 2&simu-seed 3&simu-seed 4&simu-seed 5 \\
+\hline
+Precision& 0.8885 & 0.8823 & 0.8733& 0.8443& 0.7856 \\
+\hline
+Recall& 0.8371 & 0.8366 & 0.8939& 0.8813& 0.8403 \\
+\hline
+\end{tabular}
+\caption{GSC}
+\label{ta: simu in gsc}
+\end{table} 
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+ & seed 1 & seed 2&seed 3&seed 4&seed 5 \\
+\hline
+Precision& 0.6471 & 0.6567 & 0.6534& 0.7069& 0.6811 \\
+\hline
+Recall& 0.9306 & 0.9501 & 0.9454& 0.8991& 0.9015 \\
+\hline
+ & simu-seed 1 & simu-seed 2&simu-seed 3&simu-seed 4&simu-seed 5 \\
+\hline
+Precision& 0.6722 & 0.6995 & 0.6802& 0.6631& 0.7153 \\
+\hline
+Recall& 0.9251 & 0.9221 & 0.9331& 0.9249& 0.9189 \\
+\hline
+\end{tabular}
+\caption{SP}
+\label{ta: simu in sp}
+\end{table} 
+
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+ & seed 1 & seed 2&seed 3&seed 4&seed 5 \\
+\hline
+Precision& 0.7591 & 0.7672 & 0.7672& 0.8496& 0.7057 \\
+\hline
+Recall& 0.8837 & 0.9109 & 0.9019& 0.9279& 0.8759 \\
+\hline
+ & simu-seed 1 & simu-seed 2&simu-seed 3&simu-seed 4&simu-seed 5 \\
+\hline
+Precision& 0.7716 & 0.7781 & 0.7556& 0.7716& 0.7766 \\
+\hline
+Recall& 0.8347 & 0.8477 & 0.8568& 0.8515& 0.8438 \\
+\hline
+\end{tabular}
+\caption{RW}
+\label{ta: simu in rw}
+\end{table} 
+
+
+\subsection{Solution space for labelling generation}
+\paragraph{} In order to generate automatic labels, we need to figure out the consistence among markers made by different users. So we further analyzed the markers in both superpixel level and superpixel group level. Table \ref{ta: label coverage f} shows coverage rate of superpixel groups in foreground and Table \ref{ta: label coverage b} shows the value of background.
+We have observed that the maximum coverage reaches 100\% in every batch of markers and there exists low coverage in both foreground marker and background marker. Also, inside a single batch of markers which were made by the same user, the coverage rate is rather stable, as is indicated by low variance and coefficient of variance. 
+
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+ & seed 1 & seed 2&seed 3&seed 4&seed 5&Average&Variance\\
+\hline
+Maximum& 100\% & 100\% & 100\%& 100\%& 100\%&100\%&0\%\\
+\hline
+Minimum& 24.1379\% & 44.4444\% & 24.1379\%& 34.4828\%& 25\%&30.4406\%&0.0080 \\
+\hline
+Average& 74.9206\% & 81.9107\% & 83.5839\%& 83.1823\%& 76.5065\%&80.0208\%&0.0016 \\
+\hline
+Variance& 0.0265 & 0.0189 & 0.0211& 0.0235& 0.0277&NAN&NAN \\
+\hline
+Coefficient of variance& 0.2176 & 0.1680 & 0.1740& 0.1843& 0.2178&NAN&NAN \\
+\hline
+\end{tabular}
+\caption{Superpixel group coverage in foreground}
+\label{ta: label coverage f}
+\end{table} 
+
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+ & seed 1 & seed 2&seed 3&seed 4&seed 5&Average&Variance \\
+\hline
+Maximum& 100\% & 100\% & 93.3333\%& 100\%& 100\%&100\%&0.0009\\
+\hline
+Minimum& 16.667\% & 35.7143\% & 11.7647\%& 6.6667\%& 33.3333\%&20.8291\%&0.0169\\
+\hline
+Average& 64.9213\% & 64.4634\% & 65.4448\%& 61.1484\%& 74.1032\%&66.0162\%&0.0023 \\
+\hline
+Variance& 0.0309 & 0.0191 & 0.0212& 0.0376& 0.0168&NAN&NAN \\
+\hline
+Coefficient of variance& 0.2709 & 0.2144 & 0.2227& 0.3170& 0.1747&NAN&NAN \\
+\hline
+\end{tabular}
+\caption{Superpixel group coverage in background}
+\label{ta: label coverage b}
+\end{table} 
+
+
+\paragraph{} Based on the rather stable level of group coverage, we calculate the average group overlap rate between every two markers on the same image. Table \ref{ta: group overlap f} shows the value in foreground and Table \ref{ta: group overlap b} shows the situation in background. Value in position (i,j) denotes the percent of groups in seed i which were also covered in seed j. We could note that the overlap rate between every two participants is rather high. In foreground, the highest value is up to 92.86\% and average value is around 85\%; In background, the highest value is as high as 88.78\% and the average value is around 80\%.
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+ & seed 1 & seed 2&seed 3&seed 4&seed 5&Average\\
+\hline
+seed1& 100\% & 91.44\% & 92.86\%& 89.71\%& 88.64\%&90.66\%\\
+\hline
+seed2& 83.86\% & 100\% & 90.75\%& 88.82\%& 85.93\%&87.34\%\\
+\hline
+seed3& 83.40\% & 89.04\% & 100\%& 88.18\%& 84.62\%&86.31\% \\
+\hline
+seed4& 80.75\% & 87.15\% & 88.15\%& 100\%& 82.44\%&84.62\% \\
+\hline
+seed5& 82.53\% & 92.06\% & 92.10\%& 89.31\%& 100\%&90.00\% \\
+\hline
+\end{tabular}
+\caption{Group overlap between seeds in foreground }
+\label{ta: group overlap f}
+\end{table} 
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+ & seed 1 & seed 2&seed 3&seed 4&seed 5&Average\\
+\hline
+seed1& 100\% &80.19\% & 81.61\%& 72.23\%& 86.97\%&80.25\%\\
+\hline
+seed2& 80.22\% & 100\% & 82.65\%& 74.86\%& 88.57\%&81.58\% \\
+\hline
+seed3& 80.25\% & 81.42\% & 100\%& 74.09\%& 88.36\%&81.03\%\\
+\hline
+seed4& 77.40\% & 80.30\% & 80.15\%& 100\%& 88.78\%&81.66\% \\
+\hline
+seed5& 76.36\% & 77.76\% & 78.21\%& 73.21\%& 100\%&76.39\%\\
+\hline
+\end{tabular}
+\caption{Group overlap between seeds in backgorund}
+\label{ta: group overlap b}
+\end{table} 
+
+\paragraph{}We also examined the overlap rate in superpixel level. Table \ref{ta: sp overlap f} and \ref{ta: sp overlap f}  shows the result. It is obvious that different users share little common ground on the superpixel level. In foreground, the highest value is only 3.70\% and average value is around 3\%; In background, the highest value is as low as 5.33\% and the average value is around 1.5\%. Based on analysis on superpixel and superpixel group level, we safely conclude that markers of differernt users are consistent in terms of defined superpixel groups. It is therefore reasonable to simulate user scribbles using the coverage rate of superpixel groups.
+
+
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+ & seed 1 & seed 2&seed 3&seed 4&seed 5&Average\\
+\hline
+seed1& 100\% & 3.70\% & 3.69	\%& 3.39\%& 3.35\%& 3.53\%\\
+\hline
+seed2& 2.91\% & 100\% & 3.32\%& 3.14\%& 3.00\% & 3.09\%\\
+\hline
+seed3& 2.78\% & 3.23\% & 100\%& 2.93\%& 2.90\%& 2.96\% \\
+\hline
+seed4& 2.24\% & 2.63\% & 2.55\%& 100\%& 2.37\%& 2.45\%\\
+\hline
+seed5& 2.25\% & 2.56\% & 2.58\%& 2.45\%& 100\%& 2.46\% \\
+\hline
+\end{tabular}
+\caption{superpixel overlap between seeds in foreground }
+\label{ta: sp overlap f}
+\end{table} 
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+ & seed 1 & seed 2&seed 3&seed 4&seed 5&Average\\
+\hline
+seed1& 100\% & 1.65\% & 1.59	\%& 0.49\%& 1.42\%& 1.29\%\\
+\hline
+seed2& 1.70\% & 100\% & 5.33\%& 1.91\%& 1.81\%& 2.69\% \\
+\hline
+seed3& 1.52\% & 1.75\% & 100\%& 0.65\%& 1.77\%& 1.42\% \\
+\hline
+seed4& 0.39\% & 0.64\% & 0.59\%& 100\%& 1.56\%& 0.80\%\\
+\hline
+seed5& 0.87\% & 1.08\% & 1.13\%& 1.18\%& 100\%& 1.07\% \\
+\hline
+\end{tabular}
+\caption{superpixel overlap between seeds in background }
+\label{ta: sp overlap b}
+\end{table} 
+
+
+
+
+\subsection{Labelling generation}
+
 
 \begin{table}
 \centering
@@ -317,7 +557,7 @@ Precision& 63.180\% & 49.860\% & 45.720\% \\
 Recall& 98.660\% & 97.910\% & 97.430\%  \\
 \hline
 \end{tabular}
-\caption{rw}
+\caption{RW}
 \end{table}
 
 \section{Evaluation of Interactive Segmentation Algorithms}
