@@ -300,7 +300,7 @@ coefficient of variance& 0.2719 & 0.4207 & 0.4546 & 0.4819& 0.5042\\
 \section{Semi-automatic Labelling Generation}
 
 \subsection{Image representation for labelling quantitative analysis}
-\paragraph{} In interactive image segmentation,users are expected labels some key features of the image foreground and background. The effectiveness of these labels is greatly related to their coverage of foreground and background key components. So we decide to simulate markers by simulating their coverage of key pixel clusters. In our method, we used the simple linear iterative clustering (SLIC)  method \citep{achanta2010slic} implemented by VLFeat open source library\citep{vedaldi08vlfeat}. The SLIC algorithm clusters pixels in the combined five-dimensional color and image plane space which brings compact, nearly uniform superpixels. We then decompose all the superpixels into groups according to the quantitative feature of each superpixel. In this way, we could analyze user markers in superpixel level and superpixel group level.
+\paragraph{} In interactive image segmentation,users are expected labels some key features of the image foreground and background. The effectiveness of these labels is greatly related to their coverage of foreground and background key components. So we decide to simulate markers by simulating their coverage of key pixel clusters. In our method, we used the simple linear iterative clustering (SLIC)  method \citep{achanta2010slic} implemented by VLFeat open source library\citep{vedaldi08vlfeat}. The SLIC algorithm clusters pixels in the combined five-dimensional color and image plane space which brings compact, nearly uniform superpixels. We then decompose all the superpixels into groups according to the quantitative feature of each superpixel. In this way, we could analyze user markers on both superpixel level and superpixel group level.  On the level of superpixel, we are aimed at analyzing the manual labour of providing certain labels; on the level of superpixel group, we could estimate the amount of information or key features provided by the labels.
 
 \subsection{Effect of connection in labelling}
 \paragraph{} Instead of continuous user scribbles, our simulation is targeted at generating several points to represent key features in the image. So our first step was to validate the effectiveness of points in segmentation as compared to continuous lines. After figuring out the superpixel groups which were covered by user markers, we randomly select one superpixel from these groups and then randomly select one point from that superpixel, in this way, we formed a point set which contains points from all groups covered by a certain artificial marker. We then applied five sets which were generated the same way to segmentation algorithms. In terms of evaluation of segmentation accuracy, we define the following criteria:
@@ -450,7 +450,7 @@ Coefficient of variance& 0.2709 & 0.2144 & 0.2227& 0.3170& 0.1747&NAN&NAN \\
 \end{table} 
 
 
-\paragraph{} Based on the rather stable level of group coverage, we calculate the average group overlap rate between every two markers on the same image. Table \ref{ta: group overlap f} shows the value in foreground and Table \ref{ta: group overlap b} shows the situation in background. Value in position (i,j) denotes the percent of groups in seed i which were also covered in seed j. We could note that the overlap rate between every two participants is rather high. In foreground, the highest value is up to 92.86\% and average value is around 85\%; In background, the highest value is as high as 88.78\% and the average value is around 80\%.
+\paragraph{} Based on the rather stable level of group coverage, we calculate the average group overlap rate between every two markers on the same image. Table \ref{ta: group overlap f} shows the value in foreground and Table \ref{ta: group overlap b} shows the situation in background. Value in position (i,j) denotes the percent of groups in seed i which were also covered in seed j. We could note that the overlap rate between every two participants is rather high. In foreground, the highest value is up to 92.86\% and average value is around 85\%; In background, the highest value is as high as 88.78\% and the average value is around 80\%; We also examined the overlap rate in superpixel level. Table \ref{ta: sp overlap f} and \ref{ta: sp overlap b}  shows the result. It is obvious that different users share little common ground on the superpixel level. In foreground, the highest value is only 3.70\% and average value is around 3\%; In background, the highest value is as low as 5.33\% and the average value is around 1.5\%. 
 
 \begin{table}
 \centering
@@ -494,7 +494,13 @@ seed5& 76.36\% & 77.76\% & 78.21\%& 73.21\%& 100\%&76.39\%\\
 \label{ta: group overlap b}
 \end{table} 
 
-\paragraph{}We also examined the overlap rate in superpixel level. Table \ref{ta: sp overlap f} and \ref{ta: sp overlap f}  shows the result. It is obvious that different users share little common ground on the superpixel level. In foreground, the highest value is only 3.70\% and average value is around 3\%; In background, the highest value is as low as 5.33\% and the average value is around 1.5\%. Based on analysis on superpixel and superpixel group level, we safely conclude that markers of differernt users are consistent in terms of defined superpixel groups. It is therefore reasonable to simulate user scribbles using the coverage rate of superpixel groups.
+
+\paragraph{}Based on analysis on superpixel and superpixel group level, we safely conclude that markers of different users are consistent on the defined superpixel groups but inconsistent on superpixel level. It is because certain key features of an image could be represented by many superpixels. For example, 
+
+
+
+Also, the high level of superpixel group coverage( with the mean value arounf 85\%) and low level of superpixel coverage reveals two rules to us: (1) When labelling images, people are intended to provide as much information as possible(as indicated by the high coverage of superpixel groups)  (2) While aimed at labelling more key features, people also want to reduce the times of interaction or the total amount of labels, that is, shorter length within the same width. (as shown by the low coverage of superpixels)
+
 
 
 
@@ -544,6 +550,53 @@ seed5& 0.87\% & 1.08\% & 1.13\%& 1.18\%& 100\%& 1.07\% \\
 
 
 \subsection{Labelling generation}
+\paragraph{} In labelling generation, we test the normality of superpixel coverage distribution and superpixel-group coverage distribution.The Normal Q-Q plot of the four coverage rate is shown in \ref{fig: qq plot}. As we can see from the plot below, the data points of four plots are all close to the diagonal line which indicates a normal distribution. We then fit the four dataset to normal distribution, as is shown in Figure \ref{fig:histogram}.
+
+\paragraph{}
+
+\begin{figure}
+\centering
+
+\subfigure[figure 1 title.] { \label{fig:a2}
+\includegraphics[width=0.4\columnwidth]{images/qq_group_f.png}
+}
+\subfigure[figure 2 title.] { \label{fig:b2}
+\includegraphics[width=0.4\columnwidth]{images/qq_group_b.png}
+}
+\subfigure[figure 3 title.] { \label{fig:c}
+\includegraphics[width=0.4\columnwidth]{images/qq_sp_f.png}
+}
+\subfigure[figure 3 title.] { \label{fig:c}
+\includegraphics[width=0.4\columnwidth]{images/qq_sp_b.png}
+}
+\caption{ Probability distribution of superpixel group/ superpixel  }
+\label{fig: qq plot}
+\end{figure}
+
+
+
+
+\begin{figure}
+\centering
+
+\subfigure[figure 1 title.] { \label{fig:a2}
+\includegraphics[width=0.4\columnwidth]{images/group_p_f.png}
+}
+\subfigure[figure 2 title.] { \label{fig:b2}
+\includegraphics[width=0.4\columnwidth]{images/group_p_b.png}
+}
+\subfigure[figure 3 title.] { \label{fig:c}
+\includegraphics[width=0.4\columnwidth]{images/sp_p_f.png}
+}
+\subfigure[figure 3 title.] { \label{fig:c}
+\includegraphics[width=0.4\columnwidth]{images/sp_p_b.png}
+}
+\caption{ Probability distribution of superpixel group/ superpixel  }
+\label{fig: histogram}
+\end{figure}
+
+
+
 
 
 \begin{table}
@@ -552,7 +605,7 @@ seed5& 0.87\% & 1.08\% & 1.13\%& 1.18\%& 100\%& 1.07\% \\
 \hline
 & all-group-seed-1 & all-group-seed-2&all-group-seed -3 \\
 \hline
-Precision& 63.180\% & 49.860\% & 45.720\% \\
+Precision& 63.180\% & 69.860\% & 65.720\% \\
 \hline
 Recall& 98.660\% & 97.910\% & 97.430\%  \\
 \hline
