@@ -74,7 +74,8 @@ bjie.jiang@gmail.com, rentw@nju.edu.cn, beijia@software.nju.edu.cn
 
 
 \begin{abstract}
-\emph{This paper proposes a semi-automatic labelling generation method for evaluating interactive segmentation algorithms. The main contribution can be summarized as follows: (1) We analyze the differences between multiple user labels and the variance in their segmentation results when applied to four state-of-the-art segmentation algorithms. (2) We then figure out the underlying consistence between user labels on the level of defined superpixel group. (3) We also prove the validity of points as input of interactive segmentation algorithms (4) We then propose a semi-automatic labelling generation methodology and apply the auto-generated labels to four state-of-art algorithms. Our method provides an objective way to evaluate interactive segmentation methods and is aimed at reducing human labour needed in this field in the future.} 
+\emph{This paper proposes a semi-automatic labelling generation method for evaluating interactive segmentation algorithms. The main contribution can be summarized as follows: (1) We analyze the differences between multiple user labels and the variance in their segmentation results when applied to four state-of-the-art segmentation algorithms. (2) We then figure out the underlying consistence between user labels on the level of defined superpixel group. (3) We also prove the validity of points as input of interactive segmentation algorithms (4) We then propose a semi-automatic labelling generation methodology and apply the auto-generated labels to four state-of-art algorithms. Our method provides an objective way to evaluate interactive segmentation methods and is aimed at reducing human labour needed in this field in the future.
+}
 
 \keywords{automatic labelling; evaluation of interactive segmentation algorithms}
 \end{abstract}
@@ -85,9 +86,11 @@ bjie.jiang@gmail.com, rentw@nju.edu.cn, beijia@software.nju.edu.cn
 % requirement of interaction: less interaction, suitable for different users
 % current evaluation approach and its drawbacks: does not consider multiple users or high human labor
 
-\paragraph{}Interactive image segmentation is one of the most important problems in the filed of computer vision. It has been extensively studied in the latest decade in that the power of human assistance enables the extraction of desired objects from the image more accurate. However, the involved human interaction is required to be informative, yet it should not involve high human labor in consideration of real-life application.Also,when it comes to the evaluation of these algorithms, the comparison can hardly be objective due to different human interferences. As is often the case, interactive image segmentation algorithms are tested upon user scribbles provided by the specific author or experiment. In this way, the situation of multiple users are neglected. So the performance of segmentation result could heavily depend on certain batch of human labels, rendering the result not convincing enough when compared with other algorithms.
+Interactive image segmentation is one of the most important problems in the filed of computer vision. It has been extensively studied in the latest decade in that the power of human assistance enables the extraction of desired objects from the image more accurate. However, the involved human interaction is required to be informative, yet it should not involve high human labor in consideration of real-life application.Also,when it comes to the evaluation of these algorithms, the comparison can hardly be objective due to different human interferences. As is often the case, interactive image segmentation algorithms are tested upon user scribbles provided by the specific author or experiment. In this way, the situation of multiple users are neglected. So the performance of segmentation result could heavily depend on certain batch of human labels, rendering the result not convincing enough when compared with other algorithms.
+
 % our work
-\paragraph{}This paper deals with the problem of evaluating interactive segmentation algorithms in an objective and comprehensive way. The contribution of this paper includes: (1)  Analysis of differences and similarities between user labels in a quantitative way. By clustering pixels and further decomposing them into groups, we figured out both consistence and inconsistence of human labels and their influence on segmentation results.(2)A semi-automatic labelling generation method. Based on the consistence of user labels, we figured out the probability distribution function of key component coverage and use it to select key features from the image for labelling. (3) General evaluation of interactive image segmentation methods. Our automatic generated labels are then applied to different methods and the performance of these methods are evaluated in multiple ways.
+This paper deals with the problem of evaluating interactive segmentation algorithms in an objective and comprehensive way. The contribution of this paper includes: (1)  Analysis of differences and similarities between user labels in a quantitative way. By clustering pixels and further decomposing them into groups, we figured out both consistence and inconsistence of human labels and their influence on segmentation results.(2)A semi-automatic labelling generation method. Based on the consistence of user labels, we figured out the probability distribution function of key component coverage and use it to select key features from the image for labelling. (3) General evaluation of interactive image segmentation methods. Our automatic generated labels are then applied to different methods and the performance of these methods are evaluated in multiple ways.
+
 % paper organization
 The rest of the paper is organized as follows: In section.2, we introduced the related works. In section.3, we introduce the design of the dataset and experiment, and section.4 presents the idea of user interaction difference and consistence . In section.5 we describe the details of our label generation methodology, and section.6. analyzes the performance of four algorithms on the auto-generated labels. The paper concludes in section.7.
 
@@ -95,18 +98,19 @@ The rest of the paper is organized as follows: In section.2, we introduced the r
 
 % existing interactive image segmentation methods
 % existing evaluation methods
-\paragraph{}Many state-of-the-art algorithms in interactive image segmentation have been proposed, starting from Boycov et. al\citep{boykov2001interactive},followed by Grabcut\citep{rother2004grabcut},Random Walker\citep{grady2006random},Bai and Sapiro \citep{bai2007geodesic} and \citep{gulshan2010geodesic}. 
+\paragraph{}Many state-of-the-art algorithms in interactive image segmentation have been proposed, starting from Boycov et. al \citep{boykov2001interactive}, followed by Grabcut \citep{rother2004grabcut}, Random Walker \citep{grady2006random}, Bai and Sapiro \citep{bai2007geodesic} and \citep{gulshan2010geodesic}.
 
 For automatic segmentation, Martin et. al  \citep{martin2001database} presents an image database of a wide variety of natural scenes and its application to segmentation algorithm evaluation.  Unnikrishnan \citep{unnikrishnan2007toward} proposed the normalized probabilistic rand (NPR) index, which can be used to perform a quantitative comparison between image segmentation algorithms. Kevin McGuinness \citep{mcguinness2010comparative} developed a tool set for comparative evaluation of interactive segmentation algorithms.
 
-\section{Dataset and experiment design}
+\section{Dataset}
 % introduction of berkeley dataset
-\paragraph{}The dataset contains 96 images from publicly available Berkeley Segmentation Dataset\citep{martin2001database}. These images are selected so that each of them contains at least one obvious object which could be unambiguously explained to participants.These images are also representative of some major challenges of image segmentation, including fuzzy boundary, complex texture and complex lighting conditions. Ground truths are precisely hand-labeled for each image in order to avoid any bias.
-% our labelling (including how to collect the labels)
-\paragraph{}In collecting labels, We use the software provided by The K-Space Segmentation Tool Set, \citep{mcguinness2008k}. The 5 participants are all students from computer science background but have limited knowledge in interactive image segmentation. Each participant was given a clear guidance and enough time to familiarize themselves and become proficient with the software that would be used for the experiment. Sample labels were also provided in avoid of misunderstanding . Then in real experiment, each participants are provided with 96 images and the corresponding ground-truth which tells exactly which object to extract. However, we hide the segmentation result from user so that they will not realize if they have provided a "good" mark or not. We also confined the time for labeling each image. In this way, we manage to (1)limit the effort of participants to draw scribbles in consideration of real-life application.
-(2)obtain the most natural response of users rather than inputs guided by segmentation result.
-\section{Analysis of User Interaction Differences}
+The dataset contains 96 images from publicly available Berkeley Segmentation Dataset\citep{martin2001database}. These images are selected so that each of them contains at least one obvious object which could be unambiguously explained to participants.These images are also representative of some major challenges of image segmentation, including fuzzy boundary, complex texture and complex lighting conditions. Ground truths are precisely hand-labeled for each image in order to avoid any bias.
 
+% our labelling (including how to collect the labels)
+In collecting labels, We use the software provided by The K-Space Segmentation Tool Set, \citep{mcguinness2008k}. The 5 participants are all students from computer science background but have limited knowledge in interactive image segmentation. Each participant was given a clear guidance and enough time to familiarize themselves and become proficient with the software that would be used for the experiment. Sample labels were also provided in avoid of misunderstanding . Then in real experiment, each participants are provided with 96 images and the corresponding ground-truth which tells exactly which object to extract. However, we hide the segmentation result from user so that they will not realize if they have provided a "good" mark or not. We also confined the time for labeling each image. In this way, we manage to (1)limit the effort of participants to draw scribbles in consideration of real-life application.
+(2)obtain the most natural response of users rather than inputs guided by segmentation result.
+
+\section{Analysis of User Interaction Differences}
 %\begin{figure}[h!]
 %\centering
 %\includegraphics[width=0.5\columnwidth]{images/screenshot.png}
@@ -170,7 +174,7 @@ label 5 & 0.6300\% & 0.7300\% & 0.6800\% & 0.6700\% & 100\% \\
 
 
 
-\begin{figure}
+\begin{figure}[!tb]
 \centering
 
 \subfigure[source image] { \label{fig:a}
@@ -324,7 +328,7 @@ coefficient of variance& 0.2719 & 0.4207 & 0.4546 & 0.4819& 0.5042\\
 \end{empheq}
 
 
-The accuracy evaluation of five batches of human-made labels and five batches of auto-generated labels applied to four algorithms are shown in Table  \ref{ta: simu in bj} \ref{ta: simu in gsc} \ref{ta: simu in sp} \ref{ta: simu in rw}. The precision and recall value are defined to be the mean value on all the images. We have observed that our simulated label points achieves a very similar precision and recall level as human labels do. This approves the validity of our assumption: discrete points which representing key features of the image could also act as effective labels. 
+The accuracy evaluation of five batches of human-made labels and five batches of auto-generated labels applied to four algorithms are shown in Table  \ref{ta: simu in bj} \ref{ta: simu in gsc} \ref{ta: simu in sp} \ref{ta: simu in rw}. The precision and recall value are defined to be the mean value on all the images. We have observed that our simulated label points achieves a very similar precision and recall level as human labels do. This approves the validity of our assumption: discrete points which representing key features of the image could also act as effective labels.
 \begin{table}
 \centering
 \begin{tabular}{|c|c|c|c|c|c|}
@@ -344,7 +348,7 @@ Recall& 0.8101 & 0.8339 & 0.8780& 0.8740& 0.8337  \\
 \end{tabular}
 \caption{BJ}
 \label{ta: simu in bj}
-\end{table} 
+\end{table}
 
 
 \begin{table}
@@ -366,7 +370,7 @@ Recall& 0.8371 & 0.8366 & 0.8939& 0.8813& 0.8403 \\
 \end{tabular}
 \caption{GSC}
 \label{ta: simu in gsc}
-\end{table} 
+\end{table}
 
 \begin{table}
 \centering
@@ -387,7 +391,7 @@ Recall& 0.9251 & 0.9221 & 0.9331& 0.9249& 0.9189 \\
 \end{tabular}
 \caption{SP}
 \label{ta: simu in sp}
-\end{table} 
+\end{table}
 
 
 \begin{table}
@@ -409,12 +413,12 @@ Recall& 0.8347 & 0.8477 & 0.8568& 0.8515& 0.8438 \\
 \end{tabular}
 \caption{RW}
 \label{ta: simu in rw}
-\end{table} 
+\end{table}
 
 
 \subsection{Solution space for labelling generation}
 \paragraph{} In order to generate automatic labels, we need to figure out the consistence among labels made by different users. So we further analyzed the labels on both superpixel level and superpixel group level. Table \ref{ta: label coverage f} shows coverage rate of superpixel groups in foreground and Table \ref{ta: label coverage b} shows the situation in background.
-We have observed that the maximum coverage reaches 100\% in every batch of labels and there exists low coverage in both foreground label and background label. Also, inside a single batch of labels which were made by the same user, the coverage rate is rather stable, as is indicated by low variance and coefficient of variance. 
+We have observed that the maximum coverage reaches 100\% in every batch of labels and there exists low coverage in both foreground label and background label. Also, inside a single batch of labels which were made by the same user, the coverage rate is rather stable, as is indicated by low variance and coefficient of variance.
 
 
 \begin{table}
@@ -432,7 +436,7 @@ CV& 0.2176 & 0.1680 & 0.1740& 0.1843& 0.2178&NAN&NAN \\
 \end{tabular}
 \caption{Superpixel group coverage in foreground.}
 \label{ta: label coverage f}
-\end{table} 
+\end{table}
 
 % CV: coefficient of variation
 \begin{table}
@@ -450,10 +454,10 @@ Coefficient of variance& 0.2709 & 0.2144 & 0.2227& 0.3170& 0.1747&NAN&NAN \\
 \end{tabular}
 \caption{Superpixel group coverage in background.}
 \label{ta: label coverage b}
-\end{table} 
+\end{table}
 
 
-\paragraph{} Based on the rather stable level of group coverage, we calculate the mean group overlap rate between every two labels on the same image. Table \ref{ta:group overlap f} and Table \ref{ta:group overlap b}  shows the value in foreground and background. Value in position (i,j) denotes the percent of groups in label i which were also covered in label j. We could note that the overlap rate between every two participants is rather high; We also examined the overlap rate on superpixel level. Table \ref{ta: sp overlap f} and Table \ref{ta: sp overlap b} shows the result. It is obvious that different users share little common ground on the superpixel level. 
+\paragraph{} Based on the rather stable level of group coverage, we calculate the mean group overlap rate between every two labels on the same image. Table \ref{ta:group overlap f} and Table \ref{ta:group overlap b}  shows the value in foreground and background. Value in position (i,j) denotes the percent of groups in label i which were also covered in label j. We could note that the overlap rate between every two participants is rather high; We also examined the overlap rate on superpixel level. Table \ref{ta: sp overlap f} and Table \ref{ta: sp overlap b} shows the result. It is obvious that different users share little common ground on the superpixel level.
 
 \begin{table}
 \parbox{.35\linewidth}{
@@ -560,9 +564,9 @@ label5& 0.87\% & 1.08\% & 1.13\%& 1.18\%& 100\%& 1.07\% \\
 
 \subsection{Labelling generation}
 \paragraph{} In labelling generation, we test the normality of superpixel coverage distribution and superpixel-group coverage distribution.The Normal Q-Q plot of the four coverage rate is shown in \ref{fig: qq plot}. As we can see from the plot below, the data points of four plots are all close to the diagonal line which indicates a normal distribution. We then fit the four distribution to normal distribution, as is shown in Figure \ref{fig:histogram} and figure out the probability distribution function of both superpixel coverage percent and superpixel group coverage percent as $coverage \sim \mathcal{N} (m,\sigma^2)$
-\paragraph{} Then our labelling generation process is carried out as following: For each image (1) We first generate two coverage percent of superpixel and superpixel group according to the calculated  distribution. (2) Randomly select groups according to the target percentage. (3) Select superpixels in each group for labelling according to the size of the group and the overall percentage. 
+\paragraph{} Then our labelling generation process is carried out as following: For each image (1) We first generate two coverage percent of superpixel and superpixel group according to the calculated  distribution. (2) Randomly select groups according to the target percentage. (3) Select superpixels in each group for labelling according to the size of the group and the overall percentage.
 
-\begin{figure}
+\begin{figure}[!tb]
 \centering
 
 \subfigure[Normal Q-Q plot of superpixel group coverage rate in foreground] { \label{fig:a2}
@@ -582,7 +586,7 @@ label5& 0.87\% & 1.08\% & 1.13\%& 1.18\%& 100\%& 1.07\% \\
 \end{figure}
 
 
-\begin{figure}
+\begin{figure}[!tb]
 \centering
 
 \subfigure[Distribution of superpixel group coverage rate in foreground ] { \label{fig:a2}
@@ -609,7 +613,7 @@ We then test the four algorithms respectively with 96*5 auto-generated user labe
 
 
 
-\begin{figure}
+\begin{figure}[!tb]
 \centering
 \subfigure[Precision/recall value of BJ with human-made and auto-generate labels] { \label{fig:a3}
 \includegraphics[width=0.4\columnwidth]{images/bj-eva.png}
