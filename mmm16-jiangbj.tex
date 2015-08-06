@@ -86,13 +86,13 @@ bjie.jiang@gmail.com, rentw@nju.edu.cn, beijia@software.nju.edu.cn
 % requirement of interaction: less interaction, suitable for different users
 % current evaluation approach and its drawbacks: does not consider multiple users or high human labor
 
-Interactive image segmentation is one of the most important problems in the filed of computer vision. It has been extensively studied in the latest decade in that the power of human assistance enables the extraction of desired objects from the image more accurate. However, the involved human interaction is required to be informative, yet it should not involve high human labor in consideration of real-life application.Also,when it comes to the evaluation of these algorithms, the comparison can hardly be objective due to different human interferences. As is often the case, interactive image segmentation algorithms are tested upon user scribbles provided by the specific author or experiment. In this way, the situation of multiple users are neglected. So the performance of segmentation result could heavily depend on certain batch of human labels, rendering the result not convincing enough when compared with other algorithms.
+\paragraph{}Interactive image segmentation is one of the most important problems in the filed of computer vision. It has been extensively studied in the latest decade because the power of human assistance enables the extraction of desired objects from the image more accurate.The involved human interaction is required to be informative so that it could serve as effective inputs of certain image segmentation algorithms. Yet it should not involve too much human labor in consideration of real-life application. However,when it comes to the evaluation of these algorithms, the comparison can hardly be objective due to the limited data source and rather subjective human interferences. Usually, interactive image segmentation algorithms are tested upon user labels provided by a specific author or experiment. In this way, the situation of multiple users are neglected and the performance of segmentation result could heavily depend on certain batch of human labels, rendering the result not convincing enough when compared with other algorithms. In order to evaluate different algorithms in an objective and universal way, it is necessary to provide a large dataset of varied labels. But it should involve a great amount of time and human labour to set up such kind of database and many measures need to be taken to ensure the variety of this dataset. Under this guidance, we come up with the idea of generating semi-automatic labels which use the ground truth of certain images.With the help of our automatic generated labels, the volume of the dataset can be greatly increased with little cost of time and labour. The work of establishing a universal image labels dataset can therefore be largely reduced and the evaluation of segmentation algorithms can  be more objective and universal.
 
 % our work
-This paper deals with the problem of evaluating interactive segmentation algorithms in an objective and comprehensive way. The contribution of this paper includes: (1)  Analysis of differences and similarities between user labels in a quantitative way. By clustering pixels and further decomposing them into groups, we figured out both consistence and inconsistence of human labels and their influence on segmentation results.(2)A semi-automatic labelling generation method. Based on the consistence of user labels, we figured out the probability distribution function of key component coverage and use it to select key features from the image for labelling. (3) General evaluation of interactive image segmentation methods. Our automatic generated labels are then applied to different methods and the performance of these methods are evaluated in multiple ways.
+\paragraph{}This paper deals with the problem of evaluating interactive segmentation algorithms in an objective and comprehensive way. The contribution of this paper includes: (1)  Analysis of differences and similarities between user labels in a quantitative way. By clustering pixels and further decomposing them into groups, we figured out both consistence and inconsistence of human labels and their influence on segmentation results.(2)A semi-automatic labelling generation method. Based on the consistence of user labels, we figured out the probability distribution function of key component coverage and use it to select key features from the image for labelling. (3) General evaluation of interactive image segmentation methods. Our automatic generated labels are then applied to different methods and the performance of these methods are evaluated in multiple ways.
 
 % paper organization
-The rest of the paper is organized as follows: In section.2, we introduced the related works. In section.3, we introduce the design of the dataset and experiment, and section.4 presents the idea of user interaction difference and consistence . In section.5 we describe the details of our label generation methodology, and section.6. analyzes the performance of four algorithms on the auto-generated labels. The paper concludes in section.7.
+\paragraph{}The rest of the paper is organized as follows: In section.2, we introduced the related works. In section.3, we introduce the design of the dataset and experiment, and section.4 presents the idea of user interaction difference and consistence . In section.5 we describe the details of our label generation methodology, and section.6. analyzes the performance of four algorithms on the auto-generated labels. The paper concludes in section.7.
 
 \section{Related Work}
 
@@ -124,49 +124,48 @@ $$intersection\ of\ marked\ pixels/union\ of\ marked\ pixels$$
 We make the following observations: (1)The mean value of intersection/union between every two people is quiet small, ranging from 1.6592\% to 3.5195\% in foreground and 0.0905\% to 0.9700\% in background, which indicates that labels made by different people have little in common. Figure \ref{fig:example} shows an example of user labels which share no common pixels (2) People share less similarities in background labels than foreground. It is mainly because the foreground objects are confined to a certain area while the backgrounds are more extensive.
 
 \begin{table}
-\parbox{.35\linewidth}{
 \centering
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
  Label & label 1 & label 2 & label 3 & label 4& label 5 \\
 \hline
-label 1 & 100\% & 2.3768\% & 3.5195\% & 2.0146\%& 1.6592\% \\
+label 1 & 100\% & 2.38\% & 3.52\% & 2.01\%& 1.66\% \\
 \hline
-label 2 & 2.3768\% & 100\% & 2.7080\% & 2.1684\%& 2.2459\% \\
+label 2 & 2.38\% & 100\% & 2.71\% & 2.17\%& 2.25\% \\
 \hline
-label 3 & 3.5195\% & 2.7080\% & 100\% & 2.0485\%& 2.0102\%\\
+label 3 & 3.52\% & 2.70\% & 100\% & 2.05\%& 2.01\%\\
 \hline
-label 4 & 2.0146\% & 2.1684\% & 2.0485\% & 100\%& 1.8441\% \\
+label 4 & 2.01\% & 2.17\% & 2.05\% & 100\%& 1.84\% \\
 \hline
-label 5 & 1.6592\% & 2.2459\% & 2.0102\% & 1.8441\%& 100\% \\
+label 5 & 1.66\% & 2.25\% & 2.01\% & 1.84\%& 100\% \\
 \hline
 \end{tabular}
 \captionsetup{justification=centerlast}
 \caption{intersection degree of foreground labels}
 \label{ta:intersection degree f}
-}
-\hfill
-\parbox{.35\linewidth}{
+\end{table}
+
+
+\begin{table}
 \centering
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
  Label & label 1 & label 2 & label 3 & label 4& label 5 \\
 \hline
-label 1 & 100\% & 0.8700\% & 0.8600\% & 0.0905\%& 0.6300\% \\
+label 1 & 100\% & 0.87\% & 0.86\% & 0.09\%& 0.63\% \\
 \hline
-label 2 & 0.8700\% & 100\% & 0.9700\% & 0.2100\%& 0.7300\% \\
+label 2 & 0.87\% & 100\% & 0.97\% & 0.21\%& 0.73\% \\
 \hline
-label 3 & 0.8600\% & 0.9700\% & 100\% & 0.1600\%& 0.6800\%\\
+label 3 & 0.86\% & 0.97\% & 100\% & 0.16\%& 0.68\%\\
 \hline
-label 4 & 0.0905\% & 0.2100\% & 0.1600\% & 100\%& 0.6700\% \\
+label 4 & 0.09\% & 0.21\% & 0.16\% & 100\%& 0.67\% \\
 \hline
-label 5 & 0.6300\% & 0.7300\% & 0.6800\% & 0.6700\% & 100\% \\
+label 5 & 0.63\% & 0.73\% & 0.68\% & 0.67\% & 100\% \\
 \hline
 \end{tabular}
 \captionsetup{justification=centerlast}
 \caption{intersection degree of background labels}
 \label{ta:intersection degree b}
-}
 \end{table}
 
 
@@ -198,114 +197,142 @@ label 5 & 0.6300\% & 0.7300\% & 0.6800\% & 0.6700\% & 100\% \\
 
 
 \subsection{Segmentation result difference}
-\paragraph{}Based on the above result, we took a step further by examine the segmentation results of different labels.The implementation of four interactive segmentation algorithms in \citep{gulshan2010geodesic} was used. Based on the 96*5*4 segmentation results, we have found out that due to the variance between different labels, the segmentation results tend to be quite different, too.  We arrived here by calculating percent of pixels which was segmented out as foreground simultaneously by 1 person, two people, three people ,four people and 5 people out of all the segmented pixels. The result is shown in Table \ref{ta:bj intersection} \ref{ta:gsc intersection} \ref{ta:sp intersection} \ref{ta:rw intersection}. We have observed that: (1) The effectiveness of different labels as input of interactive segmentation algorithms vary from person to person, as could be observed that the label made by participant 1 have a better performance than others in terms of mean, maximum and minimum, which means there exists kind of "professional lables" \citep{fu2008saliency} (2) In mean level, the result reaches at most 66.760\% in table 5 made by participant 1. While the maximum ratio could be high as 99.050\%, the minimum ratio was also low as 1.060\%. This shows that when applied to segmentation algorithms, the variance of labels could further lead to even greater difference in segmentation results.
+\paragraph{}Based on the above result, we took a step further by examine the segmentation results of different labels.The implementation of four interactive segmentation algorithms in \citep{gulshan2010geodesic} was used. These algorithms are: Boykov Jolly Graph cut\citep{boykov2001interactive},  Boykov Jolly with Geodesic Star-Convexitycitep\citep{gulshan2010geodesic} , Bai and Sapiro\citep{bai2007geodesic} and Random Walker\citep {grady2006random}. Based on the 96*5*4 segmentation results, we have found out that due to the variance between different labels, the segmentation results tend to be quite different, too.  We arrived here by calculating percent of pixels which was segmented out as foreground simultaneously by 1 person, two people, three people ,four people and 5 people out of all the segmented pixels. The result is shown in Table \ref{fig:seg-inter}. We have observed that: (1) The effectiveness of different labels as input of interactive segmentation algorithms vary from person to person, as could be observed that the label made by participant 1 have a better performance than others in terms of mean, maximum and minimum, which means there exists kind of "professional lables" \citep{fu2008saliency} (2) In mean level, the result reaches at most 66.76\% in table 5 made by participant 1. While the maximum ratio could be high as 99.05\%, the minimum ratio was also low as 1.06\%. This shows that when applied to segmentation algorithms, the variance of labels could further lead to even greater difference in segmentation results.
 
-\begin{table}
+\begin{figure}[!htb]
 \centering
-\begin{tabular}{|c|c|}
-\hline
-Algorithm shorthand & Description\\
-\hline
-BJ\citep{boykov2001interactive} &  Boykov Jolly Graph cut  \\
-\hline
-GSC\citep{gulshan2010geodesic}& Boykov Jolly with Geodesic Star-Convexity \\
-\hline
-SP\citep{bai2007geodesic} & Bai and Sapiro \\
-\hline
-RW\citep {grady2006random}& Random Walker  \\
-\hline
-\end{tabular}
-\caption{Interactive image segmentation algorithms}
-\label{ta:algorithms}
-\end{table}
+\subfigure[BJ] { \label{fig:a1}
+\includegraphics[width=0.4\columnwidth]{images/bj-seg-inter.png}
+}
+\subfigure[GSC] { \label{fig:b1}
+\includegraphics[width=0.4\columnwidth]{images/gsc-seg-inter.png}
+}
+\subfigure[RW] { \label{fig:c1}
+\includegraphics[width=0.4\columnwidth]{images/rw-seg-inter.png}
+}
+\subfigure[SP] { \label{fig:d1}
+\includegraphics[width=0.4\columnwidth]{images/sp-seg-inter.png}
+}
+\caption{ Examples of user labels and auto-generated labels. (a) shows a source image, (b) shows the ground truth of image(a), (c)(d)shows two labels which show no common pixels. }
+\label{fig:seg-inter}
+\end{figure}
 
 
 
 
-\begin{table}
-\centering
-\begin{tabular}{|c|c|c|c|c|c|}
-\hline
- intersection scale & 1 & 2 & 3 & 4& 5 \\
-\hline
-mean& 66.360\% & 55.090\% & 52.300\% & 50.710\%& 49.620\% \\
-\hline
-max& 99.020\% & 98.580\% & 98.370\% & 98.200\%& 98.060\% \\
-\hline
-min& 21.060\% & 1.240\% & 1.180\% & 1.160\%& 1.140\%\\
-\hline
-variance& 0.0557 & 0.0883 & 0.0897 & 0.0899& 0.0898 \\
-\hline
-coefficient of variance& 0.3556 & 0.5394 & 0.5727 & 0.5913& 0.6039\\
-\hline
-\end{tabular}
-\caption{Segmentation intersection on algorithm BJ}
-\label{ta:bj intersection}
-\end{table}
-
-\begin{table}
-\centering
-\begin{tabular}{|c|c|c|c|c|c|}
-\hline
-intersection scale & 1 & 2 & 3 & 4& 5 \\
-\hline
-mean& 66.760\% & 55.490\% & 52.490\% & 50.600\%& 49.170\% \\
-\hline
-max& 99.040\% & 98.500\% & 98.170\% & 97.900\%& 97.660\% \\
-\hline
-min& 21.130\% & 1.230\% & 1.100\% & 1.080\%& 1.060\%\\
-\hline
-variance& 0.0518 & 0.0809 & 0.0813 & 0.0812& 0.0812 \\
-\hline
-coefficient of variance& 0.3409 & 0.5126 & 0.5432 & 0.5632& 0.5795\\
-\hline
-\end{tabular}
-\caption{Segmentation intersection on algorithm GSC}
-\label{ta:gsc intersection}
-\end{table}
 
 
-\begin{table}
-\centering
-\begin{tabular}{|c|c|c|c|c|c|}
-\hline
-intersection scale & 1 & 2 & 3 & 4& 5 \\
-\hline
-mean& 56.390\% & 41.030\% & 36.740\% & 34.350\%& 32.660\% \\
-\hline
-max& 96.040\% & 94.290\% & 93.470\% & 92.850\%& 92.260\% \\
-\hline
-min& 22.950\% & 2.920\% & 2.270\% & 2.030\%& 1.910\%\\
-\hline
-variance& 0.0286 & 0.0431 & 0.0418& 0.0405&0.0393 \\
-\hline
-coefficient of variance& 0.2999 & 0.5060 & 0.5565 & 0.5859& 0.6070\\
-\hline
-\end{tabular}
-\caption{Segmentation intersection on algorithm SP}
-\label{ta:sp intersection}
-\end{table}
 
-\begin{table}
-\centering
-\begin{tabular}{|c|c|c|c|c|c|}
-\hline
-intersection scale & 1 & 2 & 3 & 4& 5 \\
-\hline
-mean& 63.180\% & 49.860\% & 45.720\% & 43.180\%& 41.410\% \\
-\hline
-max& 98.660\% & 97.910\% & 97.430\% & 97.010\%& 96.600\% \\
-\hline
-min& 23.010\% & 3.190\% & 2.580\% & 2.190\%& 2.000\%\\
-\hline
-variance& 0.0295 & 0.0440 & 0.0432 & 0.0433& 0.0436 \\
-\hline
-coefficient of variance& 0.2719 & 0.4207 & 0.4546 & 0.4819& 0.5042\\
-\hline
-\end{tabular}
-\caption{Segmentation intersection on algorithm RW}
-\label{ta:rw intersection}
-\end{table}
+
+
+%\begin{table}
+%\centering
+%\begin{tabular}{|c|c|}
+%\hline
+%Algorithm shorthand & Description\\
+%\hline
+%BJ\citep{boykov2001interactive} &  Boykov Jolly Graph cut  \\
+%\hline
+%GSC\citep{gulshan2010geodesic}& Boykov Jolly with Geodesic Star-Convexity \\
+%\hline
+%SP\citep{bai2007geodesic} & Bai and Sapiro \\
+%\hline
+%RW\citep {grady2006random}& Random Walker  \\
+%\hline
+%\end{tabular}
+%\caption{Interactive image segmentation algorithms}
+%\label{ta:algorithms}
+%\end{table}
+
+
+
+
+
+% \begin{table}
+% \centering
+% \begin{tabular}{|c|c|c|c|c|c|}
+% \hline
+%  intersection scale & 1 & 2 & 3 & 4& 5 \\
+% \hline
+% mean& 66.360\% & 55.090\% & 52.300\% & 50.710\%& 49.620\% \\
+% \hline
+% max& 99.020\% & 98.580\% & 98.370\% & 98.200\%& 98.060\% \\
+% \hline
+% min& 21.060\% & 1.240\% & 1.180\% & 1.160\%& 1.140\%\\
+% \hline
+% variance& 0.0557 & 0.0883 & 0.0897 & 0.0899& 0.0898 \\
+% \hline
+% coefficient of variance& 0.3556 & 0.5394 & 0.5727 & 0.5913& 0.6039\\
+% \hline
+% \end{tabular}
+% \caption{Segmentation intersection on algorithm BJ}
+% \label{ta:bj intersection}
+% \end{table}
+
+% \begin{table}
+% \centering
+% \begin{tabular}{|c|c|c|c|c|c|}
+% \hline
+% intersection scale & 1 & 2 & 3 & 4& 5 \\
+% \hline
+% mean& 66.760\% & 55.490\% & 52.490\% & 50.600\%& 49.170\% \\
+% \hline
+% max& 99.040\% & 98.500\% & 98.170\% & 97.900\%& 97.660\% \\
+% \hline
+% min& 21.130\% & 1.230\% & 1.100\% & 1.080\%& 1.060\%\\
+% \hline
+% variance& 0.0518 & 0.0809 & 0.0813 & 0.0812& 0.0812 \\
+% \hline
+% coefficient of variance& 0.3409 & 0.5126 & 0.5432 & 0.5632& 0.5795\\
+% \hline
+% \end{tabular}
+% \caption{Segmentation intersection on algorithm GSC}
+% \label{ta:gsc intersection}
+% \end{table}
+
+
+% \begin{table}
+% \centering
+% \begin{tabular}{|c|c|c|c|c|c|}
+% \hline
+% intersection scale & 1 & 2 & 3 & 4& 5 \\
+% \hline
+% mean& 56.390\% & 41.030\% & 36.740\% & 34.350\%& 32.660\% \\
+% \hline
+% max& 96.040\% & 94.290\% & 93.470\% & 92.850\%& 92.260\% \\
+% \hline
+% min& 22.950\% & 2.920\% & 2.270\% & 2.030\%& 1.910\%\\
+% \hline
+% variance& 0.0286 & 0.0431 & 0.0418& 0.0405&0.0393 \\
+% \hline
+% coefficient of variance& 0.2999 & 0.5060 & 0.5565 & 0.5859& 0.6070\\
+% \hline
+% \end{tabular}
+% \caption{Segmentation intersection on algorithm SP}
+% \label{ta:sp intersection}
+% \end{table}
+
+% \begin{table}
+% \centering
+% \begin{tabular}{|c|c|c|c|c|c|}
+% \hline
+% intersection scale & 1 & 2 & 3 & 4& 5 \\
+% \hline
+% mean& 63.180\% & 49.860\% & 45.720\% & 43.180\%& 41.410\% \\
+% \hline
+% max& 98.660\% & 97.910\% & 97.430\% & 97.010\%& 96.600\% \\
+% \hline
+% min& 23.010\% & 3.190\% & 2.580\% & 2.190\%& 2.000\%\\
+% \hline
+% variance& 0.0295 & 0.0440 & 0.0432 & 0.0433& 0.0436 \\
+% \hline
+% coefficient of variance& 0.2719 & 0.4207 & 0.4546 & 0.4819& 0.5042\\
+% \hline
+% \end{tabular}
+% \caption{Segmentation intersection on algorithm RW}
+% \label{ta:rw intersection}
+% \end{table}
+
 
 
 \section{Semi-automatic Labelling Generation}
