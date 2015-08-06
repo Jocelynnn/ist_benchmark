@@ -56,7 +56,7 @@
 % their surnames. This ensures that the names appear correctly in
 % the running heads and the author index.
 %
-\author{Bingjie Jiang \and Tongwei Ren$^{*}$ \and Jia Bei}
+\author{Bingjie Jiang \and Tongwei Ren \and Jia Bei}
 %
 \authorrunning{Bingjie Jiang, Tongwei Ren, Jia Bei}
 % (feature abused for this document to repeat the title also on left hand pages)
@@ -98,16 +98,16 @@ The rest of the paper is organized as follows: In section.2, we introduced the r
 
 % existing interactive image segmentation methods
 % existing evaluation methods
-\paragraph{}Many state-of-the-art algorithms in interactive image segmentation have been proposed, starting from Boycov et. al \citep{boykov2001interactive}, followed by Grabcut \citep{rother2004grabcut}, Random Walker \citep{grady2006random}, Bai and Sapiro \citep{bai2007geodesic} and \citep{gulshan2010geodesic}.
+Many state-of-the-art algorithms in interactive image segmentation have been proposed, starting from Boycov et. al \cite{boykov2001interactive}, followed by Grabcut \cite{rother2004grabcut}, Random Walker \cite{grady2006random}, Bai and Sapiro \cite{bai2007geodesic} and \cite{gulshan2010geodesic}.
 
-For automatic segmentation, Martin et. al  \citep{martin2001database} presents an image database of a wide variety of natural scenes and its application to segmentation algorithm evaluation.  Unnikrishnan \citep{unnikrishnan2007toward} proposed the normalized probabilistic rand (NPR) index, which can be used to perform a quantitative comparison between image segmentation algorithms. Kevin McGuinness \citep{mcguinness2010comparative} developed a tool set for comparative evaluation of interactive segmentation algorithms.
+For automatic segmentation, Martin et. al  \cite{martin2001database} presents an image database of a wide variety of natural scenes and its application to segmentation algorithm evaluation.  Unnikrishnan \cite{unnikrishnan2007toward} proposed the normalized probabilistic rand (NPR) index, which can be used to perform a quantitative comparison between image segmentation algorithms. Kevin McGuinness \cite{mcguinness2010comparative} developed a tool set for comparative evaluation of interactive segmentation algorithms.
 
 \section{Dataset}
 % introduction of berkeley dataset
-The dataset contains 96 images from publicly available Berkeley Segmentation Dataset\citep{martin2001database}. These images are selected so that each of them contains at least one obvious object which could be unambiguously explained to participants.These images are also representative of some major challenges of image segmentation, including fuzzy boundary, complex texture and complex lighting conditions. Ground truths are precisely hand-labeled for each image in order to avoid any bias.
+The dataset contains 96 images from publicly available Berkeley Segmentation Dataset\cite{martin2001database}. These images are selected so that each of them contains at least one obvious object which could be unambiguously explained to participants.These images are also representative of some major challenges of image segmentation, including fuzzy boundary, complex texture and complex lighting conditions. Ground truths are precisely hand-labeled for each image in order to avoid any bias.
 
 % our labelling (including how to collect the labels)
-In collecting labels, We use the software provided by The K-Space Segmentation Tool Set, \citep{mcguinness2008k}. The 5 participants are all students from computer science background but have limited knowledge in interactive image segmentation. Each participant was given a clear guidance and enough time to familiarize themselves and become proficient with the software that would be used for the experiment. Sample labels were also provided in avoid of misunderstanding . Then in real experiment, each participants are provided with 96 images and the corresponding ground-truth which tells exactly which object to extract. However, we hide the segmentation result from user so that they will not realize if they have provided a "good" mark or not. We also confined the time for labeling each image. In this way, we manage to (1)limit the effort of participants to draw scribbles in consideration of real-life application.
+In collecting labels, We use the software provided by The K-Space Segmentation Tool Set, \cite{mcguinness2008k}. The 5 participants are all students from computer science background but have limited knowledge in interactive image segmentation. Each participant was given a clear guidance and enough time to familiarize themselves and become proficient with the software that would be used for the experiment. Sample labels were also provided in avoid of misunderstanding . Then in real experiment, each participants are provided with 96 images and the corresponding ground-truth which tells exactly which object to extract. However, we hide the segmentation result from user so that they will not realize if they have provided a "good" mark or not. We also confined the time for labeling each image. In this way, we manage to (1)limit the effort of participants to draw scribbles in consideration of real-life application.
 (2)obtain the most natural response of users rather than inputs guided by segmentation result.
 
 \section{Analysis of User Interaction Differences}
@@ -119,7 +119,7 @@ In collecting labels, We use the software provided by The K-Space Segmentation T
 %\end{figure}
 
 \subsection{User-interaction differences}
-\paragraph{}In our person-oriented experiments, great differences among user labels were observed. It comes to us instinctively that different people tend to consider different part of foreground and background object as salient. Under this guidance, we processed the 5 label files of the same image and calculated the pair-wise intersection degree. The result is shown in Table \ref{ta:intersection degree f} and table \ref{ta:intersection degree b}. The intersection degree is defined as follows:
+In our person-oriented experiments, great differences among user labels were observed. It comes to us instinctively that different people tend to consider different part of foreground and background object as salient. Under this guidance, we processed the 5 label files of the same image and calculated the pair-wise intersection degree. The result is shown in Table \ref{ta:intersection degree f} and table \ref{ta:intersection degree b}. The intersection degree is defined as follows:
 $$intersection\ of\ marked\ pixels/union\ of\ marked\ pixels$$
 We make the following observations: (1)The mean value of intersection/union between every two people is quiet small, ranging from 1.6592\% to 3.5195\% in foreground and 0.0905\% to 0.9700\% in background, which indicates that labels made by different people have little in common. Figure \ref{fig:example} shows an example of user labels which share no common pixels (2) People share less similarities in background labels than foreground. It is mainly because the foreground objects are confined to a certain area while the backgrounds are more extensive.
 
@@ -170,10 +170,6 @@ label 5 & 0.6300\% & 0.7300\% & 0.6800\% & 0.6700\% & 100\% \\
 \end{table}
 
 
-
-
-
-
 \begin{figure}[!tb]
 \centering
 
@@ -198,7 +194,7 @@ label 5 & 0.6300\% & 0.7300\% & 0.6800\% & 0.6700\% & 100\% \\
 
 
 \subsection{Segmentation result difference}
-\paragraph{}Based on the above result, we took a step further by examine the segmentation results of different labels.The implementation of four interactive segmentation algorithms in \citep{gulshan2010geodesic} was used. Based on the 96*5*4 segmentation results, we have found out that due to the variance between different labels, the segmentation results tend to be quite different, too.  We arrived here by calculating percent of pixels which was segmented out as foreground simultaneously by 1 person, two people, three people ,four people and 5 people out of all the segmented pixels. The result is shown in Table \ref{ta:bj intersection} \ref{ta:gsc intersection} \ref{ta:sp intersection} \ref{ta:rw intersection}. We have observed that: (1) The effectiveness of different labels as input of interactive segmentation algorithms vary from person to person, as could be observed that the label made by participant 1 have a better performance than others in terms of mean, maximum and minimum, which means there exists kind of "professional lables" \citep{fu2008saliency} (2) In mean level, the result reaches at most 66.760\% in table 5 made by participant 1. While the maximum ratio could be high as 99.050\%, the minimum ratio was also low as 1.060\%. This shows that when applied to segmentation algorithms, the variance of labels could further lead to even greater difference in segmentation results.
+Based on the above result, we took a step further by examine the segmentation results of different labels.The implementation of four interactive segmentation algorithms in \cite{gulshan2010geodesic} was used. Based on the 96*5*4 segmentation results, we have found out that due to the variance between different labels, the segmentation results tend to be quite different, too.  We arrived here by calculating percent of pixels which was segmented out as foreground simultaneously by 1 person, two people, three people ,four people and 5 people out of all the segmented pixels. The result is shown in Table \ref{ta:bj intersection} \ref{ta:gsc intersection} \ref{ta:sp intersection} \ref{ta:rw intersection}. We have observed that: (1) The effectiveness of different labels as input of interactive segmentation algorithms vary from person to person, as could be observed that the label made by participant 1 have a better performance than others in terms of mean, maximum and minimum, which means there exists kind of "professional lables" \cite{fu2008saliency} (2) In mean level, the result reaches at most 66.760\% in table 5 made by participant 1. While the maximum ratio could be high as 99.050\%, the minimum ratio was also low as 1.060\%. This shows that when applied to segmentation algorithms, the variance of labels could further lead to even greater difference in segmentation results.
 
 \begin{table}
 \centering
@@ -206,13 +202,13 @@ label 5 & 0.6300\% & 0.7300\% & 0.6800\% & 0.6700\% & 100\% \\
 \hline
 Algorithm shorthand & Description\\
 \hline
-BJ\citep{boykov2001interactive} &  Boykov Jolly Graph cut  \\
+BJ\cite{boykov2001interactive} &  Boykov Jolly Graph cut  \\
 \hline
-GSC\citep{gulshan2010geodesic}& Boykov Jolly with Geodesic Star-Convexity \\
+GSC\cite{gulshan2010geodesic}& Boykov Jolly with Geodesic Star-Convexity \\
 \hline
-SP\citep{bai2007geodesic} & Bai and Sapiro \\
+SP\cite{bai2007geodesic} & Bai and Sapiro \\
 \hline
-RW\citep {grady2006random}& Random Walker  \\
+RW\cite {grady2006random}& Random Walker  \\
 \hline
 \end{tabular}
 \caption{Interactive image segmentation algorithms}
@@ -311,12 +307,12 @@ coefficient of variance& 0.2719 & 0.4207 & 0.4546 & 0.4819& 0.5042\\
 \section{Semi-automatic Labelling Generation}
 
 \subsection{Image representation for labelling quantitative analysis}
-\paragraph{} In interactive image segmentation,users are expected labels some key features of the image foreground and background. The effectiveness of these labels is greatly related to their coverage of foreground and background key components. So we decide to simulate labels by simulating their coverage of key pixel clusters. In our method, we used the simple linear iterative clustering (SLIC)  method \citep{achanta2010slic} implemented by VLFeat open source library\citep{vedaldi08vlfeat}. The SLIC algorithm clusters pixels in the combined five-dimensional color and image plane space which brings compact, nearly uniform superpixels. We then decompose all the superpixels into distinct groups according to the quantitative rgb feature of each superpixel. In this way, we could analyze user labels on both superpixel level and superpixel group level.  On the level of superpixel, we are aimed at analyzing the amount of manual labour of providing certain labels; on the level of superpixel group, we could estimate the amount of information or key features provided by the labels.
+ In interactive image segmentation,users are expected labels some key features of the image foreground and background. The effectiveness of these labels is greatly related to their coverage of foreground and background key components. So we decide to simulate labels by simulating their coverage of key pixel clusters. In our method, we used the simple linear iterative clustering (SLIC)  method \cite{achanta2010slic} implemented by VLFeat open source library\cite{vedaldi08vlfeat}. The SLIC algorithm clusters pixels in the combined five-dimensional color and image plane space which brings compact, nearly uniform superpixels. We then decompose all the superpixels into distinct groups according to the quantitative rgb feature of each superpixel. In this way, we could analyze user labels on both superpixel level and superpixel group level.  On the level of superpixel, we are aimed at analyzing the amount of manual labour of providing certain labels; on the level of superpixel group, we could estimate the amount of information or key features provided by the labels.
 
 
 
 \subsection{Effect of connection in labelling}
-\paragraph{} Instead of continuous user scribbles, our simulation is planned to generating several points to represent key features in the image. So our first step was to validate the effectiveness of points in segmentation as compared to continuous lines. After figuring out the superpixel groups which were covered by user labels, we randomly select one superpixel from these groups and then randomly select one point from that superpixel. In this way, we formed a point set which contains points from groups covered by a certain human-made label. An example of our auto-generated label is shown in figure \ref{fig:example}.  We then apply five sets of this kind of labels to the four segmentation algorithms. In terms of evaluation of segmentation accuracy, we define the following criteria:
+ Instead of continuous user scribbles, our simulation is planned to generating several points to represent key features in the image. So our first step was to validate the effectiveness of points in segmentation as compared to continuous lines. After figuring out the superpixel groups which were covered by user labels, we randomly select one superpixel from these groups and then randomly select one point from that superpixel. In this way, we formed a point set which contains points from groups covered by a certain human-made label. An example of our auto-generated label is shown in figure \ref{fig:example}.  We then apply five sets of this kind of labels to the four segmentation algorithms. In terms of evaluation of segmentation accuracy, we define the following criteria:
 
 \begin{empheq}[box=\fbox]{align}
 \begin{split}
@@ -417,7 +413,7 @@ Recall& 0.8347 & 0.8477 & 0.8568& 0.8515& 0.8438 \\
 
 
 \subsection{Solution space for labelling generation}
-\paragraph{} In order to generate automatic labels, we need to figure out the consistence among labels made by different users. So we further analyzed the labels on both superpixel level and superpixel group level. Table \ref{ta: label coverage f} shows coverage rate of superpixel groups in foreground and Table \ref{ta: label coverage b} shows the situation in background.
+ In order to generate automatic labels, we need to figure out the consistence among labels made by different users. So we further analyzed the labels on both superpixel level and superpixel group level. Table \ref{ta: label coverage f} shows coverage rate of superpixel groups in foreground and Table \ref{ta: label coverage b} shows the situation in background.
 We have observed that the maximum coverage reaches 100\% in every batch of labels and there exists low coverage in both foreground label and background label. Also, inside a single batch of labels which were made by the same user, the coverage rate is rather stable, as is indicated by low variance and coefficient of variance.
 
 
@@ -457,7 +453,7 @@ Coefficient of variance& 0.2709 & 0.2144 & 0.2227& 0.3170& 0.1747&NAN&NAN \\
 \end{table}
 
 
-\paragraph{} Based on the rather stable level of group coverage, we calculate the mean group overlap rate between every two labels on the same image. Table \ref{ta:group overlap f} and Table \ref{ta:group overlap b}  shows the value in foreground and background. Value in position (i,j) denotes the percent of groups in label i which were also covered in label j. We could note that the overlap rate between every two participants is rather high; We also examined the overlap rate on superpixel level. Table \ref{ta: sp overlap f} and Table \ref{ta: sp overlap b} shows the result. It is obvious that different users share little common ground on the superpixel level.
+ Based on the rather stable level of group coverage, we calculate the mean group overlap rate between every two labels on the same image. Table \ref{ta:group overlap f} and Table \ref{ta:group overlap b}  shows the value in foreground and background. Value in position (i,j) denotes the percent of groups in label i which were also covered in label j. We could note that the overlap rate between every two participants is rather high; We also examined the overlap rate on superpixel level. Table \ref{ta: sp overlap f} and Table \ref{ta: sp overlap b} shows the result. It is obvious that different users share little common ground on the superpixel level.
 
 \begin{table}
 \parbox{.35\linewidth}{
@@ -507,7 +503,7 @@ label5& 76.36\% & 77.76\% & 78.21\%& 73.21\%& 100\%&76.39\%\\
 
 
 
-\paragraph{}Based on analysis on superpixel and superpixel group level, we safely conclude that labels of different users are consistent on the defined superpixel group level but inconsistent on superpixel level. It is because certain key features of an image could be represented by different superpixels. Though there are limited number of key features of an object, users are sensitive to different representative superpixels. Also, the high level of superpixel group coverage( with the mean value arounf 85\%) and low level of superpixel coverage reveals two rules to us: (1) When labelling images, people are intended to provide as much information as possible(as indicated by the high coverage of superpixel groups)  (2) While aimed at labelling more key features, people also want to reduce the times of interaction or the total amount of labels, that is, shorter length within the same width. (as shown by the low coverage of superpixels)
+Based on analysis on superpixel and superpixel group level, we safely conclude that labels of different users are consistent on the defined superpixel group level but inconsistent on superpixel level. It is because certain key features of an image could be represented by different superpixels. Though there are limited number of key features of an object, users are sensitive to different representative superpixels. Also, the high level of superpixel group coverage( with the mean value arounf 85\%) and low level of superpixel coverage reveals two rules to us: (1) When labelling images, people are intended to provide as much information as possible(as indicated by the high coverage of superpixel groups)  (2) While aimed at labelling more key features, people also want to reduce the times of interaction or the total amount of labels, that is, shorter length within the same width. (as shown by the low coverage of superpixels)
 
 
 
@@ -563,8 +559,8 @@ label5& 0.87\% & 1.08\% & 1.13\%& 1.18\%& 100\%& 1.07\% \\
 
 
 \subsection{Labelling generation}
-\paragraph{} In labelling generation, we test the normality of superpixel coverage distribution and superpixel-group coverage distribution.The Normal Q-Q plot of the four coverage rate is shown in \ref{fig: qq plot}. As we can see from the plot below, the data points of four plots are all close to the diagonal line which indicates a normal distribution. We then fit the four distribution to normal distribution, as is shown in Figure \ref{fig:histogram} and figure out the probability distribution function of both superpixel coverage percent and superpixel group coverage percent as $coverage \sim \mathcal{N} (m,\sigma^2)$
-\paragraph{} Then our labelling generation process is carried out as following: For each image (1) We first generate two coverage percent of superpixel and superpixel group according to the calculated  distribution. (2) Randomly select groups according to the target percentage. (3) Select superpixels in each group for labelling according to the size of the group and the overall percentage.
+In labelling generation, we test the normality of superpixel coverage distribution and superpixel-group coverage distribution.The Normal Q-Q plot of the four coverage rate is shown in \ref{fig: qq plot}. As we can see from the plot below, the data points of four plots are all close to the diagonal line which indicates a normal distribution. We then fit the four distribution to normal distribution, as is shown in Figure \ref{fig:histogram} and figure out the probability distribution function of both superpixel coverage percent and superpixel group coverage percent as $coverage \sim \mathcal{N} (m,\sigma^2)$
+Then our labelling generation process is carried out as following: For each image (1) We first generate two coverage percent of superpixel and superpixel group according to the calculated  distribution. (2) Randomly select groups according to the target percentage. (3) Select superpixels in each group for labelling according to the size of the group and the overall percentage.
 
 \begin{figure}[!tb]
 \centering
@@ -608,14 +604,10 @@ label5& 0.87\% & 1.08\% & 1.13\%& 1.18\%& 100\%& 1.07\% \\
 
 
 \section{Evaluation of Interactive Segmentation Algorithms}
-We then test the four algorithms respectively with 96*5 auto-generated user labels and compare the result with the outcome of the previous 96*5 human-made labels. We also provide labels generated in the following ways for comparison: (1) Randomly select a superpixel in each superpixel group for labelling(all-group-2). (2) Randomly select certain percentage of superpixels among all superpixels without grouping them(all-group-1). 
-The result is shown in figure \ref{fig:pr boxplot}. In each figure, the first two boxplots show the precision value of human-made labels and auto-generate labels while the following two boxplots show the recall value. 
+We then test the four algorithms respectively with 96*5 auto-generated user labels and compare the result with the outcome of the previous 96*5 human-made labels. We also provide labels generated in the following ways for comparison: (1) Randomly select a superpixel in each superpixel group for labelling(all-group-2). (2) Randomly select certain percentage of superpixels among all superpixels without grouping them(all-group-1).
+The result is shown in figure \ref{fig:pr boxplot}. In each figure, the first two boxplots show the precision value of human-made labels and auto-generate labels while the following two boxplots show the recall value.
 
-
-We make the following observations: (1) The performance of four algorithms remains similar under our auto-generated labels (the second column) compared with human-made labels, which confirms the effectiveness of our simulation methods. (2) The thrid set of labels (the third column) are generated by cover all superpixel groups, thus providing more information than normal human labels could do, as could be indicated by its high precision value.(3) The fourth set of labels(the fourth column)  are generated randomly on all the superpixels. It shows the lowest precision level as it does not provide diverse information as superpixel groups could do.  (3) GSC \citep{gulshan2010geodesic} remains the best system on the whole dataset with high accuracy and stable performance. While RW \citep {grady2006random} and BJ \citep{boykov2001interactive}are expected to have similar performance, RW presents more robustness on both sets of labels. The SP\citep{bai2007geodesic} algorithm still achieves the poorest performance, mainly due to its lack of sensitivity to label locations.
-
-
-
+We make the following observations: (1) The performance of four algorithms remains similar under our auto-generated labels (the second column) compared with human-made labels, which confirms the effectiveness of our simulation methods. (2) The thrid set of labels (the third column) are generated by cover all superpixel groups, thus providing more information than normal human labels could do, as could be indicated by its high precision value.(3) The fourth set of labels(the fourth column)  are generated randomly on all the superpixels. It shows the lowest precision level as it does not provide diverse information as superpixel groups could do.  (3) GSC \cite{gulshan2010geodesic} remains the best system on the whole dataset with high accuracy and stable performance. While RW \cite {grady2006random} and BJ \cite{boykov2001interactive}are expected to have similar performance, RW presents more robustness on both sets of labels. The SP\cite{bai2007geodesic} algorithm still achieves the poorest performance, mainly due to its lack of sensitivity to label locations.
 
 \begin{figure}[!tb]
 \centering
@@ -654,6 +646,8 @@ In this paper, we propose a semi-automatic labelling generation method for evalu
 \bibliographystyle{plain}
 \bibliography{references}
 
+%\begin{thebibliography}{4}
+%
 %\end{thebibliography}
 
 
