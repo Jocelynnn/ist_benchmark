@@ -46,10 +46,10 @@
 \mainmatter  % start of an individual contribution
 
 % first the title is needed
-\title{Semi-automatic Labelling Generation for Interactive Image Segmentation Evaluation}
+\title{Semi-automatic Scribble Generation for Interactive Image Segmentation Evaluation}
 
 % a short form should be given in case it is too long for the running head
-\titlerunning{Labelling Generation for Interactive Image Segmentation Evaluation}
+\titlerunning{Scribble Generation for Interactive Image Segmentation Evaluation}
 
 % the name(s) of the author(s) follow(s) next
 %
@@ -57,7 +57,7 @@
 % their surnames. This ensures that the names appear correctly in
 % the running heads and the author index.
 %
-\author{Bingjie Jiang \and Tongwei Ren \and Jia Bei}
+\author{Bingjie Jiang \and Tongwei Ren$^{*}$ \and Jia Bei}
 %
 \authorrunning{Bingjie Jiang, Tongwei Ren, Jia Bei}
 % (feature abused for this document to repeat the title also on left hand pages)
@@ -78,35 +78,41 @@ bjie.jiang@gmail.com, rentw@nju.edu.cn, beijia@software.nju.edu.cn
 \emph{This paper proposes a semi-automatic labelling generation method for evaluating interactive segmentation algorithms. We analyze the differences between multiple user labels and the resulting variance in their segmentation results when applied to four state-of-the-art segmentation algorithms. We then figure out the underlying consistence between user labels on the level of defined superpixel group. We also prove the validity of points as input of interactive segmentation algorithms. Finally, we propose a semi-automatic labelling generation methodology and apply the auto-generated labels to four state-of-the-art algorithms. Our method provides an objective way to evaluate interactive segmentation methods and is aimed at reducing human labour needed in this field in the future.
 }
 
-\keywords{Human interaction differences;Automatic labelling; Evaluation of interactive segmentation algorithms}
+\keywords{Human interaction differences; Automatic labelling; Evaluation of interactive segmentation algorithms}
 \end{abstract}
 
 
 \section{Introduction}
 % Interactive image segmentation is important
-% requirement of interaction: less interaction, suitable for different users
-% current evaluation approach and its drawbacks: does not consider multiple users or high human labor
+As the foundation of numerous multimedia applications, interactive image segmentation has been widely utilized in object recognition \cite{Bao13tip}, image retrieval \cite{Xu14icme}, scene analysis \cite{Li15tcsvt}, visual tracking \cite{Ren15mmsys}, social media mining \cite{Sang12tmm} and so on. It can effectively extract the desired objects from images with the assistance of manual labels, which is used to approximately outline the regions of objects. There have been several types of manual labels applied in the existing interactive image segmentation algorithms, including triple map, boundary box and scribble, in which scribble is commonly used for its simplicity and flexibility in labelling.
 
-Interactive image segmentation is an important problem in the filed of computer vision. It has been extensively studied in the latest decade because the power of human assistance enables the extraction of desired objects from the image more accurately.The involved human interaction is required to be informative so that it could serve as effective inputs of certain image segmentation algorithms. Yet it should not involve too much human labor in consideration of real-life application. However,when it comes to the evaluation of these algorithms, the comparison can hardly be objective due to the limited label source and rather subjective human interferences. Usually, interactive image segmentation algorithms are tested upon user labels provided by a specific author or experiment. In this way, the situation of multiple users are neglected and the performance of segmentation result could heavily depend on certain batch of human labels, rendering the result not convincing enough when compared with other algorithms. In order to evaluate different algorithms in an objective and universal way, it is necessary to provide a large dataset of varied labels. But it should involve a great amount of time and human labour to set up such kind of database and many measures need to be taken to ensure the variety of this dataset. Under this guidance, we come up with the idea of generating semi-automatic labels using the ground truth of certain images.With the help of our automatically generated labels, the volume of the dataset can be greatly increased with little cost of time and labour. The work of establishing an image label dataset can therefore be largely reduced and the evaluation of segmentation algorithms can  be more objective.
+% requirement of interaction: suitable for different users, current evaluation approach and its drawbacks: does not consider multiple users or high human labor
+For different users may provide various scribbles in labelling, an effective interactive image segmentation algorithm should be robust to scribbles, i.e., its performance should not be obviously influenced by the difference of scribbles. It requires to evaluate interactive image segmentation algorithms on the scribbles provided by numbers of users with sufficient variety. However, in the evaluations of the existing algorithms \textcolor{red}{***}, only the scribbles provided by one specific user is used to reduce human labor. Obviously, such evaluations are not sufficient for they contain high randomness in the performance of different segmentation algorithms in comparison. Moreover, if the scribbles are intentionally selected, the evaluations may have a bias to some algorithms, which may influence the fairness of the evaluations.
+
+% The involved human interaction is required to be informative so that it could serve as effective inputs of certain image segmentation algorithms. Yet it should not involve too much human labor in consideration of real-life application. However, when it comes to the evaluation of these algorithms, the comparison can hardly be objective due to the limited label source and rather subjective human interferences. Usually, interactive image segmentation algorithms are tested upon user labels provided by a specific author or experiment. In this way, the situation of multiple users are neglected and the performance of segmentation result could heavily depend on certain batch of human labels, rendering the result not convincing enough when compared with other algorithms. In order to evaluate different algorithms in an objective and universal way, it is necessary to provide a large dataset of varied labels. But it should involve a great amount of time and human labour to set up such kind of database and many measures need to be taken to ensure the variety of this dataset. Under this guidance, we come up with the idea of generating semi-automatic labels using the ground truth of certain images. With the help of our automatically generated labels, the volume of the dataset can be greatly increased with little cost of time and labour. The work of establishing an image label dataset can therefore be largely reduced and the evaluation of segmentation algorithms can  be more objective.
+
 % our work
-This paper deals with the problem of evaluating interactive segmentation algorithms in an objective way. The contribution of this paper includes: (1)  Analysis of differences and consistence between different user labels in a quantitative way. By clustering pixels and further decomposing them into groups, we figured out both consistence and inconsistence of human labels and their influence on segmentation results.(2)A semi-automatic labelling generation method. Based on the consistence of user labels, we figured out the distribution of key component coverage rate and use it to select key features from the image for further labelling. (3) General evaluation of interactive segmentation methods. Our automatically generated labels are then applied to different methods and the performance of these methods are evaluated.
-% paper organization
-The rest of the paper is organized as follows: In section.2, we introduced the related works. In section.3, we introduce the design of the dataset and experiment, and section.4 presents the idea of user interaction difference and the underlying consistence . In section.5 we describe the details of our label generation methodology, and section.6 analyzes the performance of four algorithms on the auto-generated labels. The paper concludes in section.7.
+To overcome the above problem, we propose a semi-automatic scribble generation approach for interactive image segmentation evaluation. The proposed approach still only requires one user to take participation in evaluation. Instead of just providing his/her scribbles, the user should generate the ground truths of segmentation results, which can be efficiently obtained after several interactions. Then, based on the ground truths, a number of scribbles with variety will be automatically generated to stimulate the labelling results provided by different users. Finally, interactive image segmentation algorithms can be comprehensively evaluated using the scribbles.
 
-\section{Related Work}
+%This paper deals with the problem of evaluating interactive segmentation algorithms in an objective way. The contribution of this paper includes: (1)  Analysis of differences and consistence between different user labels in a quantitative way. By clustering pixels and further decomposing them into groups, we figured out both consistence and inconsistence of human labels and their influence on segmentation results.(2)A semi-automatic labelling generation method. Based on the consistence of user labels, we figured out the distribution of key component coverage rate and use it to select key features from the image for further labelling. (3) General evaluation of interactive segmentation methods. Our automatically generated labels are then applied to different methods and the performance of these methods are evaluated.
+
+% paper organization
+\textcolor{red}{The rest of the paper is organized as follows: In section.2, we introduced the related works. In section.3, we introduce the design of the dataset and experiment, and section.4 presents the idea of user interaction difference and the underlying consistence . In section.5 we describe the details of our label generation methodology, and section.6 analyzes the performance of four algorithms on the auto-generated labels. The paper concludes in section.7.}
+
+\section{\textcolor{red}{Related Work}}
 
 % existing interactive image segmentation methods
-% existing evaluation methods
 Many state-of-the-art algorithms in interactive image segmentation have been proposed, starting from Boycov et. al \cite{boykov2001interactive}, which utilizes max-flow/min-cut energy minimization to achieve foreground/background interactive segmentation. The Grabcut algorithm\cite{rother2004grabcut} further reduces the user interaction by allowing users to label a rectangle around the foreground object. In random walker \cite{grady2006random}, each pixel is assigned a maximal probability which a random walker could reach it starting from the corresponding labels. Bai and Sapiro come up with an interactive framework for soft segmentation and matting of natural images and videos in \cite{bai2007geodesic}. Gulshan\cite{gulshan2010geodesic} introduces a new shape constraint for interactive image segmentation by shifting from a single star to multiple stars and adopts Geodesic paths instead of Euclidean rays.
 
+% existing evaluation methods
 For segmentation algorithm evaluation, Martin et. al  \cite{martin2001database} presents an image database of a wide variety of natural scenes and its application to segmentation algorithm evaluation.  Unnikrishnan \cite{unnikrishnan2007toward} proposed the normalized probabilistic rand (NPR) index, which can be used to perform a quantitative comparison between image segmentation algorithms. Kevin McGuinness \cite{mcguinness2010comparative} developed a tool set for comparative evaluation of interactive segmentation algorithms. Moschidis and Jim Graham carried out systematic performance evaluation of three efficient image segmentation algorithms in \cite{moschidis2010systematic}, which focuses on their function as the computational part of an interactive segmentation system.
 
 \section{Dataset}
 % introduction of berkeley dataset
-Our dataset contains 96 images from publicly available Berkeley Segmentation Dataset\cite{martin2001database}. These images are selected so that each of them contains at least one obvious object which could be unambiguously explained to participants.These images are also representative of some major challenges of image segmentation, including fuzzy boundary, complex texture and complex lighting conditions. Ground truths are precisely hand-labeled for each image in order to avoid any bias.
+We construct our data set Berkeley Segmentation Dataset \cite{martin2001database} in size of 96 images. Each image contains at least one obvious object, which could be unambiguously explained to users. And these images are also representative of some major challenges of image segmentation, including fuzzy boundary, complex texture and complex lighting conditions. The ground truths of segmentation results are precisely hand-labelled for each image to avoid biases.
 
 % our labelling (including how to collect the labels)
-In collecting labels, We use the software provided by The K-Space Segmentation Tool Set, \cite{mcguinness2008k}. The 5 participants are all students from computer science background but have limited knowledge in interactive image segmentation. Each participant was given a clear guidance and enough time to familiarize themselves with the software. Sample labels were also provided in avoid of misunderstanding . 
+To analyze the rules of scribble generation, we invite five users to manually label the images with The K-Space Segmentation Tool Set \cite{mcguinness2008k}. All the users are the students with basic computer operating skills but limited knowledge about interactive image segmentation. Each user is given a clear guidance and enough time to familiarize themselves with the labelling software, and all the labelling operations are carried out by mouse.
 
 %Then in real experiment, each participants are provided with 96 images and the corresponding ground-truth which tells exactly which object to extract. However, we hide the segmentation result from user so that they will not realize if they have provided a "good" mark or not. We also confined the time for labeling each image. In this way, we manage to (1)limit the effort of participants to draw scribbles in consideration of real-life application.
 %(2)obtain the most natural response of users rather than inputs guided by segmentation result.
@@ -124,52 +130,47 @@ In our person-oriented experiments, great differences among user labels were obs
 $$intersection\ of\ marked\ pixels/union\ of\ marked\ pixels$$
 We make the following observations: (1)The value of intersection/union between every two people is quite small, which indicates that labels made by different people have little in common. Figure \ref{fig:example} shows an example of user labels which share no common pixels (2) People share less similarities in background labels than foreground. It is mainly because the foreground objects are confined to a certain area while the backgrounds are more extensive.
 
-
+\begin{table}
+\centering
+\caption{intersection rate of foreground labels.}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+ Label & label 1 & label 2 & label 3 & label 4& label 5 \\
+\hline
+label 1 & -- & 2.38\% & 3.52\% & 2.01\%& 1.66\% \\
+\hline
+label 2 & 2.38\% & -- & 2.71\% & 2.17\%& 2.25\% \\
+\hline
+label 3 & 3.52\% & 2.70\% & -- & 2.05\%& 2.01\%\\
+\hline
+label 4 & 2.01\% & 2.17\% & 2.05\% & -- & 1.84\% \\
+\hline
+label 5 & 1.66\% & 2.25\% & 2.01\% & 1.84\%& -- \\
+\hline
+\end{tabular}
+\label{ta:intersection rate f}
+\end{table}
 
 
 \begin{table}
-\parbox{.35\linewidth}{
 \centering
+\caption{intersection rate of background labels.}
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
  Label & label 1 & label 2 & label 3 & label 4& label 5 \\
 \hline
-label 1 & 100\% & 2.38\% & 3.52\% & 2.01\%& 1.66\% \\
+label 1 & -- & 0.87\% & 0.86\% & 0.09\%& 0.63\% \\
 \hline
-label 2 & 2.38\% & 100\% & 2.71\% & 2.17\%& 2.25\% \\
+label 2 & 0.87\% & -- & 0.97\% & 0.21\%& 0.73\% \\
 \hline
-label 3 & 3.52\% & 2.70\% & 100\% & 2.05\%& 2.01\%\\
+label 3 & 0.86\% & 0.97\% & -- & 0.16\%& 0.68\%\\
 \hline
-label 4 & 2.01\% & 2.17\% & 2.05\% & 100\%& 1.84\% \\
+label 4 & 0.09\% & 0.21\% & 0.16\% & -- & 0.67\% \\
 \hline
-label 5 & 1.66\% & 2.25\% & 2.01\% & 1.84\%& 100\% \\
-\hline
-\end{tabular}
-\caption{intersection rate of foreground labels}
-\label{ta:intersection rate f}
-}
-\hfill
-\parbox{.35\linewidth}{
-\centering
-\begin{tabular}{|c|c|c|c|c|c|}
-\hline
- Label & label 1 & label 2 & label 3 & label 4& label 5 \\
-\hline
-label 1 & 100\% & 0.87\% & 0.86\% & 0.09\%& 0.63\% \\
-\hline
-label 2 & 0.87\% & 100\% & 0.97\% & 0.21\%& 0.73\% \\
-\hline
-label 3 & 0.86\% & 0.97\% & 100\% & 0.16\%& 0.68\%\\
-\hline
-label 4 & 0.09\% & 0.21\% & 0.16\% & 100\%& 0.67\% \\
-\hline
-label 5 & 0.63\% & 0.73\% & 0.68\% & 0.67\% & 100\% \\
+label 5 & 0.63\% & 0.73\% & 0.68\% & 0.67\% & -- \\
 \hline
 \end{tabular}
-\captionsetup{justification=centerlast}
-\caption{intersection rate of background labels}
 \label{ta:intersection rate b}
-}
 \end{table}
 
 
@@ -380,91 +381,87 @@ Based on the rather stable level of group coverage, we calculate the group overl
 
 \begin{table}[!tb]
 \centering
+\caption{Superpixel group overlap between labels in foregorund.}
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline
  & label 1 & label 2&label 3&label 4&label 5&mean\\
 \hline
-label1& 100\% & 91.44\% & 92.86\%& 89.71\%& 88.64\%&90.66\%\\
+label1& -- & 91.44\% & 92.86\%& 89.71\%& 88.64\%&90.66\%\\
 \hline
-label2& 83.86\% & 100\% & 90.75\%& 88.82\%& 85.93\%&87.34\%\\
+label2& 83.86\% & -- & 90.75\%& 88.82\%& 85.93\%&87.34\%\\
 \hline
-label3& 83.40\% & 89.04\% & 100\%& 88.18\%& 84.62\%&86.31\% \\
+label3& 83.40\% & 89.04\% & -- & 88.18\%& 84.62\%&86.31\% \\
 \hline
-label4& 80.75\% & 87.15\% & 88.15\%& 100\%& 82.44\%&84.62\% \\
+label4& 80.75\% & 87.15\% & 88.15\%& -- & 82.44\%&84.62\% \\
 \hline
-label5& 82.53\% & 92.06\% & 92.10\%& 89.31\%& 100\%&90.00\% \\
+label5& 82.53\% & 92.06\% & 92.10\%& 89.31\%& -- &90.00\% \\
 \hline
 \end{tabular}
-\captionsetup{justification=centerlast}
-\caption{Superpixel group overlap between labels in foregorund}
 \label{ta:group overlap f}
 \end{table}
 
 \begin{table}[!tb]
+\caption{Superpixel group overlap between labels in backgorund.}
 \centering
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline
  & label 1 & label 2&label 3&label 4&label 5&mean\\
 \hline
-label1& 100\% &80.19\% & 81.61\%& 72.23\%& 86.97\%&80.25\%\\
+label1& -- &80.19\% & 81.61\%& 72.23\%& 86.97\%&80.25\%\\
 \hline
-label2& 80.22\% & 100\% & 82.65\%& 74.86\%& 88.57\%&81.58\% \\
+label2& 80.22\% & -- & 82.65\%& 74.86\%& 88.57\%&81.58\% \\
 \hline
-label3& 80.25\% & 81.42\% & 100\%& 74.09\%& 88.36\%&81.03\%\\
+label3& 80.25\% & 81.42\% & -- & 74.09\%& 88.36\%&81.03\%\\
 \hline
-label4& 77.40\% & 80.30\% & 80.15\%& 100\%& 88.78\%&81.66\% \\
+label4& 77.40\% & 80.30\% & 80.15\%& -- & 88.78\%&81.66\% \\
 \hline
-label5& 76.36\% & 77.76\% & 78.21\%& 73.21\%& 100\%&76.39\%\\
+label5& 76.36\% & 77.76\% & 78.21\%& 73.21\%& -- &76.39\%\\
 \hline
 \end{tabular}
-\captionsetup{justification=centerlast}
-\caption{Superpixel group overlap between labels in backgorund}
 \label{ta:group overlap b}
 \end{table}
 
-Based on analysis on superpixel and superpixel group level, we safely conclude that labels of different users are consistent on the defined superpixel group level but inconsistent on superpixel level. It is because that there are limited amount of key features of an object. But certain key features could always be represented by many different superpixels and users are usually sensitive to different representative superpixels. 
+Based on analysis on superpixel and superpixel group level, we safely conclude that labels of different users are consistent on the defined superpixel group level but inconsistent on superpixel level. It is because that there are limited amount of key features of an object. But certain key features could always be represented by many different superpixels and users are usually sensitive to different representative superpixels.
 \begin{table}[!tb]
 \centering
+\caption{Superpixel overlap between labels in foreground.}
 \begin{tabular}{|c|c|c|c|c|c|c|}
 \hline
  & label 1 & label 2&label 3&label 4&label 5&mean\\
 \hline
-label1& 100\% & 3.70\% & 3.69	\%& 3.39\%& 3.35\%& 3.53\%\\
+label1& -- & 3.70\% & 3.69	\%& 3.39\%& 3.35\%& 3.53\%\\
 \hline
-label2& 2.91\% & 100\% & 3.32\%& 3.14\%& 3.00\% & 3.09\%\\
+label2& 2.91\% & -- & 3.32\%& 3.14\%& 3.00\% & 3.09\%\\
 \hline
-label3& 2.78\% & 3.23\% & 100\%& 2.93\%& 2.90\%& 2.96\% \\
+label3& 2.78\% & 3.23\% & -- & 2.93\%& 2.90\%& 2.96\% \\
 \hline
-label4& 2.24\% & 2.63\% & 2.55\%& 100\%& 2.37\%& 2.45\%\\
+label4& 2.24\% & 2.63\% & 2.55\%& -- & 2.37\%& 2.45\%\\
 \hline
-label5& 2.25\% & 2.56\% & 2.58\%& 2.45\%& 100\%& 2.46\% \\
+label5& 2.25\% & 2.56\% & 2.58\%& 2.45\%& -- & 2.46\% \\
 \hline
 \end{tabular}
-\captionsetup{justification=centerlast}
-\caption{superpixel overlap between labels in foreground}
 \label{ta: sp overlap f}
 \end{table}
 
 
 \begin{table}[!tb]
 \centering
+\caption{Superpixel overlap between labels in background.}
 \begin{tabular}{|c|c|c|c|c|c|c|}
 \hline
  & label 1 & label 2&label 3&label 4&label 5&mean\\
 \hline
-label1& 100\% & 1.65\% & 1.59	\%& 0.49\%& 1.42\%& 1.29\%\\
+label1& -- & 1.65\% & 1.59	\%& 0.49\%& 1.42\%& 1.29\%\\
 \hline
-label2& 1.70\% & 100\% & 5.33\%& 1.91\%& 1.81\%& 2.69\% \\
+label2& 1.70\% & -- & 5.33\%& 1.91\%& 1.81\%& 2.69\% \\
 \hline
-label3& 1.52\% & 1.75\% & 100\%& 0.65\%& 1.77\%& 1.42\% \\
+label3& 1.52\% & 1.75\% & --& 0.65\%& 1.77\%& 1.42\% \\
 \hline
-label4& 0.39\% & 0.64\% & 0.59\%& 100\%& 1.56\%& 0.80\%\\
+label4& 0.39\% & 0.64\% & 0.59\%& --& 1.56\%& 0.80\%\\
 \hline
-label5& 0.87\% & 1.08\% & 1.13\%& 1.18\%& 100\%& 1.07\% \\
+label5& 0.87\% & 1.08\% & 1.13\%& 1.18\%& --& 1.07\% \\
 \hline
 \end{tabular}
-\captionsetup{justification=centerlast}
-\caption{superpixel overlap between labels in background}
 \label{ta: sp overlap b}
 \end{table}
 
@@ -546,34 +543,49 @@ We then test the four algorithms respectively with 96*5 auto-generated user labe
 \section{Conclusion}
 In this paper, we propose a semi-automatic labelling generation method for evaluating interactive segmentation algorithms. We analyze the differences between multiple user labels and the corresponding segmentation results. Then we figure out the underlying consistence between user labels on the defined superpixel group level. After validating the effectiveness of point-level simulation, a labelling simulation methodology is proposed to simulate user labels. Finally, four state-of-art algorithms are tested and evaluated by the auto-generated labels.
 
+\section{Acknowledgement}This work is supported by the National Science Foundation of China (61321491, 61202320), Research Project of Excellent State Key Laboratory (61223003), National Undergraduate Innovation Project (G1410284075) and Collaborative Innovation Center of Novel Software Technology and Industrialization.\textcolor{red}{format}
 
 %\bibliographystyle{plain}
 %\bibliography{references}
-\small{
-\begin{thebibliography}{12}
+\begin{thebibliography}{4}
 
-\bibitem{boykov2001interactive} Boykov, Yuri Y and Jolly, M-P. Interactive graph cuts for optimal boundary \& region segmentation of objects in ND images. IEEE International Conference on Computer Vision. 1, 105--112 (2001)
+\bibitem{Bao13tip}Bing-Kun Bao, Guangcan Liu, Richang Hong, Shuicheng Yan, and Changsheng Xu. General subspace learning with corrupted training data via graph embedding. IEEE Transactions on Image Processing, 22(11):4380--4393 (2013)
 
-\bibitem{rother2004grabcut} Carsten Rother, Vladimir Kolmogorov, and Andrew Blake. Grabcut: Inter-
-active foreground extraction using iterated graph cuts. ACM Transactions
-on Graphics (TOG), 23(3):309-314, 2004.
-\bibitem{bai2007geodesic} Xue Bai and Guillermo Sapiro. A geodesic framework for fast interactive image and video segmentation and matting. In Computer Vision, 2007. ICCV 2007. IEEE 11th International Conference on, pages 1-8. IEEE, 2007.
-\bibitem{grady2006random} Leo Grady. Random walks for image segmentation. Pattern Analysis and Machine Intelligence, IEEE Transactions on, 28(11):1768-1783, 2006.
-\bibitem{gulshan2010geodesic} Varun Gulshan, Carsten Rother, Antonio Criminisi, Andrew Blake, and Andrew Zisserman. Geodesic star convexity for interactive image segmen- tation. In Computer Vision and Pattern Recognition (CVPR), 2010 IEEE Conference on, pages 3129-3136. IEEE, 2010.
-\bibitem{martin2001database} David Martin, Charless Fowlkes, Doron Tal, and Jitendra Malik. A database of human segmented natural images and its application to evaluating seg- mentation algorithms and measuring ecological statistics. In Computer Vi- sion, 2001. ICCV 2001. Proceedings. Eighth IEEE International Conference on, volume 2, pages 416-423. IEEE, 2001.
-\bibitem{mcguinness2010comparative} Kevin McGuinness and Noel E Oconnor. A comparative evaluation of inter- active segmentation algorithms. Pattern Recognition, 43(2):434--444, 2010.
+\bibitem{Xu14icme} 	Xiangyang Xu, Wenjing Geng, Ran Ju, Yang Yang, Tongwei Ren, Gangshan Wu. OBSIR: Object-based stereo image retrieval. IEEE International Conference on Multimedia and Expo. 1-6 (2014)
+
+\bibitem{Li15tcsvt} Teng Li, Huan Chang, Meng Wang, Bingbing Ni, Richang Hong, and Shuicheng Yan. Crowded scene analysis: A survey. IEEE Transactions on Circuits and Systems for Video Technology. 25(3), 367--386 (2015)
+
+\bibitem{Ren15mmsys}Tongwei Ren, Zhongyan Qiu, Yan Liu, Tong Yu, and Jia Bei. Soft-assigned bag of features for object tracking. Multimedia Systems. 21(2):189-205 (2015)
+
+\bibitem{Sang12tmm}Jitao Sang, Changsheng Xu, Jing Liu. User-Aware image tag refinement via ternary semantic analysis. IEEE Transactions on Multimedia. 14(3-2):883--895 (2012)
+
+
+\bibitem{boykov2001interactive} Boykov, Yuri Y and Jolly, M-P. Interactive graph cuts for optimal boundary \& region segmentation of objects in ND images. IEEE International Conference on Computer Vision. 105--112 (2001)
+
+\bibitem{rother2004grabcut} Carsten Rother, Vladimir Kolmogorov, and Andrew Blake. Grabcut: Interactive foreground extraction using iterated graph cuts. ACM Transactions on Graphics. 23(3):309-314 (2004)
+    
+\bibitem{bai2007geodesic} Xue Bai and Guillermo Sapiro. A geodesic framework for fast interactive image and video segmentation and matting. IEEE International Conference on Computer Vision. 1--8 (2007)
+
+\bibitem{grady2006random} Leo Grady. Random walks for image segmentation. IEEE Transactions on Pattern Analysis and Machine Intelligence. 28(11):1768-1783 (2006)
+
+\bibitem{gulshan2010geodesic} Varun Gulshan, Carsten Rother, Antonio Criminisi, Andrew Blake, and Andrew Zisserman. Geodesic star convexity for interactive image segmentation. IEEE Conference on Computer Vision and Pattern Recognition. 3129--3136 (2010)
+    
+\bibitem{martin2001database} David Martin, Charless Fowlkes, Doron Tal, and Jitendra Malik. A database of human segmented natural images and its application to evaluating segmentation algorithms and measuring ecological statistics. IEEE International Conference on Computer Vision. 416--423 (2001)
+    
+\bibitem{mcguinness2010comparative} Kevin McGuinness and Noel E Oconnor. A comparative evaluation of interactive segmentation algorithms. Pattern Recognition. 43(2):434--444 (2010)
+    
 \bibitem{mcguinness2008k} Kevin McGuinness and Noel E OConnor. The k-space segmentation tool set. 2008.
-\bibitem{fu2008saliency} Yu Fu, Jian Cheng, Zhenglong Li, and Hanqing Lu. Saliency cuts: An automatic approach to object segmentation. In Pattern Recognition, 2008. ICPR 2008. 19th International Conference on, pages 1-4. IEEE, 2008.
-\bibitem{achanta2010slic} Radhakrishna Achanta, Appu Shaji, Kevin Smith, Aurelien Lucchi, Pascal Fua, and Sabine Susstrunk. Slic superpixels. Technical report, 2010.
-\bibitem{vedaldi08vlfeat} A. Vedaldi and B. Fulkerson. VLFeat: An open and portable library of
-computer vision algorithms. http://www.vlfeat.org/, 2008.
-\bibitem{unnikrishnan2007toward} Ranjith Unnikrishnan, Caroline Pantofaru, and Martial Hebert. Toward
-objective evaluation of image segmentation algorithms. Pattern Analysis
-and Machine Intelligence, IEEE Transactions on, 29(6):929-944, 2007.
-\bibitem{moschidis2010systematic}Emmanouil Moschidis and Jim Graham. A systematic performance evalu-
-ation of interactive image segmentation methods based on simulated user interaction. In Biomedical Imaging: From Nano to Macro, 2010 IEEE In- ternational Symposium on, pages 928-931. IEEE, 2010.
-\end{thebibliography}
 
-}
+\bibitem{fu2008saliency} Yu Fu, Jian Cheng, Zhenglong Li, and Hanqing Lu. Saliency cuts: An automatic approach to object segmentation. International Conference on Pattern Recognition. 1--4 (2008)
+    
+\bibitem{achanta2010slic} Radhakrishna Achanta, Appu Shaji, Kevin Smith, Aurelien Lucchi, Pascal Fua, and Sabine Susstrunk. Slic superpixels. Technical report (2010)
+
+\bibitem{vedaldi08vlfeat} A. Vedaldi and B. Fulkerson. VLFeat: An open and portable library of computer vision algorithms. http://www.vlfeat.org/, 2008.
+    
+\bibitem{unnikrishnan2007toward} Ranjith Unnikrishnan, Caroline Pantofaru, and Martial Hebert. Toward objective evaluation of image segmentation algorithms. IEEE Transactions on Pattern Analysis and Machine Intelligence. 29(6):929-944 (2007)
+    
+\bibitem{moschidis2010systematic}Emmanouil Moschidis and Jim Graham. A systematic performance evaluation of interactive image segmentation methods based on simulated user interaction. IEEE International Symposium on Biomedical Imaging: From Nano to Macro, 928--931 (2010)
+    
+\end{thebibliography}
 
 \end{document}
