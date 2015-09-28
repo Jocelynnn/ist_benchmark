@@ -18,27 +18,21 @@
 
 \documentclass[runningheads,a4paper]{llncs}
 
-\usepackage{amssymb}
-\setcounter{tocdepth}{3}
-\usepackage{graphicx}
-\usepackage{multirow}
-\usepackage[table,xcdraw]{xcolor}
-\usepackage{algorithm}
-\usepackage{algorithmic}
-\usepackage{amsmath}
+\usepackage{amssymb,graphicx,multirow,algorithm,algorithmic,amsmath,makecell,color,url}
 %\usepackage{natbib}
-\usepackage{graphicx}
+\usepackage[table,xcdraw]{xcolor}
+\setcounter{tocdepth}{3}
+
 \usepackage{subfigure}
 \usepackage{empheq}
-\usepackage{caption}
 
-
-\usepackage{url}
 %\urldef{\mailsa}\path|{alfred.hofmann, ursula.barth, ingrid.haas, frank.holzwarth,|
 %\urldef{\mailsb}\path|anna.kramer, leonie.kunz, christine.reiss, nicole.sator,|
 %\urldef{\mailsc}\path|erika.siebert-cole, peter.strasser, lncs}@springer.com|
 \newcommand{\keywords}[1]{\par\addvspace\baselineskip
 \noindent\keywordname\enspace\ignorespaces#1}
+\hyphenpenalty=5000
+\tolerance=1000
 
 \begin{document}
 
@@ -75,8 +69,8 @@ bjie.jiang@gmail.com, rentw@nju.edu.cn, beijia@software.nju.edu.cn
 
 
 \begin{abstract}
-\emph{This paper proposes a semi-automatic labelling generation method for evaluating interactive segmentation algorithms. We analyze the differences between multiple user labels and the resulting variance in their segmentation results when applied to four state-of-the-art segmentation algorithms. We then figure out the underlying consistence between user labels on the level of defined superpixel group. We also prove the validity of points as input of interactive segmentation algorithms. Finally, we propose a semi-automatic labelling generation methodology and apply the auto-generated labels to four state-of-the-art algorithms. Our method provides an objective way to evaluate interactive segmentation methods and is aimed at reducing human labour needed in this field in the future.
-}
+This paper proposes a semi-automatic labelling generation method for evaluating interactive segmentation algorithms. We analyze the differences between multiple user labels and the resulting variance in their segmentation results when applied to four state-of-the-art segmentation algorithms. We then figure out the underlying consistence between user labels on the level of defined superpixel group. We also prove the validity of points as input of interactive segmentation algorithms. Finally, we propose a semi-automatic labelling generation methodology and apply the auto-generated labels to four state-of-the-art algorithms. Our method provides an objective way to evaluate interactive segmentation methods and is aimed at reducing human labour needed in this field in the future.\textcolor{red}{(no more than 150 words)}
+
 
 \keywords{Human interaction differences; Automatic labelling; Evaluation of interactive segmentation algorithms}
 \end{abstract}
@@ -112,12 +106,12 @@ For segmentation algorithm evaluation, Martin et. al  \cite{martin2001database} 
 We construct our data set Berkeley Segmentation Dataset \cite{martin2001database} in size of 96 images. Each image contains at least one obvious object, which could be unambiguously explained to users. And these images are also representative of some major challenges of image segmentation, including fuzzy boundary, complex texture and complex lighting conditions. The ground truths of segmentation results are precisely hand-labelled for each image to avoid biases.
 
 % our labelling (including how to collect the labels)
-To analyze the rules of scribble generation, we invite five users to manually label the images with The K-Space Segmentation Tool Set \cite{mcguinness2008k}. All the users are the students with basic computer operating skills but limited knowledge about interactive image segmentation. Each user is given a clear guidance and enough time to familiarize themselves with the labelling software, and all the labelling operations are carried out by mouse.
+To analyze the rules for scribble generation, we invite five users to manually label the images with The K-Space Segmentation Tool Set \cite{mcguinness2008k}. All the users are the students with basic computer operating skills but limited knowledge about interactive image segmentation. Each user is given a clear guidance and enough time to familiarize themselves with the labelling software, and all the labelling operations are carried out by mouse.
 
 %Then in real experiment, each participants are provided with 96 images and the corresponding ground-truth which tells exactly which object to extract. However, we hide the segmentation result from user so that they will not realize if they have provided a "good" mark or not. We also confined the time for labeling each image. In this way, we manage to (1)limit the effort of participants to draw scribbles in consideration of real-life application.
 %(2)obtain the most natural response of users rather than inputs guided by segmentation result.
 
-\section{Analysis of User Interaction Differences}
+\section{Scribble Variety Analysis}
 %\begin{figure}[h!]
 %\centering
 %\includegraphics[width=0.5\columnwidth]{images/screenshot.png}
@@ -125,54 +119,39 @@ To analyze the rules of scribble generation, we invite five users to manually la
 %\label{fig:screenshot}
 %\end{figure}
 
-\subsection{User-interaction differences}
-In our person-oriented experiments, great differences among user labels were observed. It comes to us instinctively that different people tend to consider different parts of foreground and background object as salient. Under this guidance, we processed the 5 label files of the same image and calculated the pair-wise intersection rate. The result is shown in Table \ref{ta:intersection rate f} and \ref{ta:intersection rate b}. The pair-wise intersection rate is defined as follows:
-$$intersection\ of\ marked\ pixels/union\ of\ marked\ pixels$$
-We make the following observations: (1)The value of intersection/union between every two people is quite small, which indicates that labels made by different people have little in common. Figure \ref{fig:example} shows an example of user labels which share no common pixels (2) People share less similarities in background labels than foreground. It is mainly because the foreground objects are confined to a certain area while the backgrounds are more extensive.
+An instinctive observation is that different users cannot keep high consistency of scribble generation in labelling images. In order to validate the observation, we analyze the variety of scribbles generated by different users. To facilitate the following description, we indicate the five users with $A$, $B$, $C$, $D$, and $E$. To the $k$th image, the scribbles generated by user $n$ are represented as $s^{k}_{n}$, here $n\in \{A,B,C,D,E\}$. And the scribbles generated by user $n$ on all the images are represented as $S_{n}$.
 
-\begin{table}
+\subsection{Scribble difference}
+
+We first analyze the difference of scribbles by pair-wise intersection rate. To the $k$th image, the intersection rate of the scribbles generated by user $m$ and $n$ is calculated as $IR^{k}_{m,n}=(s^{k}_{m}\cap s^{k}_{n})/(s^{k}_{m}\cup s^{k}_{n})$. And the average intersection rate of all the scribbles generated by user $m$ and $n$ is calculated as $\bar{IR}_{m,n}=\frac{1}{K}\sum^{K}_{k=1}{s^{k}_{m,n}}$, here $K=96$ is the number of images in our data set. Table \ref{tab:sb-IR} shows the average interaction rates between the scribbles generated by all the users on foreground and background, respectively. It is observed that the values of average intersection rates between the scribbles generated by different users are quite low.
+
+
+%In our person-oriented experiments, great differences among user labels were observed. It comes to us instinctively that different people tend to consider different parts of foreground and background object as salient. Under this guidance, we processed the 5 label files of the same image and calculated the pair-wise intersection rate. The result is shown in Table \ref{ta:intersection rate f} and \ref{ta:intersection rate b}. The pair-wise intersection rate is defined as follows: $$intersection\ of\ marked\ pixels/union\ of\ marked\ pixels$$ We make the following observations: (1)The value of intersection/union between every two people is quite small, which indicates that labels made by different people have little in common. Figure \ref{fig:example} shows an example of user labels which share no common pixels (2) People share less similarities in background labels than foreground. It is mainly because the foreground objects are confined to a certain area while the backgrounds are more extensive.
+
+
+\begin{table}[!h]
 \centering
-\caption{intersection rate of foreground labels.}
-\begin{tabular}{|c|c|c|c|c|c|}
+\vspace{-0.2cm}
+\caption{Average intersection rates of different scribbles on foreground and background, respectively.}
+\begin{tabular}{c|c|c|c|c|c||c|c|c|c|c|c}
 \hline
- Label & label 1 & label 2 & label 3 & label 4& label 5 \\
+\multicolumn{6}{c||}{foreground} &\multicolumn{6}{c}{background}\\
 \hline
-label 1 & -- & 2.38\% & 3.52\% & 2.01\%& 1.66\% \\
+& $S_{A}$ & $S_{B}$ & $S_{C}$ & $S_{D}$ & $S_{E}$ && $S_{A}$ & $S_{B}$ & $S_{C}$ & $S_{D}$ & $S_{E}$ \\
 \hline
-label 2 & 2.38\% & -- & 2.71\% & 2.17\%& 2.25\% \\
+$S_{A}$ & -- & 2.38\% & 3.52\% & 2.01\%& 1.66\% &$S_{A}$ & -- & 0.87\% & 0.86\% & 0.09\%& 0.63\% \\
 \hline
-label 3 & 3.52\% & 2.70\% & -- & 2.05\%& 2.01\%\\
+$S_{B}$ & 2.38\% & -- & 2.71\% & 2.17\%& 2.25\% &$S_{B}$ & 0.87\% & -- & 0.97\% & 0.21\%& 0.73\% \\
 \hline
-label 4 & 2.01\% & 2.17\% & 2.05\% & -- & 1.84\% \\
+$S_{C}$ & 3.52\% & 2.70\% & -- & 2.05\%& 2.01\% &$S_{C}$ & 0.86\% & 0.97\% & -- & 0.16\%& 0.68\%\\
 \hline
-label 5 & 1.66\% & 2.25\% & 2.01\% & 1.84\%& -- \\
+$S_{D}$ & 2.01\% & 2.17\% & 2.05\% & -- & 1.84\% &$S_{D}$ & 0.09\% & 0.21\% & 0.16\% & -- & 0.67\% \\
+\hline
+$S_{E}$ & 1.66\% & 2.25\% & 2.01\% & 1.84\%& -- &$S_{E}$ & 0.63\% & 0.73\% & 0.68\% & 0.67\% & -- \\
 \hline
 \end{tabular}
-\label{ta:intersection rate f}
+\label{tab:sb-IR}
 \end{table}
-
-
-\begin{table}
-\centering
-\caption{intersection rate of background labels.}
-\begin{tabular}{|c|c|c|c|c|c|}
-\hline
- Label & label 1 & label 2 & label 3 & label 4& label 5 \\
-\hline
-label 1 & -- & 0.87\% & 0.86\% & 0.09\%& 0.63\% \\
-\hline
-label 2 & 0.87\% & -- & 0.97\% & 0.21\%& 0.73\% \\
-\hline
-label 3 & 0.86\% & 0.97\% & -- & 0.16\%& 0.68\%\\
-\hline
-label 4 & 0.09\% & 0.21\% & 0.16\% & -- & 0.67\% \\
-\hline
-label 5 & 0.63\% & 0.73\% & 0.68\% & 0.67\% & -- \\
-\hline
-\end{tabular}
-\label{ta:intersection rate b}
-\end{table}
-
 
 
 %\begin{table}[!tb]
@@ -253,34 +232,41 @@ label 5 & 0.63\% & 0.73\% & 0.68\% & 0.67\% & -- \\
 \includegraphics[width=0.15\columnwidth,height=1in]{images/188063-auto-label.png}
 }
 
-\caption{ This figure shows examples of human labels and auto-generated labels. (a)(f) shows source images, (b)(g) shows the ground truth of image(a)(f), (c)(d) and (h)(i)shows two pair of labels which share almost no common pixels, (e)(j) shows examples of our auto-generated labels }
+\caption{Examples of human labels and auto-generated labels. (a)(f) Source images. (b)(g) Ground truth of image(a)(f). (c)(d)(h)(i) Two pair of labels which share almost no common pixels. (e)(j) Examples of our auto-generated labels.}
 \label{fig:example}
 \end{figure}
 
 
-\subsection{Segmentation result difference}
+\subsection{Influence to segmentation result}
 Based on the above result, we take a step further by examining the segmentation results of different labels.The implementation of four interactive segmentation algorithms in \cite{gulshan2010geodesic} was used. These algorithms are: Boykov Jolly Graph cut\cite{boykov2001interactive},  Boykov Jolly with Geodesic Star-Convexitycitep\cite{gulshan2010geodesic} , Bai and Sapiro Shortest Path\cite{bai2007geodesic} and Random Walker\cite{grady2006random}. Based on the 96*5*4 segmentation results, we have found out that due to the variance between different labels, the segmentation results tend to be quite different, too.  We arrived here by calculating percentage of pixels which was segmented out as foreground simultaneously by 1 person, two people, three people ,four people and 5 people. The result is shown in Figure \ref{fig:seg-inter}. We have observed that: (1) The intersection rate of segmented object declines greatly as the intersection scale expands, which means when there are multiple users, the segmentation results of a same image could be quite different. (2) While having a high intersection rate, segmentation results of BJ and GSC exhibits more variability than RW and SP, as indicated by the much larger length of box.
 
 % (1) The effectiveness of different labels as input of interactive segmentation algorithms vary from person to person, as could be observed that the label made by participant 1 have a better performance than others in terms of mean, maximum and minimum, which means there exists kind of "professional lables" \cite{fu2008saliency} (2) On mean level, the result reaches at most 66.76\% made by participant 1. While the maximum ratio could be high as 99.05\%, the minimum ratio was also low as 1.06\%. This shows that when applied to segmentation algorithms, the variance of labels could further lead to even greater difference in segmentation results.
 
 
-\begin{figure}[!tb]
+\begin{figure}[!h]
 \centering
-\subfigure[BJ] { \label{fig:a1}
-\includegraphics[width=0.4\columnwidth]{images/bj-seg-inter.png}
-}
-\subfigure[GSC] { \label{fig:b1}
-\includegraphics[width=0.4\columnwidth]{images/gsc-seg-inter.png}
-}
-\subfigure[RW] { \label{fig:c1}
-\includegraphics[width=0.4\columnwidth]{images/rw-seg-inter.png}
-}
-\subfigure[SP] { \label{fig:d1}
-\includegraphics[width=0.4\columnwidth]{images/sp-seg-inter.png}
-}
+\includegraphics[width=0.9\textwidth]{fig_segment.pdf}
 \caption{ This figure shows the intersection of segmentation result of four algorithms on the five batches of labels. The five boxplot in each figure respectively shows the pixels which are segmented out simutaneously by one person, two people, three people, four people and five people.}
 \label{fig:seg-inter}
 \end{figure}
+
+%\begin{figure}[!tb]
+%\centering
+%\subfigure[BJ] { \label{fig:a1}
+%\includegraphics[width=0.4\columnwidth]{images/bj-seg-inter.png}
+%}
+%\subfigure[GSC] { \label{fig:b1}
+%\includegraphics[width=0.4\columnwidth]{images/gsc-seg-inter.png}
+%}
+%\subfigure[RW] { \label{fig:c1}
+%\includegraphics[width=0.4\columnwidth]{images/rw-seg-inter.png}
+%}
+%\subfigure[SP] { \label{fig:d1}
+%\includegraphics[width=0.4\columnwidth]{images/sp-seg-inter.png}
+%}
+%\caption{ This figure shows the intersection of segmentation result of four algorithms on the five batches of labels. The five boxplot in each figure respectively shows the pixels which are segmented out simutaneously by one person, two people, three people, four people and five people.}
+%\label{fig:seg-inter}
+%\end{figure}
 
 
 \section{Semi-automatic Labelling Generation}
@@ -379,91 +365,142 @@ Coefficient of variance& 0.27 & 0.21& 0.22& 0.31& 0.17 \\
 
 Based on the rather stable level of group coverage, we calculate the group overlap rate between every two labels on the same image. Table \ref{ta:group overlap f} and Table \ref{ta:group overlap b}  shows the value in foreground and background. Value in position (i,j) denotes the percentage of groups in label i which were also covered in label j. We could note that the overlap rate between every two participants is rather high; We also examined the overlap percetage on superpixel level. Table \ref{ta: sp overlap f} and Table \ref{ta: sp overlap b} shows the result. It is obvious that different users share little common ground on superpixel level.
 
-\begin{table}[!tb]
+\begin{table}[!h]
 \centering
-\caption{Superpixel group overlap between labels in foregorund.}
-\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\vspace{-0.2cm}
+\caption{Superpixel overlap between scribbles generated by different users on foreground and background, respectively.}
+\begin{tabular}{c|c|c|c|c|c||c|c|c|c|c|c}
 \hline
- & label 1 & label 2&label 3&label 4&label 5&mean\\
+\multicolumn{6}{c||}{foreground} &\multicolumn{6}{c}{background}\\
 \hline
-label1& -- & 91.44\% & 92.86\%& 89.71\%& 88.64\%&90.66\%\\
+& $S_{A}$ & $S_{B}$ & $S_{C}$ & $S_{D}$ & $S_{E}$ && $S_{A}$ & $S_{B}$ & $S_{C}$ & $S_{D}$ & $S_{E}$ \\
 \hline
-label2& 83.86\% & -- & 90.75\%& 88.82\%& 85.93\%&87.34\%\\
+$S_{A}$ & -- & 3.70\% & 3.69\% & 3.39\% & 3.35\% & $S_{A}$ & -- & 1.65\% & 1.59	\% & 0.49\% & 1.42\% \\
 \hline
-label3& 83.40\% & 89.04\% & -- & 88.18\%& 84.62\%&86.31\% \\
+$S_{B}$ & 2.91\% & -- & 3.32\% & 3.14\% & 3.00\% & $S_{B}$ & 1.70\% & -- & 5.33\% & 1.91\% & 1.81\% \\
 \hline
-label4& 80.75\% & 87.15\% & 88.15\%& -- & 82.44\%&84.62\% \\
+$S_{C}$ & 2.78\% & 3.23\% & -- & 2.93\% & 2.90\% & $S_{C}$ & 1.52\% & 1.75\% & -- & 0.65\% & 1.77\% \\
 \hline
-label5& 82.53\% & 92.06\% & 92.10\%& 89.31\%& -- &90.00\% \\
+$S_{D}$ & 2.24\% & 2.63\% & 2.55\% & -- & 2.37\% & $S_{D}$ & 0.39\% & 0.64\% & 0.59\% & -- & 1.56\% \\
+\hline
+$S_{E}$ & 2.25\% & 2.56\% & 2.58\% & 2.45\% &--  & $S_{E}$ & 0.87\% & 1.08\% & 1.13\% & 1.18\% & --  \\
 \hline
 \end{tabular}
-\label{ta:group overlap f}
+\label{tab:sp-overlap}
 \end{table}
 
-\begin{table}[!tb]
-\caption{Superpixel group overlap between labels in backgorund.}
+\begin{table}[!h]
 \centering
-\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\vspace{-0.2cm}
+\caption{Superpixel group overlap between scribbles generated by different users on foreground and background, respectively.}
+\begin{tabular}{c|c|c|c|c|c||c|c|c|c|c|c}
 \hline
- & label 1 & label 2&label 3&label 4&label 5&mean\\
+\multicolumn{6}{c||}{foreground} &\multicolumn{6}{c}{background}\\
 \hline
-label1& -- &80.19\% & 81.61\%& 72.23\%& 86.97\%&80.25\%\\
+& $S_{A}$ & $S_{B}$ & $S_{C}$ & $S_{D}$ & $S_{E}$ && $S_{A}$ & $S_{B}$ & $S_{C}$ & $S_{D}$ & $S_{E}$ \\
 \hline
-label2& 80.22\% & -- & 82.65\%& 74.86\%& 88.57\%&81.58\% \\
+$S_{A}$ & -- & 91.44\% & 92.86\% & 89.71\% & 88.64\% & $S_{A}$ & -- & 80.19\% & 81.61\% & 72.23\% & 86.97\% \\
 \hline
-label3& 80.25\% & 81.42\% & -- & 74.09\%& 88.36\%&81.03\%\\
+$S_{B}$ & 83.86\% & -- & 90.75\% & 88.82\% & 85.93\% & $S_{B}$ & 80.22\% & -- & 82.65\%& 74.86\% & 88.57\% \\
 \hline
-label4& 77.40\% & 80.30\% & 80.15\%& -- & 88.78\%&81.66\% \\
+$S_{C}$ & 83.40\% & 89.04\% & -- & 88.18\% & 84.62\% & $S_{C}$ & 80.25\% & 81.42\% & -- & 74.09\% & 88.36\% \\
 \hline
-label5& 76.36\% & 77.76\% & 78.21\%& 73.21\%& -- &76.39\%\\
+$S_{D}$ & 80.75\% & 87.15\% & 88.15\% & -- & 82.44\% & $S_{D}$ & 77.40\% & 80.30\% & 80.15\% & -- & 88.78\% \\
+\hline
+$S_{E}$ & 82.53\% & 92.06\% & 92.10\% & 89.31\%& --  & $S_{E}$ & 76.36\% & 77.76\% & 78.21\% & 73.21\% & --  \\
 \hline
 \end{tabular}
-\label{ta:group overlap b}
+\label{tab:spg-overlap}
 \end{table}
+
+
+%\begin{table}[!tb]
+%\centering
+%\caption{Superpixel group overlap between labels in foregorund.}
+%\begin{tabular}{|c|c|c|c|c|c|c|c|}
+%\hline
+% & label 1 & label 2&label 3&label 4&label 5&mean\\
+%\hline
+%label1& -- & 91.44\% & 92.86\%& 89.71\%& 88.64\%&90.66\%\\
+%\hline
+%label2& 83.86\% & -- & 90.75\%& 88.82\%& 85.93\%&87.34\%\\
+%\hline
+%label3& 83.40\% & 89.04\% & -- & 88.18\%& 84.62\%&86.31\% \\
+%\hline
+%label4& 80.75\% & 87.15\% & 88.15\%& -- & 82.44\%&84.62\% \\
+%\hline
+%label5& 82.53\% & 92.06\% & 92.10\%& 89.31\%& -- &90.00\% \\
+%\hline
+%\end{tabular}
+%\label{ta:group overlap f}
+%\end{table}
+%
+%\begin{table}[!tb]
+%\caption{Superpixel group overlap between labels in backgorund.}
+%\centering
+%\begin{tabular}{|c|c|c|c|c|c|c|c|}
+%\hline
+% & label 1 & label 2&label 3&label 4&label 5&mean\\
+%\hline
+%label1& -- &80.19\% & 81.61\%& 72.23\%& 86.97\%&80.25\%\\
+%\hline
+%label2& 80.22\% & -- & 82.65\%& 74.86\%& 88.57\%&81.58\% \\
+%\hline
+%label3& 80.25\% & 81.42\% & -- & 74.09\%& 88.36\%&81.03\%\\
+%\hline
+%label4& 77.40\% & 80.30\% & 80.15\%& -- & 88.78\%&81.66\% \\
+%\hline
+%label5& 76.36\% & 77.76\% & 78.21\%& 73.21\%& -- &76.39\%\\
+%\hline
+%\end{tabular}
+%\label{ta:group overlap b}
+%\end{table}
 
 Based on analysis on superpixel and superpixel group level, we safely conclude that labels of different users are consistent on the defined superpixel group level but inconsistent on superpixel level. It is because that there are limited amount of key features of an object. But certain key features could always be represented by many different superpixels and users are usually sensitive to different representative superpixels.
-\begin{table}[!tb]
-\centering
-\caption{Superpixel overlap between labels in foreground.}
-\begin{tabular}{|c|c|c|c|c|c|c|}
-\hline
- & label 1 & label 2&label 3&label 4&label 5&mean\\
-\hline
-label1& -- & 3.70\% & 3.69	\%& 3.39\%& 3.35\%& 3.53\%\\
-\hline
-label2& 2.91\% & -- & 3.32\%& 3.14\%& 3.00\% & 3.09\%\\
-\hline
-label3& 2.78\% & 3.23\% & -- & 2.93\%& 2.90\%& 2.96\% \\
-\hline
-label4& 2.24\% & 2.63\% & 2.55\%& -- & 2.37\%& 2.45\%\\
-\hline
-label5& 2.25\% & 2.56\% & 2.58\%& 2.45\%& -- & 2.46\% \\
-\hline
-\end{tabular}
-\label{ta: sp overlap f}
-\end{table}
 
 
-\begin{table}[!tb]
-\centering
-\caption{Superpixel overlap between labels in background.}
-\begin{tabular}{|c|c|c|c|c|c|c|}
-\hline
- & label 1 & label 2&label 3&label 4&label 5&mean\\
-\hline
-label1& -- & 1.65\% & 1.59	\%& 0.49\%& 1.42\%& 1.29\%\\
-\hline
-label2& 1.70\% & -- & 5.33\%& 1.91\%& 1.81\%& 2.69\% \\
-\hline
-label3& 1.52\% & 1.75\% & --& 0.65\%& 1.77\%& 1.42\% \\
-\hline
-label4& 0.39\% & 0.64\% & 0.59\%& --& 1.56\%& 0.80\%\\
-\hline
-label5& 0.87\% & 1.08\% & 1.13\%& 1.18\%& --& 1.07\% \\
-\hline
-\end{tabular}
-\label{ta: sp overlap b}
-\end{table}
+%\begin{table}[!tb]
+%\centering
+%\caption{Superpixel overlap between labels in foreground.}
+%\begin{tabular}{|c|c|c|c|c|c|c|}
+%\hline
+% & label 1 & label 2&label 3&label 4&label 5&mean\\
+%\hline
+%label1& -- & 3.70\% & 3.69	\%& 3.39\%& 3.35\%& 3.53\%\\
+%\hline
+%label2& 2.91\% & -- & 3.32\%& 3.14\%& 3.00\% & 3.09\%\\
+%\hline
+%label3& 2.78\% & 3.23\% & -- & 2.93\%& 2.90\%& 2.96\% \\
+%\hline
+%label4& 2.24\% & 2.63\% & 2.55\%& -- & 2.37\%& 2.45\%\\
+%\hline
+%label5& 2.25\% & 2.56\% & 2.58\%& 2.45\%& -- & 2.46\% \\
+%\hline
+%\end{tabular}
+%\label{ta: sp overlap f}
+%\end{table}
+%
+%
+%\begin{table}[!tb]
+%\centering
+%\caption{Superpixel overlap between labels in background.}
+%\begin{tabular}{|c|c|c|c|c|c|c|}
+%\hline
+% & label 1 & label 2&label 3&label 4&label 5&mean\\
+%\hline
+%label1& -- & 1.65\% & 1.59	\%& 0.49\%& 1.42\%& 1.29\%\\
+%\hline
+%label2& 1.70\% & -- & 5.33\%& 1.91\%& 1.81\%& 2.69\% \\
+%\hline
+%label3& 1.52\% & 1.75\% & --& 0.65\%& 1.77\%& 1.42\% \\
+%\hline
+%label4& 0.39\% & 0.64\% & 0.59\%& --& 1.56\%& 0.80\%\\
+%\hline
+%label5& 0.87\% & 1.08\% & 1.13\%& 1.18\%& --& 1.07\% \\
+%\hline
+%\end{tabular}
+%\label{ta: sp overlap b}
+%\end{table}
 
 
 \subsection{Labelling generation}
@@ -543,7 +580,7 @@ We then test the four algorithms respectively with 96*5 auto-generated user labe
 \section{Conclusion}
 In this paper, we propose a semi-automatic labelling generation method for evaluating interactive segmentation algorithms. We analyze the differences between multiple user labels and the corresponding segmentation results. Then we figure out the underlying consistence between user labels on the defined superpixel group level. After validating the effectiveness of point-level simulation, a labelling simulation methodology is proposed to simulate user labels. Finally, four state-of-art algorithms are tested and evaluated by the auto-generated labels.
 
-\section{Acknowledgement}This work is supported by the National Science Foundation of China (61321491, 61202320), Research Project of Excellent State Key Laboratory (61223003), National Undergraduate Innovation Project (G1410284075) and Collaborative Innovation Center of Novel Software Technology and Industrialization.\textcolor{red}{format}
+\subsubsection*{Acknowledgments.} This work is supported by the National Science Foundation of China (61321491, 61202320), Research Project of Excellent State Key Laboratory (61223003), National Undergraduate Innovation Project (G1410284075) and Collaborative Innovation Center of Novel Software Technology and Industrialization.
 
 %\bibliographystyle{plain}
 %\bibliography{references}
@@ -563,29 +600,29 @@ In this paper, we propose a semi-automatic labelling generation method for evalu
 \bibitem{boykov2001interactive} Boykov, Yuri Y and Jolly, M-P. Interactive graph cuts for optimal boundary \& region segmentation of objects in ND images. IEEE International Conference on Computer Vision. 105--112 (2001)
 
 \bibitem{rother2004grabcut} Carsten Rother, Vladimir Kolmogorov, and Andrew Blake. Grabcut: Interactive foreground extraction using iterated graph cuts. ACM Transactions on Graphics. 23(3):309-314 (2004)
-    
+
 \bibitem{bai2007geodesic} Xue Bai and Guillermo Sapiro. A geodesic framework for fast interactive image and video segmentation and matting. IEEE International Conference on Computer Vision. 1--8 (2007)
 
 \bibitem{grady2006random} Leo Grady. Random walks for image segmentation. IEEE Transactions on Pattern Analysis and Machine Intelligence. 28(11):1768-1783 (2006)
 
 \bibitem{gulshan2010geodesic} Varun Gulshan, Carsten Rother, Antonio Criminisi, Andrew Blake, and Andrew Zisserman. Geodesic star convexity for interactive image segmentation. IEEE Conference on Computer Vision and Pattern Recognition. 3129--3136 (2010)
-    
+
 \bibitem{martin2001database} David Martin, Charless Fowlkes, Doron Tal, and Jitendra Malik. A database of human segmented natural images and its application to evaluating segmentation algorithms and measuring ecological statistics. IEEE International Conference on Computer Vision. 416--423 (2001)
-    
+
 \bibitem{mcguinness2010comparative} Kevin McGuinness and Noel E Oconnor. A comparative evaluation of interactive segmentation algorithms. Pattern Recognition. 43(2):434--444 (2010)
-    
+
 \bibitem{mcguinness2008k} Kevin McGuinness and Noel E OConnor. The k-space segmentation tool set. 2008.
 
 \bibitem{fu2008saliency} Yu Fu, Jian Cheng, Zhenglong Li, and Hanqing Lu. Saliency cuts: An automatic approach to object segmentation. International Conference on Pattern Recognition. 1--4 (2008)
-    
+
 \bibitem{achanta2010slic} Radhakrishna Achanta, Appu Shaji, Kevin Smith, Aurelien Lucchi, Pascal Fua, and Sabine Susstrunk. Slic superpixels. Technical report (2010)
 
 \bibitem{vedaldi08vlfeat} A. Vedaldi and B. Fulkerson. VLFeat: An open and portable library of computer vision algorithms. http://www.vlfeat.org/, 2008.
-    
+
 \bibitem{unnikrishnan2007toward} Ranjith Unnikrishnan, Caroline Pantofaru, and Martial Hebert. Toward objective evaluation of image segmentation algorithms. IEEE Transactions on Pattern Analysis and Machine Intelligence. 29(6):929-944 (2007)
-    
+
 \bibitem{moschidis2010systematic}Emmanouil Moschidis and Jim Graham. A systematic performance evaluation of interactive image segmentation methods based on simulated user interaction. IEEE International Symposium on Biomedical Imaging: From Nano to Macro, 928--931 (2010)
-    
+
 \end{thebibliography}
 
 \end{document}
