@@ -78,10 +78,10 @@ To provide comprehensive evaluation of interactive image segmentation algorithms
 
 \section{Introduction}
 % Interactive image segmentation is important
-As the foundation of numerous multimedia applications, interactive image segmentation has been widely utilized in object recognition \cite{Bao13tip}, image retrieval \cite{Xu14icme}, scene analysis \cite{Li15tcsvt}, visual tracking \cite{Ren15mmsys}, social media mining \cite{Sang12tmm} and so on. It can effectively extract the desired objects from images with the assistance of manual labels, which is used to approximately outline the regions of objects. There have been several types of manual labels applied in the existing interactive image segmentation algorithms, including triple map, boundary box and scribble, in which scribble is commonly used for its simplicity and flexibility in labelling.
+As the foundation of numerous multimedia applications, interactive image segmentation has been widely utilized in object recognition \cite{Bao13tip}, image retrieval \cite{Xu14icme} and annotation \cite{sang2012user}, scene understanding \cite{Li15tcsvt}, visual tracking \cite{Ren15mmsys}, social media mining \cite{Sang12tmm}, surveillance analysis \cite{bao2012inductive} and so on. It can effectively extract the desired objects from images with the assistance of manual labels, which is used to approximately outline the regions of objects \cite{boykov2001interactive}. There have been several types of manual labels applied in the existing interactive image segmentation algorithms, including triple map, boundary box and scribble, in which scribble is commonly used for its simplicity and flexibility in labelling \cite{ju2015stereosnakes}.
 
 % requirement of interaction: suitable for different users, current evaluation approach and its drawbacks: does not consider multiple users or high human labor
-For different users may provide various scribbles in labelling, an effective interactive image segmentation algorithm should be robust to scribbles, i.e., its performance should not be obviously influenced by the difference of scribbles. It requires to evaluate interactive image segmentation algorithms on the scribbles provided by numbers of users with sufficient variety. However, in the evaluations of the existing algorithms \textcolor{red}{***}, only the scribbles provided by one specific user is used to reduce human labor. Obviously, such evaluations are not sufficient for they contain high randomness in the performance of different segmentation algorithms in comparison. Moreover, if the scribbles are intentionally selected, the evaluations may have a bias to some algorithms, which may influence the fairness of the evaluations.
+For different users may provide various scribbles in labelling, an effective interactive image segmentation algorithm should be robust to scribbles, i.e., its performance should not be obviously influenced by the difference of scribbles labelled by different users. It requires to evaluate interactive image segmentation algorithms on the scribbles provided by numbers of users with sufficient variety. However, in the evaluations of the existing algorithms \cite{boykov2001interactive,ju2015stereosnakes}, only the scribbles provided by one specific user are used to reduce human labor. Obviously, such evaluations cannot provide a comprehensive comparison for they contain high randomness in scribble labelling and segmentation. Moreover, if the scribbles are intentionally selected, the evaluations may have a bias to some algorithms, which influences the fairness of the evaluations.
 
 % The involved human interaction is required to be informative so that it could serve as effective inputs of certain image segmentation algorithms. Yet it should not involve too much human labor in consideration of real-life application. However, when it comes to the evaluation of these algorithms, the comparison can hardly be objective due to the limited label source and rather subjective human interferences. Usually, interactive image segmentation algorithms are tested upon user labels provided by a specific author or experiment. In this way, the situation of multiple users are neglected and the performance of segmentation result could heavily depend on certain batch of human labels, rendering the result not convincing enough when compared with other algorithms. In order to evaluate different algorithms in an objective and universal way, it is necessary to provide a large dataset of varied labels. But it should involve a great amount of time and human labour to set up such kind of database and many measures need to be taken to ensure the variety of this dataset. Under this guidance, we come up with the idea of generating semi-automatic labels using the ground truth of certain images. With the help of our automatically generated labels, the volume of the dataset can be greatly increased with little cost of time and labour. The work of establishing an image label dataset can therefore be largely reduced and the evaluation of segmentation algorithms can  be more objective.
 
@@ -93,22 +93,31 @@ Based on the ground truths of segmentation results, a number of scribbles with s
 %This paper deals with the problem of evaluating interactive segmentation algorithms in an objective way. The contribution of this paper includes: (1)  Analysis of differences and consistence between different user labels in a quantitative way. By clustering pixels and further decomposing them into groups, we figured out both consistence and inconsistence of human labels and their influence on segmentation results.(2)A semi-automatic labelling generation method. Based on the consistence of user labels, we figured out the distribution of key component coverage rate and use it to select key features from the image for further labelling. (3) General evaluation of interactive segmentation methods. Our automatically generated labels are then applied to different methods and the performance of these methods are evaluated.
 
 % paper organization
-The rest of the paper is organized as follows: In section 2, we briefly review the existing evaluation approaches for interactive image segmentation algorithms. In section 3, we introduce the data set used in our experiments. In section 4, we analyze the variety of scribbles labelled by different users and its influence on segmentation results. In section 5, we describe the consistency and inconsistency of scribbles on superpixel level and superpixel group level, and present the details of our scribble simulation approach. In section 6, the proposed scribble simulation approach is validated by comparing manual labelling and other two automatic simulation approaches. Finally, the paper is concluded in section 7.
+The rest of the paper is organized as follows: In section 2, we briefly review the existing interactive image segmentation algorithms and evaluation strategies. In section 3, we introduce the data set used in our experiments. In section 4, we analyze the variety of scribbles labelled by different users and its influence on segmentation results. In section 5, we present the details of our scribble simulation approach. In section 6, the proposed scribble simulation approach is validated by comparing manual labelling and other two automatic simulation approaches. Finally, the paper is concluded in section 7.
 
-\section{\textcolor{red}{Related Work}}
+\section{Related Work}
 
 % existing interactive image segmentation methods
-Many state-of-the-art algorithms in interactive image segmentation have been proposed, starting from Boycov et. al \cite{boykov2001interactive}, which utilizes max-flow/min-cut energy minimization to achieve foreground/background interactive segmentation. The Grabcut algorithm\cite{rother2004grabcut} further reduces the user interaction by allowing users to label a rectangle around the foreground object. In random walker \cite{grady2006random}, each pixel is assigned a maximal probability which a random walker could reach it starting from the corresponding labels. Bai and Sapiro come up with an interactive framework for soft segmentation and matting of natural images and videos in \cite{bai2007geodesic}. Gulshan\cite{gulshan2010geodesic} introduces a new shape constraint for interactive image segmentation by shifting from a single star to multiple stars and adopts Geodesic paths instead of Euclidean rays.
+\textbf{Interactive image segmentation.} Amounts of interactive image segmentation algorithms have been proposed in decades. 
+As one of the most representative algorithms, Graph cuts \cite{boykov2001interactive} converts each image to a graph and formulates image segmentation as a min-cut energy minimization problem. 
+Grabcut \cite{rother2004grabcut} allows to label a rectangle around foreground and improves segmentation performance by iteration strategy. Random walker \cite{grady2006random} assigns each unlabelled pixel a maximal probability which a random walker could reach it starting from the existing labels.
+Geodesic distance \cite{gulshan2010geodesic} uses star-convexity prior and replaces Euclidean rays with geodesic path to exploit the structure of shortest paths.
+Recently, some researchers extend interactive segmentation from monocular image to other media types, such as binocular image \cite{ju2015stereosnakes}, RGB-D image \cite{ge2015interactive} and video \cite{bai2007geodesic}. 
 
 % existing evaluation methods
-For segmentation algorithm evaluation, Martin et. al  \cite{martin2001database} presents an image database of a wide variety of natural scenes and its application to segmentation algorithm evaluation.  Unnikrishnan \cite{unnikrishnan2007toward} proposed the normalized probabilistic rand (NPR) index, which can be used to perform a quantitative comparison between image segmentation algorithms. Kevin McGuinness \cite{mcguinness2010comparative} developed a tool set for comparative evaluation of interactive segmentation algorithms. Moschidis and Jim Graham carried out systematic performance evaluation of three efficient image segmentation algorithms in \cite{moschidis2010systematic}, which focuses on their function as the computational part of an interactive segmentation system.
+\textbf{Interactive image segmentation evaluation.} In evaluation of interactive image segmentation algorithms, a key problem is how to effectively generate sufficient user labels. 
+Manual labelling with several participants has high labor cost and time consumption even with a facilitate tool \cite{mcguinness2010comparative}, and the labelled scribbles cannot be utilized to handle new test images \cite{martin2001database}.
+To overcome the limitations of manual labelling, automatic approaches are proposed for interactive image segmentation evaluation. 
+Some approaches generate the scribbles similar to manual labelling results in appearance \cite{fu2008saliency,mcguinness2011toward,kohli2012user}, for example, extracting the sketches of foreground objects and labelling the background around the objects. 
+However, the appearance of scribbles generated by these approaches are constricted by pre-defined rules, which reduce the variety of the generated scribbles.
+To increase representation flexibility, another approaches use pixel sets instead of connected curves in representing scribbles. Nevertheless, the existing approaches usually sample the pixels by manual defined strategies without considering the characteristics of manual labelling \cite{moschidis2010systematic}.
 
 \section{Data Set}
 % introduction of berkeley dataset
 We construct our data set with 96 images from Berkeley Segmentation Dataset \cite{martin2001database}. Each image contains at least one obvious object, which could be unambiguously explained to users. And these images are also representative of some major challenges of image segmentation, including fuzzy boundary, complex texture and complex lighting conditions. The ground truths of segmentation results are precisely hand-labelled for each image to avoid biases.
 
 % our labelling (including how to collect the labels)
-To analyze the rules for scribble simulation, we invite five users to manually label the images with The K-Space Segmentation Tool Set \cite{mcguinness2008k}. All the users are the students with basic computer operating skills but limited knowledge about interactive image segmentation. Each user is given a clear guidance and enough time to familiarize themselves with the labelling software, and all the labelling operations are carried out by mouse.
+To analyze the rules for scribble simulation, we invite five users to manually label the images with The K-Space Segmentation Tool Set \cite{mcguinness2010comparative}. All the users are the students with basic computer operating skills but limited knowledge about interactive image segmentation. Each user is given a clear guidance and enough time to familiarize themselves with the labelling software, and all the labelling operations are carried out by mouse.
 
 %Then in real experiment, each participants are provided with 96 images and the corresponding ground-truth which tells exactly which object to extract. However, we hide the segmentation result from user so that they will not realize if they have provided a "good" mark or not. We also confined the time for labeling each image. In this way, we manage to (1)limit the effort of participants to draw scribbles in consideration of real-life application.
 %(2)obtain the most natural response of users rather than inputs guided by segmentation result.
@@ -134,7 +143,6 @@ We first analyze the difference of scribbles by pair-wise intersection rate. To 
 
 \begin{table}[!h]
 \centering
-\vspace{-0.2cm}
 \caption{Pixel level average intersection rates of different scribbles on foreground and background.}
 \begin{tabular}{c|c|c|c|c|c||c|c|c|c|c|c}
 \hline
@@ -248,7 +256,7 @@ $S_{E}$ & 1.7\% & 2.3\% & 2.0\% & 1.8\%& -- &$S_{E}$ & 0.6\% & 0.7\% & 0.7\% & 0
 
 \subsection{Influence on segmentation result}
 
-We further evaluate the influence of different scribbles on segmentation results. We utilize the scribbles labelled by different users as the inputs of interactive image segmentation algorithms. In our experiments, four interactive image segmentation algorithms, including graph cut (GC) \cite{boykov2001interactive}, geodesic star convexity (GSC) \cite{gulshan2010geodesic}, random walker (RW) \cite{grady2006random}, and geodesic shortest path (GSP) \cite{bai2007geodesic}, are provided by the implementation in \cite{gulshan2010geodesic}. Totally, $96\times 5\times 4$ segmentation results are generated by the four algorithms initialized with all the scribbles. To the five segmentation results generated by one algorithm on each original image, we calculate the percentages of pixels which occur as foreground in one, two, three, four or five segmentation results, respectively.
+We further evaluate the influence of different scribbles on segmentation results. We utilize the scribbles labelled by different users as the inputs of interactive image segmentation algorithms. In our experiments, four interactive image segmentation algorithms, including graph cuts (GC) \cite{boykov2001interactive}, geodesic star convexity (GSC) \cite{gulshan2010geodesic}, random walker (RW) \cite{grady2006random}, and geodesic shortest path (GSP) \cite{bai2007geodesic}, are provided by the implementation in \cite{gulshan2010geodesic}. Totally, $96\times 5\times 4$ segmentation results are generated by the four algorithms initialized with all the scribbles. To the five segmentation results generated by one algorithm on each original image, we calculate the percentages of pixels which occur as foreground in one, two, three, four or five segmentation results, respectively.
 
 Fig. \ref{fig:segment} shows the boxplots of pixel co-occurrence percentages in different numbers of segmentation results for each segmentation algorithm. We can observe that the pixel co-occurrence percentages declines greatly when the number of segmentation results increases for all the algorithms. It means the segmentation results generated by the scribbles from different users are quite inconsistent. Moreover, to some segmentation algorithms which can generated relatively higher consistent results, such as GC and GSC, we can also find that their segmentation results contains high variability (larger lengthes of the boxes in Fig. \ref{fig:segment} (a) and (b)). Therefore, multiple scribbles with sufficient variety is required for comprehensively evaluating the performance of interactive segmentation algorithms.
 
@@ -257,7 +265,6 @@ Fig. \ref{fig:segment} shows the boxplots of pixel co-occurrence percentages in 
 %The result is shown in Figure \ref{fig:segment}. We have observed that: (1) The intersection rate of segmented object declines greatly as the intersection scale expands, which means when there are multiple users, the segmentation results of a same image could be quite different. (2) While having a high intersection rate, segmentation results of BJ and GSC exhibits more variability than RW and SP, as indicated by the much larger length of box.
 
 % (1) The effectiveness of different labels as input of interactive segmentation algorithms vary from person to person, as could be observed that the label made by participant 1 have a better performance than others in terms of mean, maximum and minimum, which means there exists kind of "professional lables" \cite{fu2008saliency} (2) On mean level, the result reaches at most 66.76\% made by participant 1. While the maximum ratio could be high as 99.05\%, the minimum ratio was also low as 1.06\%. This shows that when applied to segmentation algorithms, the variance of labels could further lead to even greater difference in segmentation results.
-
 
 \begin{figure}[!tb]
 \centering
@@ -299,7 +306,6 @@ Table \ref{tab:sp-ir} shows the intersection rates of the scribbles labelled by 
 
 \begin{table}[!h]
 \centering
-\vspace{-0.2cm}
 \caption{Superpixel level average intersection rates of different scribbles on foreground and background.}
 \begin{tabular}{c|c|c|c|c|c||c|c|c|c|c|c}
 \hline
@@ -325,15 +331,14 @@ To further explore the consistency of different scribbles, we divide the superpi
 
 Table \ref{tab:sg-ir} shows the intersection rates of the scribbles labelled by different users on superpixel group level. Here, $\widetilde{S}_{n}$ denotes all the scribbles labelled by user $n$ on superpixel group level, and intersection rates of different scribbles are calculated in a similar way to intersection rates on pixel level and superpixel level. We can find that the consistency of scribbles on superpixel group level keeps increasing, and the values of intersection rates are rather high on both foreground and background.
 
-\begin{table}[!h]
+\begin{table}[!t]
 \centering
-\vspace{-0.2cm}
 \caption{Superpixel group level average intersection rates of different scribbles on foreground and background.}
 \begin{tabular}{c|c|c|c|c|c||c|c|c|c|c|c}
 \hline
 \multicolumn{6}{c||}{foreground} &\multicolumn{6}{c}{background}\\
 \hline
-& $SG_{A}$ & $\widetilde{S}_{B}$ & $\widetilde{S}_{C}$ & $\widetilde{S}_{D}$ & $\widetilde{S}_{E}$ && $\widetilde{S}_{A}$ & $\widetilde{S}_{B}$ & $\widetilde{S}_{C}$ & $\widetilde{S}_{D}$ & $\widetilde{S}_{E}$ \\
+& $\widetilde{S}_{A}$ & $\widetilde{S}_{B}$ & $\widetilde{S}_{C}$ & $\widetilde{S}_{D}$ & $\widetilde{S}_{E}$ && $\widetilde{S}_{A}$ & $\widetilde{S}_{B}$ & $\widetilde{S}_{C}$ & $\widetilde{S}_{D}$ & $\widetilde{S}_{E}$ \\
 \hline
 $\widetilde{S}_{A}$ & -- & 77.7\% & 78.3\% & 73.2\% & 77.6\% & $\widetilde{S}_{A}$ & -- & 66.9\% & 67.1\% & 58.2\% & 68.1\% \\
 \hline
@@ -380,6 +385,7 @@ CV & 0.22 & 0.17 & 0.17& 0.18& 0.22 & CV & 0.27 & 0.21& 0.22& 0.31& 0.17 \\
 \hline
 \end{tabular}
 \label{tab:sg-coverage}
+\vspace{-0.2cm}
 \end{table}
 
 To describe the distribution of superpixel group coverage, we test its normality with normal Q-Q plot. Fig. \ref{fig:sg-distribution} (a) and (b) show the normal Q-Q plots of superpixel group coverage on foreground and background, respectively. It shows that data points in the plots are both close to the diagonals, which indicates that the distribution of superpixel group coverage on foreground and background are both normal distribution. We analyze the parameters of these two normal distributions in Fig. \ref{fig:sg-distribution} (c) and (d), and use them to describe the distribution of superpixel group on foreground and background.
@@ -419,7 +425,7 @@ We analyze the distribution of superpixel coverage in a similar way to superpixe
 
 % In labelling generation, we test the normality of superpixel coverage distribution and superpixel-group coverage distribution.The Normal Q-Q plot of the four coverage rate is shown in Figure \ref{fig:histogram and qq plot}. As we can see from the plot, the data points of four plots are all close to the diagonal line.which indicates a normal distribution. We then fit the four distribution to normal distribution, and figure out the probability distribution function of both superpixel coverage percent and superpixel group coverage percent as $coverage \sim \mathcal{N} (m,\sigma^2)$, as is shown in Figure \ref{fig:histogram and qq plot} .
 
-\begin{figure}[!htb]
+\begin{figure}[!tb]
 \centering
 \includegraphics[width=\textwidth]{fig_sp-distribution.pdf}
 \caption{Distribution of superpixel coverage on foreground and background.}
@@ -501,7 +507,7 @@ Fig. \ref{fig:connection} shows the comparison of the segmentation results gener
 %   \end{split}
 % \end{empheq}
 
-\begin{figure}[!htb]
+\begin{figure}[!tb]
 \centering
 \includegraphics[width=\textwidth]{fig_connection.pdf}
 \caption{Comparison of the segmentation results generated by manually labelled scribbles and their corresponding pixel sets. (a)-(d) Precision comparison using SC, GSC, RW, and GSP algorithms, respectively. (e)-(h) Recall comparison using SC, GSC, RW, and GSP algorithms, respectively.}
@@ -642,15 +648,15 @@ We first generate the superpixels and superpixel groups according to the corresp
 
 \section{Evaluation of Interactive Segmentation Algorithms}
 
-To validate the performance of the proposed scribble simulation approach, we compare the segmentation results generated by manually labelled scribbles and automatically simulated scribbles on the 96 images in our data set. To illustrate the effectiveness of our approach, we also use two other scribble simulation approaches in comparison, randomly selecting one superpixel in each selected superpixel group (SPG) and randomly selecting superpixels without grouping (SP). For each image is labelled by five users, we simulate five scribbles for each image with any simulation approach, i.e., $96\times 5$ scribbles are simulated by each approach on the whole data set.
+To validate the performance of the proposed scribble simulation approach, we compare the segmentation results generated by manually labelled scribbles and automatically simulated scribbles on the 96 images in our data set. To illustrate the effectiveness of our approach, we also use two other scribble simulation approaches in comparison, randomly selecting one superpixel in each selected superpixel group (SPG) and randomly selecting superpixels without grouping (SP). For each image is labelled by five users, we simulate five scribbles for each image with any simulation approach.
 
-We evaluate the scribbles on all the four interactive image segmentation algorithms, including graph cut (GC) \cite{boykov2001interactive}, geodesic star convexity (GSC) \cite{gulshan2010geodesic}, random walker (RW) \cite{grady2006random}, and geodesic shortest path (GSP) \cite{bai2007geodesic}. Fig. \ref{fig:evaluation} shows the evaluation results on the criteria of precision and recall. It shows that the evaluation results based on the scribbles generated by our approach is similar to the ones based on manually labelled scribbles. And it outperforms the other two simulation approaches in avoiding serious deviation in precision and recall evaluation (Fig. \ref{fig:evaluation} (b)(c)(g)).
+We evaluate the scribbles on all the four interactive image segmentation algorithms, including graph cuts (GC) \cite{boykov2001interactive}, geodesic star convexity (GSC) \cite{gulshan2010geodesic}, random walker (RW) \cite{grady2006random}, and geodesic shortest path (GSP) \cite{bai2007geodesic}. Fig. \ref{fig:evaluation} shows the evaluation results on the criteria of precision and recall. It shows that the evaluation results based on the scribbles generated by our approach is similar to the ones based on manually labelled scribbles. And it outperforms the other two simulation approaches in avoiding serious deviation in precision and recall evaluation (Fig. \ref{fig:evaluation} (b)(c)(g)).
 % We then test the four algorithms respectively with 96*5 auto-generated user labels and compare the result with the outcome of the previously made 96*5 human labels. We also provide labels generated in the following ways for comparison: (1) Randomly select a superpixel in each superpixel group for labelling(2) Randomly select certain percentage of superpixels among all superpixels without grouping them. In this way, we have four sets of labels in total. The result evaluation is shown in Figure \ref{fig:pr boxplot}. The first four figures show the precision values and the following four show the recall value. We make the following observations: (1) The performance of four algorithms remains similar under our auto-generated labels (the second column) compared with human-made labels, which confirms the stability of our simulation methods. It is thus promising that our auto-generated labels could serve as effective inputs of segmentation algorithms.(2) The third set of labels (the third column) are generated by covering all superpixel groups, thus providing more information than normal human labels could do.Sp it has much higher precision value than human labels do.(3) The fourth set of labels(the fourth column) is generated randomly on all superpixels. It shows the lowest precision level as it is formed by discrete superpixels, which can not provide enough information as superpixel groups could do.  (4) GSC \cite{gulshan2010geodesic} remains the best system on the whole dataset with high accuracy and stable performance. While RW \cite {grady2006random} and BJ \cite{boykov2001interactive}are expected to have similar performance, RW presents more robustness on both sets of labels. The SP\cite{bai2007geodesic} algorithm still achieves the poorest performance, mainly due to its lack of sensitivity to label locations.
 
 \begin{figure}[!tb]
 \centering
-\includegraphics[width=\textwidth]{fig_evaluation.pdf}
-\caption{Comparison of the evaluation results. (a)(c)(e)(g) Precision evaluation the segmentation results generated by manually labelled scribbles and the scribble simulated by our approach, SPG, SP, respectively. (b)(d)(f)(h) Recall evaluation the segmentation results generated by manually labelled scribbles and the scribble simulated by our approach, SPG, SP, respectively.}
+\includegraphics[width=0.9\textwidth]{fig_evaluation.pdf}
+\caption{Comparison of the evaluation results. (a)(c)(e)(g) Precision evaluation the segmentation results generated by manually labelled scribbles and the scribbles simulated by our approach, SPG, SP, respectively. (b)(d)(f)(h) Recall evaluation the segmentation results generated by manually labelled scribbles and the scribbles simulated by our approach, SPG, SP, respectively.}
 \label{fig:evaluation}
 \end{figure}
 
@@ -689,7 +695,7 @@ We evaluate the scribbles on all the four interactive image segmentation algorit
 
 \section{Conclusion}
 
-In this paper, we propose an automatic scribble simulation approach for interactive segmentation algorithm evaluation. Based on the analysis of the scribble variety, we describe the consistency and inconsistency of scribbles with normal distribution on superpixel level and superpixel group level, and simulate scribbles on foreground and background separately by randomly selecting superpixel groups and superpixels with the previously determined coverage values. We validate the performance of the proposed scribble simulation approach by evaluate four existing interactive image segmentation algorithms on 96 images. It shows that the scribbles simulated by the proposed approach can obtain similar evaluation results to manually labelled scribbles and avoid serious deviation in precision and recall evaluation.
+In this paper, we propose an automatic scribble simulation approach for interactive segmentation algorithm evaluation. Based on the analysis of the scribble variety, we describe the consistency and inconsistency of scribbles with normal distribution on superpixel level and superpixel group level, and simulate scribbles on foreground and background separately by randomly selecting superpixel groups and superpixels with the previously determined coverage values. The experimental results evaluated by four existing interactive image segmentation algorithms on 96 images show that the scribbles simulated by the proposed approach can obtain similar evaluation results to manually labelled scribbles and avoid serious deviation in precision and recall evaluation.
 
 % After validating the effectiveness of point-level simulation, a labelling simulation methodology is proposed to simulate user labels. Finally, four state-of-art algorithms are tested and evaluated by the auto-generated labels.
 
@@ -699,44 +705,51 @@ In this paper, we propose an automatic scribble simulation approach for interact
 %\bibliography{references}
 \begin{thebibliography}{4}
 
-\bibitem{Bao13tip} Bing-Kun Bao, Guangcan Liu, Richang Hong, Shuicheng Yan, and Changsheng Xu. General subspace learning with corrupted training data via graph embedding. IEEE Transactions on Image Processing. 22(11):4380--4393 (2013)
+\bibitem{Bao13tip} Bing-Kun Bao, Guangcan Liu, Richang Hong, Shuicheng Yan, and Changsheng Xu. General subspace learning with corrupted training data via graph embedding. IEEE TIP. 22(11):4380--4393 (2013)
 
-\bibitem{Xu14icme} Xiangyang Xu, Wenjing Geng, Ran Ju, Yang Yang, Tongwei Ren, Gangshan Wu. OBSIR: Object-based stereo image retrieval. IEEE International Conference on Multimedia and Expo. 1-6 (2014)
+\bibitem{Xu14icme} Xiangyang Xu, Wenjing Geng, Ran Ju, Yang Yang, Tongwei Ren, Gangshan Wu. OBSIR: Object-based stereo image retrieval. IEEE ICME. 1-6 (2014)
 
-\bibitem{Li15tcsvt} Teng Li, Huan Chang, Meng Wang, Bingbing Ni, Richang Hong, and Shuicheng Yan. Crowded scene analysis: A survey. IEEE Transactions on Circuits and Systems for Video Technology. 25(3), 367--386 (2015)
+\bibitem{sang2012user} Jitao Sang, Changsheng Xu, Jing Liu. User-aware image tag refinement via ternary semantic analysis. IEEE TMM. 14(3-2):883-895 (2012)
 
-\bibitem{Ren15mmsys} Tongwei Ren, Zhongyan Qiu, Yan Liu, Tong Yu, and Jia Bei. Soft-assigned bag of features for object tracking. Multimedia Systems. 21(2):189-205 (2015)
+\bibitem{Li15tcsvt} Teng Li, Huan Chang, Meng Wang, Bingbing Ni, Richang Hong, and Shuicheng Yan. Crowded scene analysis: A survey. IEEE TCSVT. 25(3), 367--386 (2015)
 
-\bibitem{Sang12tmm} Jitao Sang, Changsheng Xu, Jing Liu. User-Aware image tag refinement via ternary semantic analysis. IEEE Transactions on Multimedia. 14(3-2):883--895 (2012)
+\bibitem{Ren15mmsys} Tongwei Ren, Zhongyan Qiu, Yan Liu, Tong Yu, and Jia Bei. Soft-assigned bag of features for object tracking. MMSJ. 21(2):189-205 (2015)
 
-\bibitem{boykov2001interactive} Yuri Y Boykov, and  Marie-Pierre Jolly. Interactive graph cuts for optimal boundary \& region segmentation of objects in N-D images. IEEE International Conference on Computer Vision. 105--112 (2001)
+\bibitem{Sang12tmm} Jitao Sang, Changsheng Xu, and Jing Liu. User-Aware image tag refinement via ternary semantic analysis. IEEE TMM. 14(3-2):883--895 (2012)
 
-\bibitem{gulshan2010geodesic} Varun Gulshan, Carsten Rother, Antonio Criminisi, Andrew Blake, and Andrew Zisserman. Geodesic star convexity for interactive image segmentation. IEEE Conference on Computer Vision and Pattern Recognition. 3129--3136 (2010)
+\bibitem{bao2012inductive} Bing-Kun Bao, Guangcan Liu, Changsheng Xu, and Shuicheng Yan. Inductive robust principal component analysis. IEEE TIP. 21(8):3794--3800 (2012)
 
-\bibitem{bai2007geodesic} Xue Bai and Guillermo Sapiro. A geodesic framework for fast interactive image and video segmentation and matting. IEEE International Conference on Computer Vision. 1--8 (2007)
+\bibitem{boykov2001interactive} Yuri Y Boykov, and  Marie-Pierre Jolly. Interactive graph cuts for optimal boundary \& region segmentation of objects in N-D images. IEEE ICCV. 105--112 (2001)
 
-\bibitem{grady2006random} Leo Grady. Random walks for image segmentation. IEEE Transactions on Pattern Analysis and Machine Intelligence. 28(11):1768-1783 (2006)
+\bibitem{ju2015stereosnakes} Ran Ju, Tongwei Ren, and Gangshan Wu. StereoSnakes: Contour based consistent object extraction for stereo images. IEEE ICCV (2015)
+
+\bibitem{rother2004grabcut} Carsten Rother, Vladimir Kolmogorov, and Andrew Blake. Grabcut: Interactive foreground extraction using iterated graph cuts. ACM TOG. 23(3):309--314 (2004)
+
+\bibitem{grady2006random} Leo Grady. Random walks for image segmentation. IEEE TPAMI. 28(11):1768-1783 (2006)
+
+\bibitem{gulshan2010geodesic} Varun Gulshan, Carsten Rother, Antonio Criminisi, Andrew Blake, and Andrew Zisserman. Geodesic star convexity for interactive image segmentation. IEEE CVPR. 3129--3136 (2010)
+
+\bibitem{ge2015interactive} Ling Ge, Ran Ju, Tongwei Ren, and Gangshan Wu. Interactive RGB-D image segmentation using hierarchical graph cut and geodesic distance. PCM. 114--124 (2015)
+
+\bibitem{bai2007geodesic} Xue Bai and Guillermo Sapiro. A geodesic framework for fast interactive image and video segmentation and matting. IEEE ICCV. 1--8 (2007)
+
+\bibitem{mcguinness2010comparative} Kevin McGuinness and Noel E O'Connor. A comparative evaluation of interactive segmentation algorithms. PR. 43(2):434--444 (2010)
+
+\bibitem{martin2001database} David Martin, Charless Fowlkes, Doron Tal, and Jitendra Malik. A database of human segmented natural images and its application to evaluating segmentation algorithms and measuring ecological statistics. IEEE ICCV. 416--423 (2001)
+    
+\bibitem{fu2008saliency} Yu Fu, Jian Cheng, Zhenglong Li, and Hanqing Lu. Saliency cuts: An automatic approach to object segmentation. ICPR. 1--4 (2008)
+
+\bibitem{mcguinness2011toward} Kevin McGuinness and Noel O¡¯Connor. Toward automated evaluation of interactive segmentation. CVIU. 115(6):868--884 (2011)
+
+\bibitem{kohli2012user} Pushmeet Kohli, Hannes Nickisch, Carsten Rother, and Christoph Rhemann. User-centric learning and evaluation of interactive segmentation systems. IJCV. 100(3):261--274 (2012).
+
+\bibitem{moschidis2010systematic} Emmanouil Moschidis and Jim Graham. A systematic performance evaluation of interactive image segmentation methods based on simulated user interaction. IEEE ISBI. 928--931 (2010)
+
+\bibitem{achanta2010slic} Radhakrishna Achanta, Appu Shaji, Kevin Smith, Aurelien Lucchi, Pascal Fua, and Sabine Susstrunk. Slic superpixels compared to state-of-the-art superpixel methods. IEEE TPAMI. 34(11):2274--2282 (2012)
+
+\bibitem{vedaldi08vlfeat} Andrea Vedaldi and Brian Fulkerson. VLFeat: An open and portable library of computer vision algorithms. ACM MM. 1469--1472 (2010)
 
 
-
-
-\bibitem{rother2004grabcut} Carsten Rother, Vladimir Kolmogorov, and Andrew Blake. Grabcut: Interactive foreground extraction using iterated graph cuts. ACM Transactions on Graphics. 23(3):309-314 (2004)
-
-\bibitem{martin2001database} David Martin, Charless Fowlkes, Doron Tal, and Jitendra Malik. A database of human segmented natural images and its application to evaluating segmentation algorithms and measuring ecological statistics. IEEE International Conference on Computer Vision. 416--423 (2001)
-
-\bibitem{mcguinness2010comparative} Kevin McGuinness and Noel E Oconnor. A comparative evaluation of interactive segmentation algorithms. Pattern Recognition. 43(2):434--444 (2010)
-
-\bibitem{mcguinness2008k} Kevin McGuinness and Noel E OConnor. The k-space segmentation tool set. 2008.
-
-\bibitem{fu2008saliency} Yu Fu, Jian Cheng, Zhenglong Li, and Hanqing Lu. Saliency cuts: An automatic approach to object segmentation. International Conference on Pattern Recognition. 1--4 (2008)
-
-\bibitem{achanta2010slic} Radhakrishna Achanta, Appu Shaji, Kevin Smith, Aurelien Lucchi, Pascal Fua, and Sabine Susstrunk. Slic superpixels. Technical report (2010)
-
-\bibitem{vedaldi08vlfeat} A. Vedaldi and B. Fulkerson. VLFeat: An open and portable library of computer vision algorithms. http://www.vlfeat.org/, 2008.
-
-\bibitem{unnikrishnan2007toward} Ranjith Unnikrishnan, Caroline Pantofaru, and Martial Hebert. Toward objective evaluation of image segmentation algorithms. IEEE Transactions on Pattern Analysis and Machine Intelligence. 29(6):929-944 (2007)
-
-\bibitem{moschidis2010systematic}Emmanouil Moschidis and Jim Graham. A systematic performance evaluation of interactive image segmentation methods based on simulated user interaction. IEEE International Symposium on Biomedical Imaging: From Nano to Macro, 928--931 (2010)
 
 \end{thebibliography}
 
